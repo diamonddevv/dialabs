@@ -6,8 +6,7 @@
   "mixins": [
     "EmptyBottleMixin",
     "LivingEntityMixin",
-    "LightningEntityMixin",
-    "DamageTrackerMixin"
+    "LightningEntityMixin"
   ],
   "client": [
     "DiaLabsMixin"

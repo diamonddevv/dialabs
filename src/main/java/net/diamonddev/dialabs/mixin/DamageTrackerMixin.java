@@ -4,6 +4,7 @@ package net.diamonddev.dialabs.mixin;
 import net.diamonddev.dialabs.DiaLabs;
 import net.diamonddev.dialabs.api.DamageSources;
 import net.diamonddev.dialabs.effect.ChargeEffect;
+import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.init.InitEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -27,7 +28,7 @@ public class DamageTrackerMixin {
 
         Entity sourceEntity = damageSource.getAttacker();
 
-        if (entity != null && sourceEntity instanceof LivingEntity) {
+        if (entity != null && sourceEntity instanceof LivingEntity && entity.isAlive()) {
 
             try {
                 StatusEffectInstance statusEffectInstance = ((LivingEntity) sourceEntity).getStatusEffect(InitEffects.CHARGE);
@@ -35,16 +36,26 @@ public class DamageTrackerMixin {
                     int duration = statusEffectInstance.getDuration();
                     int amplifier = statusEffectInstance.getAmplifier() + 1;
                     if (entity.hasStatusEffect(InitEffects.CHARGE)) {
-                        float getAdditionalDamage = ChargeEffect.calculateAdditionalDamage(entity.getHealth(), amplifier, duration, ChargeEffect.chargedStatusEffectAdditionalDamageBase, true);
-                        boolean getSuccess = ChargeEffect.inflictDamageWithChargeBonus(entity, DamageSources.CHARGE, getAdditionalDamage);
-                        if (!getSuccess) {
+                        float getAdditionalDamage = ChargeEffect.calculateAdditionalDamage(amplifier, duration, ChargeEffect.chargedStatusEffectAdditionalDamageBase, true);
+                        if (entity != null) {
+                            if (entity.isAlive()) {
+                                entity.damage(DamageSources.CHARGE, (float) getAdditionalDamage);
+                            } else {
+                                DiaLabs.LOGGER.warn("Couldn't inflict additional Charge Damage");
+                            }
+                        } else {
                             DiaLabs.LOGGER.warn("Couldn't inflict additional Charge Damage");
                         }
 
                     } else {
-                        float getAdditionalDamage = ChargeEffect.calculateAdditionalDamage(entity.getHealth(), amplifier, duration, ChargeEffect.chargedStatusEffectAdditionalDamageBase, false);
-                        boolean getSuccess = ChargeEffect.inflictDamageWithChargeBonus(entity, DamageSources.CHARGE, getAdditionalDamage);
-                        if (!getSuccess) {
+                        float getAdditionalDamage = ChargeEffect.calculateAdditionalDamage(amplifier, duration, ChargeEffect.chargedStatusEffectAdditionalDamageBase, false);
+                        if (entity != null) {
+                            if (entity.isAlive()) {
+                                entity.damage(DamageSources.CHARGE, (float) getAdditionalDamage);
+                            } else {
+                                DiaLabs.LOGGER.warn("Couldn't inflict additional Charge Damage");
+                            }
+                        } else {
                             DiaLabs.LOGGER.warn("Couldn't inflict additional Charge Damage");
                         }
                     }
