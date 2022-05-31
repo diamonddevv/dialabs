@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "dialabs",
+  "version": "${version}",
+
+  "name": "DiaLabs",
+  "description": "DiamondDev's Random Stuff Mod. That's why it's his 'Labs'. Duh.",
+  "authors": [
+    "DiamondDev"
+  ],
+  "contact": {
+    "homepage": "https://www.github.com/diamondboy4005",
+    "sources": "https://github.com/diamondboy4005"
+  },
+
+  "license": "MIT",
+  "icon": "assets/dialabs/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.diamonddev.dialabs.DiaLabs"
+    ]
+  },
+  "mixins": [
+    "dialabs.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

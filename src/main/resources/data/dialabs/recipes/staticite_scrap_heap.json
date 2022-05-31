@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "dialabs:staticite_scrap"
+    }
+  },
+  "result": {
+    "item": "dialabs:staticite_scrap_heap",
+    "count": 1
+  }
+}

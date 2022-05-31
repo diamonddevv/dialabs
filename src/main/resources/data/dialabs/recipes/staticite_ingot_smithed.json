@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "dialabs:staticite_scrap_heap"
+  },
+  "addition": {
+    "item": "minecraft:copper_ingot"
+  },
+  "result": {
+    "item": "dialabs:staticite_ingot",
+    "count": 1
+  }
+}

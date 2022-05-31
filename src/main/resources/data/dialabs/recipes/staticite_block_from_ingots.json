@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "dialabs:staticite_ingot"
+    }
+  },
+  "result": {
+    "item": "dialabs:staticite_block",
+    "count": 1
+  }
+}

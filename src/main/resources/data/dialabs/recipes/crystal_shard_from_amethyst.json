@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "=+=",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:prismarine_crystals"
+    },
+    "=": {
+      "item": "minecraft:diamond"
+    },
+    "+": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "result": {
+    "item": "dialabs:crystal_shard",
+    "count": 1
+  }
+}

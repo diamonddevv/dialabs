@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "dialabs:staticite_scrap_heap"
+    }
+  ],
+  "result": {
+    "item": "dialabs:staticite_scrap",
+    "count": 4
+  }
+}

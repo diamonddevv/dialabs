@@ -1,0 +1,27 @@
+{
+  "item.dialabs.staticite_ingot": "Staticite Ingot",
+  "block.dialabs.staticite_block": "Staticite Block",
+  "block.dialabs.shocked_iron_block": "Shocked Iron Block",
+  "item.dialabs.staticite_scrap": "Staticite Scrap",
+  "item.dialabs.staticite_scrap_heap": "Staticite Scrap Heap",
+
+  "item.dialabs.static_core": "Static Core",
+  "tooltip.dialabs.static_core": "This Ender Eye is now a Core of Static Energy..",
+  "effect.dialabs.charged": "Charged",
+
+  "item.dialabs.lightning_bottle": "Lightning in a Bottle",
+
+  "item.dialabs.crystal_shard": "Crystal Shard",
+  "effect.dialabs.crystallising": "Crystallising",
+
+  "death.attack.crystal_shards": "%1$s was fatally cut by Crystal Shards",
+  "death.attack.crystal_shards.player": "%1$s was fatallly cut by %2$s's Crystal Shards",
+
+  "death.attack.charge": "%1$s couldn't withstand the current",
+  "death.attack.charge.player": "%1$s couldn't withstand %2$s's current",
+
+  "gamerule.crystalShardStrength": "Crystal Shard Strength",
+  "gamerule.staticCoreStrength": "Static Core Strength",
+  "gamerule.crystalShardLengthInSeconds": "Crystal Shard Length in Seconds",
+  "gamerule.staticCoreLengthInSeconds": "Static Core Length in Seconds"
+}

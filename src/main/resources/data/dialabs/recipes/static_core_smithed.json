@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:ender_eye"
+  },
+  "addition": {
+    "item": "dialabs:staticite_ingot"
+  },
+  "result": {
+    "item": "dialabs:static_core"
+  }
+}
