@@ -1,5 +1,6 @@
 package net.diamonddev.dialabs.api;
 
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 
 public class DamageSources extends DamageSource {
@@ -8,10 +9,10 @@ public class DamageSources extends DamageSource {
         super(name);
     }
 
-
     public static final DamageSource CRYSTAL_SHARDS = (new DamageSources("crystal_shards")).setUsesMagic();
-    public static final DamageSource CHARGE = (new DamageSources("charge").setBypassesArmor());
 
 
-
+    public static DamageSource chargeDamage(LivingEntity attacker) {
+        return new ChargeDamageSource("charge", attacker);
+    }
 }

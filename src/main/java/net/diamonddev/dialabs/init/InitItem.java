@@ -9,6 +9,7 @@ import net.diamonddev.dialabs.item.StaticCoreItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.registry.Registry;
 
 public class InitItem {
@@ -17,7 +18,7 @@ public class InitItem {
     public static final Item STATICITE_SCRAP = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
     public static final Item STATICITE_SCRAP_HEAP = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
 
-    public static final StaticCoreItem STATIC_CORE = new StaticCoreItem(new FabricItemSettings().group(ItemGroup.MATERIALS));
+    public static final StaticCoreItem STATIC_CORE = new StaticCoreItem(new FabricItemSettings().group(ItemGroup.MATERIALS).maxCount(4).rarity(Rarity.RARE));
     public static final CrystalShardItem CRYSTAL_SHARD = new CrystalShardItem(new FabricItemSettings().group(ItemGroup.MATERIALS));
     public static final LightningBottleItem LIGHTNING_BOTTLE = new LightningBottleItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(8));
     // todo: give this a tooltip
