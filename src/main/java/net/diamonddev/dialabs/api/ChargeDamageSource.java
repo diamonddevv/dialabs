@@ -22,9 +22,9 @@ public class ChargeDamageSource extends DamageSource {
         return "ChargeDamageSource (" + this.source + ")";
     }
 
-    public Text getDeathMessage(LivingEntity entity) {
-        String string = "death.attack." + this.name;
-        return new TranslatableText(string, entity.getDisplayName(), this.source.getDisplayName());
+    public Text getDeathMessage(LivingEntity deadEntity) {
+        String string = "death.attack." + this.name + ".player";
+        return new TranslatableText(string, deadEntity.getDisplayName(), this.source.getDisplayName());
     }
 
 }

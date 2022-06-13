@@ -3,6 +3,7 @@ package net.diamonddev.dialabs;
 import net.diamonddev.dialabs.api.DiaLabsGamerules;
 import net.diamonddev.dialabs.init.InitBlocks;
 import net.diamonddev.dialabs.init.InitEffects;
+import net.diamonddev.dialabs.init.InitEnchants;
 import net.diamonddev.dialabs.init.InitItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
@@ -20,7 +21,7 @@ public class DiaLabs implements ModInitializer {
 
 	// Get Versions
 	public static String getStringifiedModVer(String prefix) {
-		FabricLoader.getInstance().getModContainer(MOD_ID).ifPresent(modContainer -> {VERSION = modContainer.getMetadata().getVersion().getFriendlyString();});
+		VERSION = "";
 
 		if (prefix == null) {
 			return VERSION;
@@ -48,6 +49,7 @@ public class DiaLabs implements ModInitializer {
 		InitItem.initializeItem();
         InitEffects.initializeEffects();
 		InitBlocks.registerBlock();
+		InitEnchants.register();
 		DiaLabsGamerules.registerGamerules();
 
 

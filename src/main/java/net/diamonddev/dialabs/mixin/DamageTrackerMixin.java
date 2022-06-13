@@ -23,36 +23,25 @@ public class DamageTrackerMixin {
     @Final @Shadow private LivingEntity entity;
 
     // Called when Entity takes damage
-    @Inject(method = "onDamage", at = @At(value = "TAIL"))
+    @Inject(method = "onDamage", at = @At(value = "HEAD"))
     public void injectChargedMethod(DamageSource damageSource, float originalHealth, float f, CallbackInfo ci) {
 
         Entity sourceEntity = damageSource.getAttacker();
 
         if (entity != null && sourceEntity instanceof LivingEntity && entity.isAlive()) {
+            StatusEffectInstance statusEffectInstance = ((LivingEntity) sourceEntity).getStatusEffect(InitEffects.CHARGE);
+            if (statusEffectInstance != null) {
+                int duration = statusEffectInstance.getDuration();
+                int amplifier = statusEffectInstance.getAmplifier() + 1;
 
-            try {
-                StatusEffectInstance statusEffectInstance = ((LivingEntity) sourceEntity).getStatusEffect(InitEffects.CHARGE);
-                if (statusEffectInstance != null) {
-                    int duration = statusEffectInstance.getDuration();
-                    int amplifier = statusEffectInstance.getAmplifier() + 1;
-                    float pmd = ChargeEffect.getSentMeleeDamage();
-
-                    if (!entity.hasStatusEffect(InitEffects.CHARGE)) {
-                        float getAdditionalDamage = ChargeEffect.calculateDamage(pmd, amplifier, duration, ChargeEffect.chargedStatusEffectAdditionalDamageBase, false);
-                        if (entity != null) {
-                            if (entity.isAlive()) {
-                                entity.damage(DamageSources.chargeDamage((LivingEntity) sourceEntity), getAdditionalDamage);
-
-                            } else {
-                                DiaLabs.LOGGER.warn("Couldn't inflict additional Charge Damage");
-                            }
-                        } else {
-                            DiaLabs.LOGGER.warn("Couldn't inflict additional Charge Damage");
+                if (!entity.hasStatusEffect(InitEffects.CHARGE)) {
+                    float getAdditionalDamage = ChargeEffect.calculateDamage(amplifier, duration, ChargeEffect.chargedStatusEffectAdditionalDamageBase, false);
+                    if (entity != null) {
+                        if (entity.isAlive()) {
+                            entity.damage(DamageSources.chargeDamage((LivingEntity) sourceEntity), getAdditionalDamage);
                         }
                     }
                 }
-            } catch (NullPointerException ignored) {
-                DiaLabs.LOGGER.warn("Couldn't inflict additional Charge Damage");
             }
         }
     }
