@@ -22,10 +22,13 @@
   "death.attack.charge": "%1$s couldn't withstand the current",
   "death.attack.charge.player": "%1$s couldn't withstand %2$s's current",
 
+  "enchantment.dialabs.withered_aspect": "Withered Aspect",
+
   "gamerule.crystalShardStrength": "Crystal Shard Strength",
   "gamerule.staticCoreStrength": "Static Core Strength",
   "gamerule.crystalShardLengthInSeconds": "Crystal Shard Length in Seconds",
   "gamerule.staticCoreLengthInSeconds": "Static Core Length in Seconds",
+  "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level",
 
   "tooltip.dialabs.common_hold_down_message": "§7Hold §n§oCTRL§r §7for more info"
 }

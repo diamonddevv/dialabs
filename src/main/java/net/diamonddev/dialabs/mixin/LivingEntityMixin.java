@@ -1,6 +1,7 @@
 package net.diamonddev.dialabs.mixin;
 
 
+import net.diamonddev.dialabs.api.ChargeDamageSource;
 import net.diamonddev.dialabs.api.DamageSources;
 import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.init.InitEffects;
@@ -31,7 +32,6 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow
     public abstract boolean hasStatusEffect(StatusEffect effect);
 
-    @Shadow
     public abstract Random getRandom();
 
     @Shadow
@@ -43,7 +43,7 @@ public abstract class LivingEntityMixin extends Entity {
     public abstract LivingEntity getAttacker();
 
     // called when 'this' takes damage
-    @Inject(at = @At("HEAD"), method = "applyEnchantmentsToDamage", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage", cancellable = true)
     private void injectCrystallisingMethods(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
 
@@ -63,12 +63,20 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "applyEnchantmentsToDamage", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage", cancellable = true)
     private void removeUnchargedMeleeDamage(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
 
-        if (((LivingEntity) Objects.requireNonNull(source.getSource())).hasStatusEffect(InitEffects.CHARGE)) {
-            cir.setReturnValue(0.0F);
+        Entity entitySource = source.getSource();
+
+        if (entitySource != null) {
+            if (entitySource instanceof LivingEntity) {
+                if (!Objects.equals(source.getName(), "charge")) {
+                    if (((LivingEntity) entitySource).hasStatusEffect(InitEffects.CHARGE)) {
+                        cir.setReturnValue(0.0F);
+                    }
+                }
+            }
         }
 
     }

@@ -6,7 +6,6 @@ import net.diamonddev.dialabs.init.InitEffects;
 import net.diamonddev.dialabs.init.InitEnchants;
 import net.diamonddev.dialabs.init.InitItem;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.MinecraftVersion;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,19 +15,20 @@ public class DiaLabs implements ModInitializer {
 
 	// Mod ID and Version Variables
 	public static final String MOD_ID = "dialabs";
+	public static final String MOD_VER = "1.0.0b";
 	public static String VERSION = getStringifiedModVer("v");
 	public static String MC_VER = getStringifiedMcVer("v");
 
-	// Get Versions
+	// Get Metadata
 	public static String getStringifiedModVer(String prefix) {
-		VERSION = "";
-
+		VERSION = MOD_VER;
 		if (prefix == null) {
 			return VERSION;
 		} else {
 			return prefix + VERSION;
 		}
 	}
+
 	public static String getStringifiedMcVer(String prefix) {
 		String mcVer = MinecraftVersion.CURRENT.getName();
 

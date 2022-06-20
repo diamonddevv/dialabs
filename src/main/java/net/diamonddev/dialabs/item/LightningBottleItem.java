@@ -26,6 +26,7 @@ public class LightningBottleItem extends Item {
             World world = entity.getWorld();
 
             LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
+            assert lightning != null;
             lightning.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(pos.up()));
 
             world.spawnEntity(lightning);
@@ -46,6 +47,7 @@ public class LightningBottleItem extends Item {
 
         if (!world.isAir(pos)) {
             LightningEntity lightning = EntityType.LIGHTNING_BOLT.create(world);
+            assert lightning != null;
             lightning.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(pos.up()));
 
             world.spawnEntity(lightning);

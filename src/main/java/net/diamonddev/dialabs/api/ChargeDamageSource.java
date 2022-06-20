@@ -4,7 +4,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 public class ChargeDamageSource extends DamageSource {
     public final Entity source;
@@ -24,7 +23,7 @@ public class ChargeDamageSource extends DamageSource {
 
     public Text getDeathMessage(LivingEntity deadEntity) {
         String string = "death.attack." + this.name + ".player";
-        return new TranslatableText(string, deadEntity.getDisplayName(), this.source.getDisplayName());
+        return Text.translatable(string, deadEntity.getDisplayName(), this.source.getDisplayName());
     }
 
 }
