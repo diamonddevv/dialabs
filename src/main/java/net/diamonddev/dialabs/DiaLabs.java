@@ -15,17 +15,33 @@ public class DiaLabs implements ModInitializer {
 
 	// Mod ID and Version Variables
 	public static final String MOD_ID = "dialabs";
-	public static final String MOD_VER = "1.0.0b";
-	public static String VERSION = getStringifiedModVer("v");
-	public static String MC_VER = getStringifiedMcVer("v");
+	public static final String MOD_VER = "1.0.0";
+
+	public enum ModReleaseType {
+		RELEASE,
+		BETA,
+		ALPHA
+	}
+	public static String VERSION = getStringifiedModVer("v", ModReleaseType.BETA);
+	public static String MC_VER = getStringifiedMcVer("");
 
 	// Get Metadata
-	public static String getStringifiedModVer(String prefix) {
+	public static String getStringifiedModVer(String prefix, ModReleaseType modReleaseType) {
 		VERSION = MOD_VER;
+		String suffix = null;
+
+		if (modReleaseType == ModReleaseType.RELEASE) {
+			suffix = "";
+		} else if (modReleaseType == ModReleaseType.ALPHA) {
+			suffix = "a";
+		} else if (modReleaseType == ModReleaseType.BETA) {
+			suffix = "b";
+		}
+
 		if (prefix == null) {
-			return VERSION;
+			return VERSION + suffix;
 		} else {
-			return prefix + VERSION;
+			return prefix + VERSION + suffix;
 		}
 	}
 
