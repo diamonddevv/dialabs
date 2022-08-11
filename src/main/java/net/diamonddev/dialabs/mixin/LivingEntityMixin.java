@@ -1,14 +1,15 @@
 package net.diamonddev.dialabs.mixin;
 
 
-import net.diamonddev.dialabs.api.ChargeDamageSource;
 import net.diamonddev.dialabs.api.DamageSources;
+import net.diamonddev.dialabs.effect.ChargeEffect;
 import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.init.InitEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.world.World;
@@ -20,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Random;
 
 @Mixin(LivingEntity.class)
@@ -43,7 +45,7 @@ public abstract class LivingEntityMixin extends Entity {
     public abstract LivingEntity getAttacker();
 
     // called when 'this' takes damage
-    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage")
     private void injectCrystallisingMethods(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
 
@@ -64,22 +66,16 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(at = @At("HEAD"), method = "modifyAppliedDamage", cancellable = true)
-    private void removeUnchargedMeleeDamage(DamageSource source, float amount,
+    private void injectStaticDamage(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
+        if (source.getSource() instanceof LivingEntity attacker) {
+            if (attacker.hasStatusEffect(InitEffects.CHARGE)) {
+                int dur = Objects.requireNonNull(attacker.getStatusEffect(InitEffects.CHARGE)).getDuration();
+                int amp = Objects.requireNonNull(attacker.getStatusEffect(InitEffects.CHARGE)).getAmplifier() + 1;
 
-        Entity entitySource = source.getSource();
-
-        if (entitySource != null) {
-            if (entitySource instanceof LivingEntity) {
-                if (!Objects.equals(source.getName(), "charge")) {
-                    if (((LivingEntity) entitySource).hasStatusEffect(InitEffects.CHARGE)) {
-                        cir.setReturnValue(0.0F);
-                    }
-                }
+                cir.setReturnValue(ChargeEffect.calculateDamage(amount, amp, dur, 0.1F, this.hasStatusEffect(InitEffects.CHARGE)));
             }
         }
-
     }
-
 
 }

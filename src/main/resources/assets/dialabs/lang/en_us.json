@@ -4,9 +4,6 @@
   "block.dialabs.shocked_iron_block": "Shocked Iron Block",
   "item.dialabs.staticite_scrap": "Staticite Scrap",
   "item.dialabs.staticite_scrap_heap": "Staticite Scrap Heap",
-  "item.dialabs.static_plating": "Static Plating (NYI)",
-
-  "item.dialabs.staticite_plated_pickaxe": "Staticite-Plated Gold Pickaxe (NYI)",
 
   "item.dialabs.static_core": "Static Core",
   "effect.dialabs.charged": "Charged",
@@ -17,10 +14,10 @@
   "effect.dialabs.crystallising": "Crystallising",
 
   "death.attack.crystal_shards": "%1$s was fatally cut by Crystal Shards",
-  "death.attack.crystal_shards.player": "%1$s was fatally cut by %2$s's Crystal Shards",
+  "death.attack.crystal_shards.player": "%s was fatally cut by %s's Crystal Shards",
 
-  "death.attack.charge": "%1$s couldn't withstand the current",
-  "death.attack.charge.player": "%1$s couldn't withstand %2$s's current",
+  "death.attack.charge": "%s couldn't withstand the current",
+  "death.attack.charge.player": "%s couldn't withstand %s's current",
 
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
 
@@ -28,7 +25,5 @@
   "gamerule.staticCoreStrength": "Static Core Strength",
   "gamerule.crystalShardLengthInSeconds": "Crystal Shard Length in Seconds",
   "gamerule.staticCoreLengthInSeconds": "Static Core Length in Seconds",
-  "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level",
-
-  "tooltip.dialabs.common_hold_down_message": "§7Hold §n§oCTRL§r §7for more info"
+  "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level"
 }

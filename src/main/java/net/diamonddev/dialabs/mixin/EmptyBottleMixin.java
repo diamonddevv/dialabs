@@ -38,8 +38,8 @@ public class EmptyBottleMixin {
                                               CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
 
         ItemStack itemStack = user.getStackInHand(hand);
-        HitResult hit = Raycast.raycast(world, user, RaycastContext.FluidHandling.ANY);
-        BlockPos blockPos = ((BlockHitResult)hit).getBlockPos();
+        BlockHitResult hit = Raycast.raycast(world, user, RaycastContext.FluidHandling.ANY);
+        BlockPos blockPos = hit.getBlockPos();
 
         if (world.getBlockState(blockPos).isOf(Blocks.LIGHTNING_ROD) && !world.getBlockState(blockPos).isAir()) {
             if (world.getBlockState(blockPos).get(POWERED)) {

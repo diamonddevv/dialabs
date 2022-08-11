@@ -19,12 +19,9 @@ public class ChargeEffect extends StatusEffect {
     @Override
     public void applyUpdateEffect(LivingEntity entity, int amplifier) {}
 
-    public static float chargedStatusEffectAdditionalDamageBase = 0.1F;
-
-    public static float calculateDamage(float amplifier, float durationInTicks, float base, boolean enemyHasChargedEffect) {
-
+    public static float calculateDamage(float origin, float amplifier, float durationInTicks, float base, boolean enemyHasChargedEffect) {
         if (enemyHasChargedEffect) {
-            return 0;
+            return origin;
         } else {
             return (base * ((durationInTicks / 20) * amplifier));
         }

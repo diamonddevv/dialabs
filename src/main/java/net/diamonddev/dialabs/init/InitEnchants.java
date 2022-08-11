@@ -1,14 +1,14 @@
 package net.diamonddev.dialabs.init;
 
 
-import net.diamonddev.dialabs.enchant.WitheredAspect;
+import net.diamonddev.dialabs.api.Identifier;
+import net.diamonddev.dialabs.enchant.WitheredAspectEnchantment;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class InitEnchants {
 
-    public static final Enchantment WITHERED_ASPECT = new WitheredAspect();
+    public static final Enchantment WITHERED_ASPECT = new WitheredAspectEnchantment();
 
 
 

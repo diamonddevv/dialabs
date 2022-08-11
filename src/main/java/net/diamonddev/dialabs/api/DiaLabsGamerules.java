@@ -12,6 +12,8 @@ public class DiaLabsGamerules {
     public static GameRules.Key<GameRules.IntRule> STATIC_CORE_LENGTH;
     public static GameRules.Key<GameRules.IntRule> WITHERED_ASPECT_SPL;
 
+    public static GameRules.Key<GameRules.IntRule> WITHERED_ASPECT_APL;
+
 
     public static void registerGamerules() {
        CRYSTAL_SHARD_STRENGTH = GameRuleRegistry.register("crystalShardStrength", GameRules.Category.MOBS,
@@ -28,5 +30,8 @@ public class DiaLabsGamerules {
 
         WITHERED_ASPECT_SPL = GameRuleRegistry.register("witheredAspectSecondsPerLevel", GameRules.Category.MOBS,
                 GameRuleFactory.createIntRule(5));
+
+        WITHERED_ASPECT_APL = GameRuleRegistry.register("witheredAspectAmplifierPerLevel", GameRules.Category.MOBS,
+                GameRuleFactory.createIntRule(1));
     }
 }

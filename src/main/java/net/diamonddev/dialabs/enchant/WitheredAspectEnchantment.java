@@ -9,11 +9,12 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.world.World;
 
+import static net.diamonddev.dialabs.api.DiaLabsGamerules.WITHERED_ASPECT_APL;
 import static net.diamonddev.dialabs.api.DiaLabsGamerules.WITHERED_ASPECT_SPL;
 
-public class WitheredAspect extends Enchantment {
+public class WitheredAspectEnchantment extends Enchantment {
 
-    public WitheredAspect() {
+    public WitheredAspectEnchantment() {
         super(Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     }
 
@@ -36,8 +37,10 @@ public class WitheredAspect extends Enchantment {
         int witheredAspectGameruleValue = world.getGameRules().getInt(WITHERED_ASPECT_SPL);
         int witheredAspectSpl = witheredAspectGameruleValue * 20;
 
+        int witheredAspectApl = world.getGameRules().getInt(WITHERED_ASPECT_APL);
+
         if (target instanceof LivingEntity) {
-            ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, level * witheredAspectSpl));
+            ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, level * witheredAspectSpl, level * witheredAspectApl));
         }
     }
 }

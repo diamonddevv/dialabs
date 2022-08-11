@@ -4,13 +4,13 @@
   "package": "net.diamonddev.dialabs.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "DamageTrackerMixin",
     "EmptyBottleMixin",
-    "LivingEntityMixin",
     "LightningEntityMixin",
-    "DamageTrackerMixin"
+    "LivingEntityMixin"
   ],
   "client": [
-    "DiaLabsMixin"
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1  }
