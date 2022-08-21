@@ -21,7 +21,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Random;
 
 @Mixin(LivingEntity.class)
@@ -33,8 +32,6 @@ public abstract class LivingEntityMixin extends Entity {
 
     @Shadow
     public abstract boolean hasStatusEffect(StatusEffect effect);
-
-    public abstract Random getRandom();
 
     @Shadow
     @Nullable
@@ -53,7 +50,7 @@ public abstract class LivingEntityMixin extends Entity {
 
             int amp = Objects.requireNonNull(this.getStatusEffect(InitEffects.CRYSTALLISE)).getAmplifier() + 1;
             LivingEntity target = this.getAttacker();
-            Random rand = this.getRandom();
+            Random rand = new Random();
 
             if (target != null) {
                 if (target.isAlive()) {

@@ -4,6 +4,7 @@
   "package": "net.diamonddev.dialabs.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "BrewingRecipeInvoker",
     "DamageTrackerMixin",
     "EmptyBottleMixin",
     "LightningEntityMixin",

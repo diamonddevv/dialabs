@@ -13,6 +13,26 @@
   "item.dialabs.crystal_shard": "Crystal Shard",
   "effect.dialabs.crystallising": "Crystallising",
 
+  "item.minecraft.potion.effect.darkness": "Potion of Darkness",
+  "item.minecraft.splash_potion.effect.darkness": "Splash Potion of Darkness",
+  "item.minecraft.lingering_potion.effect.darkness": "Lingering Potion of Darkness",
+  "item.minecraft.tipped_arrow.effect.darkness": "Tipped Arrow of Darkness",
+
+  "item.minecraft.potion.effect.decay": "Potion of Decay",
+  "item.minecraft.splash_potion.effect.decay": "Splash Potion of Decay",
+  "item.minecraft.lingering_potion.effect.decay": "Lingering Potion of Decay",
+  "item.minecraft.tipped_arrow.effect.decay": "Tipped Arrow of Decay",
+
+  "item.minecraft.potion.effect.decay_long": "Potion of Decay",
+  "item.minecraft.splash_potion.effect.decay_long": "Splash Potion of Decay",
+  "item.minecraft.lingering_potion.effect.decay_long": "Lingering Potion of Decay",
+  "item.minecraft.tipped_arrow.effect.decay_long": "Tipped Arrow of Decay",
+
+  "item.minecraft.potion.effect.decay_strong": "Potion of Decay",
+  "item.minecraft.splash_potion.effect.decay_strong": "Splash Potion of Decay",
+  "item.minecraft.lingering_potion.effect.decay_strong": "Lingering Potion of Decay",
+  "item.minecraft.tipped_arrow.effect.decay_strong": "Tipped Arrow of Decay",
+
   "death.attack.crystal_shards": "%1$s was fatally cut by Crystal Shards",
   "death.attack.crystal_shards.player": "%s was fatally cut by %s's Crystal Shards",
 
@@ -20,6 +40,7 @@
   "death.attack.charge.player": "%s couldn't withstand %s's current",
 
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
+  "enchantment.dialabs.dampening": "Dampening",
 
   "gamerule.crystalShardStrength": "Crystal Shard Strength",
   "gamerule.staticCoreStrength": "Static Core Strength",
