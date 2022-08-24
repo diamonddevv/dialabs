@@ -43,7 +43,7 @@ public abstract class LivingEntityMixin extends Entity {
 
     // called when 'this' takes damage
     @Inject(at = @At("HEAD"), method = "modifyAppliedDamage")
-    private void injectCrystallisingMethods(DamageSource source, float amount,
+    private void dialabs$injectCrystallisingMethods(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
 
         if (this.hasStatusEffect(InitEffects.CRYSTALLISE)) {
@@ -63,7 +63,7 @@ public abstract class LivingEntityMixin extends Entity {
     }
 
     @Inject(at = @At("HEAD"), method = "modifyAppliedDamage", cancellable = true)
-    private void injectStaticDamage(DamageSource source, float amount,
+    private void dialabs$injectStaticDamage(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
         if (source.getSource() instanceof LivingEntity attacker) {
             if (attacker.hasStatusEffect(InitEffects.CHARGE)) {

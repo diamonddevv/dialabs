@@ -23,9 +23,9 @@ public class InitPotion {
         Registry.register(Registry.POTION, new Identifier("decay_strong"), DECAY_STRONG);
 
 
-        BrewingRecipeInvoker.invokeRegisterPotionRecipe(Potions.AWKWARD, Items.ECHO_SHARD, DARKNESS);
-        BrewingRecipeInvoker.invokeRegisterPotionRecipe(Potions.AWKWARD, Items.WITHER_ROSE, DECAY);
-        BrewingRecipeInvoker.invokeRegisterPotionRecipe(DECAY, Items.REDSTONE, DECAY_LONG);
-        BrewingRecipeInvoker.invokeRegisterPotionRecipe(DECAY, Items.GLOWSTONE_DUST, DECAY_STRONG);
+        BrewingRecipeInvoker.dialabs$invokeRegisterPotionRecipe(Potions.AWKWARD, Items.ECHO_SHARD, DARKNESS);
+        BrewingRecipeInvoker.dialabs$invokeRegisterPotionRecipe(Potions.AWKWARD, Items.WITHER_ROSE, DECAY);
+        BrewingRecipeInvoker.dialabs$invokeRegisterPotionRecipe(DECAY, Items.REDSTONE, DECAY_LONG);
+        BrewingRecipeInvoker.dialabs$invokeRegisterPotionRecipe(DECAY, Items.GLOWSTONE_DUST, DECAY_STRONG);
     }
 }

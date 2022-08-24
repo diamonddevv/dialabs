@@ -27,7 +27,7 @@ public abstract class LightningEntityMixin extends Entity {
 
 
     @Inject(at=@At("TAIL"), method="tick")
-    public void tick(CallbackInfo ci) {
+    public void dialabs$tickLightningRecipes(CallbackInfo ci) {
         if(ambientTick >= 0) {
             if(!world.isClient) {
                 BlockPos struckBlock = getBlockPos().down();

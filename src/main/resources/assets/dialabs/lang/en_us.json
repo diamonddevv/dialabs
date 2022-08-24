@@ -13,6 +13,10 @@
   "item.dialabs.crystal_shard": "Crystal Shard",
   "effect.dialabs.crystallising": "Crystallising",
 
+  "item.dialabs.deepslate_plate": "Deepslate Plate",
+  "item.dialabs.synthetic_enchantment_disc": "Synthetic Enchantment Disc",
+  "text.dialabs.empty_synthetic_enchantment_disc": "§7Empty",
+
   "item.minecraft.potion.effect.darkness": "Potion of Darkness",
   "item.minecraft.splash_potion.effect.darkness": "Splash Potion of Darkness",
   "item.minecraft.lingering_potion.effect.darkness": "Lingering Potion of Darkness",
@@ -40,11 +44,12 @@
   "death.attack.charge.player": "%s couldn't withstand %s's current",
 
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
-  "enchantment.dialabs.dampening": "Dampening",
 
   "gamerule.crystalShardStrength": "Crystal Shard Strength",
   "gamerule.staticCoreStrength": "Static Core Strength",
   "gamerule.crystalShardLengthInSeconds": "Crystal Shard Length in Seconds",
   "gamerule.staticCoreLengthInSeconds": "Static Core Length in Seconds",
-  "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level"
+  "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level",
+
+  "itemGroup.dialabs.synthetic_enchantments": "Synthetic Enchantment Discs"
 }

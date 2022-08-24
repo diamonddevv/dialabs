@@ -1,6 +1,7 @@
 package net.diamonddev.dialabs.init;
 
 import net.diamonddev.dialabs.api.Identifier;
+import net.diamonddev.dialabs.block.EnchantmentSynthesizerBlock;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -13,6 +14,7 @@ public class InitBlocks {
 
     public static Block STATICITE_BLOCK = new Block(FabricBlockSettings.of(Material.METAL).strength(10F).requiresTool());
     public static Block SHOCKED_IRON_BLOCK = new Block(FabricBlockSettings.of(Material.METAL).strength(18F).requiresTool().luminance(2));
+    public static Block ENCHANTMENT_SYNTHESIZER = new EnchantmentSynthesizerBlock();
 
     public static void registerBlock() {
 

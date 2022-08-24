@@ -1,4 +1,4 @@
-package net.diamonddev.dialabs.api;
+package net.diamonddev.dialabs.util;
 
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;

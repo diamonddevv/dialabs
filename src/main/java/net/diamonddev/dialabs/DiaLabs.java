@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs;
 
-import net.diamonddev.dialabs.api.DiaLabsGamerules;
+import net.diamonddev.dialabs.util.DiaLabsGamerules;
 import net.diamonddev.dialabs.init.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
@@ -31,6 +31,7 @@ public class DiaLabs implements ModInitializer {
 		InitEnchants.register();
 		DiaLabsGamerules.registerGamerules();
 		InitPotion.register();
+		InitScreenHandler.register();
 
 
 		long initializationTime = System.currentTimeMillis() - startInitTime;

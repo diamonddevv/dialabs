@@ -34,7 +34,7 @@ public class EmptyBottleMixin {
     }
 
     @Inject(at = @At("HEAD"), method = "use", cancellable = true)
-    private void injectLightningBottleMethods(World world, PlayerEntity user, Hand hand,
+    private void dialabs$injectLightningBottleMethods(World world, PlayerEntity user, Hand hand,
                                               CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
 
         ItemStack itemStack = user.getStackInHand(hand);

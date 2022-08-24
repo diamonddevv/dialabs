@@ -10,8 +10,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static net.diamonddev.dialabs.api.DiaLabsGamerules.CRYSTAL_SHARD_LENGTH;
-import static net.diamonddev.dialabs.api.DiaLabsGamerules.CRYSTAL_SHARD_STRENGTH;
+import static net.diamonddev.dialabs.util.DiaLabsGamerules.CRYSTAL_SHARD_LENGTH;
+import static net.diamonddev.dialabs.util.DiaLabsGamerules.CRYSTAL_SHARD_STRENGTH;
 
 
 public class CrystalShardItem extends Item {

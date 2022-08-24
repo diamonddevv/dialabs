@@ -9,10 +9,10 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.world.World;
 
-import static net.diamonddev.dialabs.api.DiaLabsGamerules.WITHERED_ASPECT_APL;
-import static net.diamonddev.dialabs.api.DiaLabsGamerules.WITHERED_ASPECT_SPL;
+import static net.diamonddev.dialabs.util.DiaLabsGamerules.WITHERED_ASPECT_APL;
+import static net.diamonddev.dialabs.util.DiaLabsGamerules.WITHERED_ASPECT_SPL;
 
-public class WitheredAspectEnchantment extends Enchantment {
+public class WitheredAspectEnchantment extends Enchantment implements SyntheticEnchantment {
 
     public WitheredAspectEnchantment() {
         super(Rarity.RARE, EnchantmentTarget.WEAPON, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
@@ -42,5 +42,10 @@ public class WitheredAspectEnchantment extends Enchantment {
         if (target instanceof LivingEntity) {
             ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, level * witheredAspectSpl, level * witheredAspectApl));
         }
+    }
+
+    @Override
+    public boolean canBeSynthesized() {
+        return true;
     }
 }

@@ -7,11 +7,11 @@
     "BrewingRecipeInvoker",
     "DamageTrackerMixin",
     "EmptyBottleMixin",
+    "EnchantedBookItemMixin",
     "LightningEntityMixin",
     "LivingEntityMixin"
   ],
   "client": [
-    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1  }

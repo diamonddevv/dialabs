@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 @Mixin(BrewingRecipeRegistry.class)
 public interface BrewingRecipeInvoker {
     @Invoker("registerPotionRecipe")
-    static void invokeRegisterPotionRecipe(Potion input, Item item, Potion output) {
+    static void dialabs$invokeRegisterPotionRecipe(Potion input, Item item, Potion output) {
         throw new AssertionError();
     }
 }

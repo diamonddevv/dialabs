@@ -25,7 +25,7 @@ public abstract class DamageTrackerMixin {
     @Shadow @Final private LivingEntity entity;
 
     @Inject(method = "getDeathMessage", at = @At("HEAD"), cancellable = true)
-    private void checkIsStatic(CallbackInfoReturnable<Text> cir) {
+    private void dialabs$checkIsStatic(CallbackInfoReturnable<Text> cir) {
 
         List<DamageRecord> list = this.recentDamage;
 
