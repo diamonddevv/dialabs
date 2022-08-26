@@ -1,4 +1,4 @@
-package net.diamonddev.dialabs.init;
+package net.diamonddev.dialabs.registry;
 
 
 import net.diamonddev.dialabs.api.Identifier;

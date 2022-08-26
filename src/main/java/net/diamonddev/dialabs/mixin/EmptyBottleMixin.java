@@ -1,8 +1,6 @@
 package net.diamonddev.dialabs.mixin;
 
-import net.diamonddev.dialabs.init.InitItem;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.diamonddev.dialabs.registry.InitItem;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.GlassBottleItem;
@@ -13,7 +11,6 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;

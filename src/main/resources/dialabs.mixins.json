@@ -8,6 +8,7 @@
     "DamageTrackerMixin",
     "EmptyBottleMixin",
     "EnchantedBookItemMixin",
+    "EnchantmentMixin",
     "LightningEntityMixin",
     "LivingEntityMixin"
   ],

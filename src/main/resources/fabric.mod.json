@@ -24,6 +24,9 @@
   "entrypoints": {
     "main": [
       "net.diamonddev.dialabs.DiaLabs"
+    ],
+    "client": [
+      "net.diamonddev.dialabs.DiaLabsClient"
     ]
   },
 

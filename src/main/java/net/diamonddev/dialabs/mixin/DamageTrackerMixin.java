@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.mixin;
 
-import net.diamonddev.dialabs.init.InitEffects;
+import net.diamonddev.dialabs.registry.InitEffects;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageRecord;
 import net.minecraft.entity.damage.DamageTracker;

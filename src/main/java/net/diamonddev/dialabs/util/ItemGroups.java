@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.util;
 
 import net.diamonddev.dialabs.api.Identifier;
-import net.diamonddev.dialabs.init.InitItem;
+import net.diamonddev.dialabs.registry.InitItem;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;

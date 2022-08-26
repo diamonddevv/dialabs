@@ -1,4 +1,4 @@
-package net.diamonddev.dialabs.init;
+package net.diamonddev.dialabs.registry;
 
 import net.diamonddev.dialabs.api.Identifier;
 import net.diamonddev.dialabs.block.EnchantmentSynthesizerBlock;
@@ -20,7 +20,7 @@ public class InitBlocks {
 
         registerBlockWithBlockItem(STATICITE_BLOCK, new Identifier("staticite_block"), new FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS));
         registerBlockWithBlockItem(SHOCKED_IRON_BLOCK, new Identifier("shocked_iron_block"), new FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS));
-
+        registerBlockWithBlockItem(ENCHANTMENT_SYNTHESIZER, new Identifier("enchantment_synthesizer"), new FabricItemSettings().group(ItemGroup.DECORATIONS));
     }
 
 

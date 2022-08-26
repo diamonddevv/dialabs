@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.item;
 
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
-import net.diamonddev.dialabs.init.InitItem;
+import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.ItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.enchantment.Enchantment;

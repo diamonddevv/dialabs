@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.mixin;
 
 
-import net.diamonddev.dialabs.init.InitBlocks;
+import net.diamonddev.dialabs.registry.InitBlocks;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

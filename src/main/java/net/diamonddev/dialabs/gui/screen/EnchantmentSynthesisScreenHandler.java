@@ -1,8 +1,8 @@
-package net.diamonddev.dialabs.screen;
+package net.diamonddev.dialabs.gui.screen;
 
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
-import net.diamonddev.dialabs.init.InitItem;
-import net.diamonddev.dialabs.init.InitScreenHandler;
+import net.diamonddev.dialabs.registry.InitItem;
+import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -31,7 +32,11 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     private final Slot outputSlot;
     private final ScreenHandlerContext context;
 
-    public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
+    public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory) {
+        this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
+    }
+
+    public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory, final ScreenHandlerContext context) {
         super(InitScreenHandler.ENCHANT_SYNTHESIS, syncId);
         this.selectedEnchantment = Property.create();
         this.availableEnchants = this.getPossibleOutputs();
@@ -56,7 +61,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
                 EnchantmentSynthesisScreenHandler.this.output.unlockLastRecipe(player);
                 ItemStack itemStack = EnchantmentSynthesisScreenHandler.this.inputSlot.takeStack(1);
                 if (!itemStack.isEmpty()) {
-                    output.setStack(outputSlot.id, new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
+                    output.setStack(outputSlot.id, getRandomlyEnchantedOutput(1));
                 }
                 super.onTakeItem(player, stack);
             }

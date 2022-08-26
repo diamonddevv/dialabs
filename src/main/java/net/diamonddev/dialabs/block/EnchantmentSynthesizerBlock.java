@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.block;
 
-import net.diamonddev.dialabs.screen.EnchantmentSynthesisScreenHandler;
+import net.diamonddev.dialabs.gui.screen.EnchantmentSynthesisScreenHandler;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,7 +15,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
 public class EnchantmentSynthesizerBlock extends Block {
     public EnchantmentSynthesizerBlock() {
@@ -35,10 +34,12 @@ public class EnchantmentSynthesizerBlock extends Block {
         }
     }
 
-    @Nullable
     @Override
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
-        return new SimpleNamedScreenHandlerFactory((syncId, playerInventory, player) ->
-                new EnchantmentSynthesisScreenHandler(syncId, playerInventory, ScreenHandlerContext.create(world, pos)), TITLE);
+        return new SimpleNamedScreenHandlerFactory((syncId, inventory, player) ->
+                new EnchantmentSynthesisScreenHandler(syncId, inventory, ScreenHandlerContext.create(world, pos)), TITLE);
     }
+
+
+
 }

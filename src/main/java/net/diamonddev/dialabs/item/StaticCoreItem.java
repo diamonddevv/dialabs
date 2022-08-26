@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.item;
 
-import net.diamonddev.dialabs.init.InitEffects;
+import net.diamonddev.dialabs.registry.InitEffects;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

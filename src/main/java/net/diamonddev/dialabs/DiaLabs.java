@@ -1,7 +1,8 @@
 package net.diamonddev.dialabs;
 
+import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DiaLabsGamerules;
-import net.diamonddev.dialabs.init.*;
+import net.diamonddev.dialabs.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.SharedConstants;
