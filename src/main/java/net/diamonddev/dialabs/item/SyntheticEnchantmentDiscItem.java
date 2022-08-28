@@ -2,6 +2,7 @@ package net.diamonddev.dialabs.item;
 
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.InitItem;
+import net.diamonddev.dialabs.util.EnchantHelper;
 import net.diamonddev.dialabs.util.ItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.enchantment.Enchantment;
@@ -13,15 +14,18 @@ import net.minecraft.util.Rarity;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
 
-public class SyntheticEnchantmentDisc extends EnchantedBookItem {
+import java.util.ArrayList;
+import java.util.Random;
 
-    public SyntheticEnchantmentDisc() {
+public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
+
+    public SyntheticEnchantmentDiscItem() {
         super(new FabricItemSettings().group(ItemGroups.SYNTHETIC_ENCHANT_GROUP).maxCount(1).rarity(Rarity.RARE));
     }
 
     @Override
     public boolean hasGlint(ItemStack stack) {
-        return true;
+        return EnchantHelper.hasAnySyntheticEnchantmentStored(stack);
     }
 
     public static ItemStack forEnchantment(EnchantmentLevelEntry info) {
@@ -34,6 +38,7 @@ public class SyntheticEnchantmentDisc extends EnchantedBookItem {
     public void appendStacks(ItemGroup group, DefaultedList<ItemStack> stacks) {
         if (group == ItemGroups.SYNTHETIC_ENCHANT_GROUP || group == ItemGroup.SEARCH) {
             Enchantment e;
+            stacks.add(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
             for (Enchantment enchantment : Registry.ENCHANTMENT) {
                 e = enchantment;
                 if (e instanceof SyntheticEnchantment) {
@@ -44,4 +49,24 @@ public class SyntheticEnchantmentDisc extends EnchantedBookItem {
             }
         }
     }
+
+    public static ArrayList<Enchantment> getAllSyntheticEnchantments() {
+        ArrayList<Enchantment> enchants = new ArrayList<>();
+        for (Enchantment e : Registry.ENCHANTMENT) {
+            if (e instanceof SyntheticEnchantment synthesis) {
+                if (synthesis.canBeSynthesized()) {
+                    enchants.add(e);
+                }
+            }
+        }
+        return enchants;
+    }
+
+    public static Enchantment getRandomSyntheticEnchantment() {
+        Random r = new Random();
+        int limit = getAllSyntheticEnchantments().size();
+        return getAllSyntheticEnchantments().get(r.nextInt(limit));
+    }
+
+
 }

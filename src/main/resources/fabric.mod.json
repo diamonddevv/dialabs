@@ -26,7 +26,7 @@
       "net.diamonddev.dialabs.DiaLabs"
     ],
     "client": [
-      "net.diamonddev.dialabs.DiaLabsClient"
+      "net.diamonddev.dialabs.client.DiaLabsClient"
     ]
   },
 

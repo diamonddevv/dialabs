@@ -5,6 +5,9 @@
   "item.dialabs.staticite_scrap": "Staticite Scrap",
   "item.dialabs.staticite_scrap_heap": "Staticite Scrap Heap",
 
+  "block.dialabs.enchantment_synthesizer": "Enchantment Synthesizer",
+  "block.dialabs.enchantment_synthesizer.ui.title": "Enchantment Synthesis",
+
   "item.dialabs.static_core": "Static Core",
   "effect.dialabs.charged": "Charged",
 

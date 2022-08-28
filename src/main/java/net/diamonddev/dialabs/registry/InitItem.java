@@ -5,7 +5,7 @@ import net.diamonddev.dialabs.api.Identifier;
 import net.diamonddev.dialabs.item.CrystalShardItem;
 import net.diamonddev.dialabs.item.LightningBottleItem;
 import net.diamonddev.dialabs.item.StaticCoreItem;
-import net.diamonddev.dialabs.item.SyntheticEnchantmentDisc;
+import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -21,7 +21,7 @@ public class InitItem {
     public static final StaticCoreItem STATIC_CORE = new StaticCoreItem(new FabricItemSettings().group(ItemGroup.MATERIALS).maxCount(4).rarity(Rarity.RARE));
     public static final CrystalShardItem CRYSTAL_SHARD = new CrystalShardItem(new FabricItemSettings().group(ItemGroup.MATERIALS));
     public static final LightningBottleItem LIGHTNING_BOTTLE = new LightningBottleItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(8));
-    public static final SyntheticEnchantmentDisc SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDisc();
+    public static final SyntheticEnchantmentDiscItem SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDiscItem();
 
     public static void initializeItem() {
 
