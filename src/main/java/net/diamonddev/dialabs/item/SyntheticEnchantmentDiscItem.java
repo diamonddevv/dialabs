@@ -5,16 +5,21 @@ import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.diamonddev.dialabs.util.ItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Text;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
@@ -47,6 +52,13 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
                     }
                 }
             }
+        }
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        if (EnchantHelper.hasAnySyntheticEnchantmentStored(stack)) {
+            tooltip.add(Text.translatable("text.dialabs.empty_synthetic_enchantment_disc"));
         }
     }
 

@@ -11,4 +11,7 @@ public class ItemGroups {
     public static final ItemGroup SYNTHETIC_ENCHANT_GROUP = FabricItemGroupBuilder.build(
             new Identifier("synthetic_enchantments"), () -> new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
 
+    public static final ItemGroup SYNTHESIS_INGREDIENTS = FabricItemGroupBuilder.build(
+            new Identifier("synthesis_ingredients"), () -> new ItemStack(InitItem.ASPECTION_TOME));
+
 }

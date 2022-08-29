@@ -8,6 +8,14 @@
   "block.dialabs.enchantment_synthesizer": "Enchantment Synthesizer",
   "block.dialabs.enchantment_synthesizer.ui.title": "Enchantment Synthesis",
 
+  "item.dialabs.strength_tome": "Strength Tome",
+  "item.dialabs.protective_tome": "Protective Tome",
+  "item.dialabs.aspection_tome": "Aspection Tome",
+
+  "synthesis.dialabs.strength_tome": "Strength",
+  "synthesis.dialabs.protective_tome": "Protection",
+  "synthesis.dialabs.aspection_tome" : "Aspect",
+
   "item.dialabs.static_core": "Static Core",
   "effect.dialabs.charged": "Charged",
 
@@ -40,7 +48,7 @@
   "item.minecraft.lingering_potion.effect.decay_strong": "Lingering Potion of Decay",
   "item.minecraft.tipped_arrow.effect.decay_strong": "Tipped Arrow of Decay",
 
-  "death.attack.crystal_shards": "%1$s was fatally cut by Crystal Shards",
+  "death.attack.crystal_shards": "%s was fatally cut by Crystal Shards",
   "death.attack.crystal_shards.player": "%s was fatally cut by %s's Crystal Shards",
 
   "death.attack.charge": "%s couldn't withstand the current",
@@ -54,5 +62,6 @@
   "gamerule.staticCoreLengthInSeconds": "Static Core Length in Seconds",
   "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level",
 
-  "itemGroup.dialabs.synthetic_enchantments": "Synthetic Enchantment Discs"
+  "itemGroup.dialabs.synthetic_enchantments": "Synthetic Enchantment Discs",
+  "itemGroup.dialabs.synthesis_ingredients": "Synthesis Ingredients"
 }

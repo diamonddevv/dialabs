@@ -91,7 +91,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
         // Recipe Slots
         for (i = 0; i < 3; i++) {
-            this.addSlot(new Slot(this.inventory, i + 2, 59, 14 + i * 18));
+            this.addSlot(new Slot(this.inventory, i + 2, 60, 15 + i * 19));
         }
 
     }
@@ -153,5 +153,10 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public void close(PlayerEntity player) {
+        super.close(player);
+        this.context.run((world, pos) -> this.dropInventory(player, this.inventory));
     }
 }

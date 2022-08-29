@@ -3,12 +3,12 @@ package net.diamonddev.dialabs.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.diamonddev.dialabs.api.Identifier;
 import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
+import net.diamonddev.dialabs.item.synthesis.SyntheticEnchantmentIngredientItem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.resource.language.I18n;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -16,8 +16,6 @@ import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.ColorHelper;
-
-import java.awt.*;
 
 @Environment(EnvType.CLIENT)
 public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthesisScreenHandler> {
@@ -36,16 +34,17 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
+
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
         for (int i = 0; i < 3; i++) {
             ItemStack stack = this.handler.getInventory().getStack(i + 2);
-            drawTextWithShadow(matrices, this.textRenderer, generateText(this.textRenderer, 86, stack), x + 80, y + 15 + i * 19,
-                    ColorHelper.Argb.getArgb(0,170, 170, 170));
+            drawTextWithShadow(matrices, this.textRenderer, getText(textRenderer, stack), x + 83, y + 15 + i * 19,
+                        ColorHelper.Argb.getArgb(0, 170, 170, 170));
+            }
         }
-    }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
@@ -57,12 +56,20 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
     @Override
     protected void init() {
         super.init();
+
+        // The title was slightly too high, I might revert this and make the rest of the ui one pixel lower
+        titleY = titleY - 1;
+    }
+    public static Text getText(TextRenderer renderer, ItemStack stack) {
+        Text key;
+        if (stack.getItem() instanceof SyntheticEnchantmentIngredientItem seii) {
+            key = Text.translatable(seii.getSynthesisUiTranslationKey());
+        } else {
+            key = Text.translatable(stack.getTranslationKey());
+        }
+        StringVisitable stringVisitable = renderer.getTextHandler().trimToWidth(key, 86, Style.EMPTY);
+        return Text.literal(stringVisitable.getString()).setStyle(TEXT_STYLE);
     }
 
-    public Text generateText(TextRenderer textRenderer, int width, ItemStack stackInSlot) {
-        return (Text) textRenderer.getTextHandler().trimToWidth(
-                Text.translatable(
-                        stackInSlot.getTranslationKey()
-                ).fillStyle(TEXT_STYLE), width, Style.EMPTY);
-    }
+
 }
