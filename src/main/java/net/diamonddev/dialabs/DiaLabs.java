@@ -33,6 +33,7 @@ public class DiaLabs implements ModInitializer {
 		DiaLabsGamerules.registerGamerules();
 		InitPotion.register();
 		InitScreenHandler.register();
+		InitRecipe.register();
 
 
 		long initializationTime = System.currentTimeMillis() - startInitTime;

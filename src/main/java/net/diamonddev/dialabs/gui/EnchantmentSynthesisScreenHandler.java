@@ -1,5 +1,6 @@
 package net.diamonddev.dialabs.gui;
 
+import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
@@ -9,7 +10,6 @@ import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.screen.Property;
@@ -40,7 +40,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         this.availableEnchants = SyntheticEnchantmentDiscItem.getAllSyntheticEnchantments();
         this.inputStack = ItemStack.EMPTY;
 
-        this.inventory = new SimpleInventory(5) {
+        this.inventory = new SynthesisInventory(5) {
             public void markDirty() {
                 super.markDirty();
                 EnchantmentSynthesisScreenHandler.this.onContentChanged(this);

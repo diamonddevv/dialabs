@@ -1,0 +1,12 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "item": "dialabs:aspection_tome"
+  },
+  "inputB": {
+    "item": "minecraft:wither_skeleton_skull"
+  },
+  "lapis_count": 5,
+  "enchantment": "dialabs:withered_aspect",
+  "level": 1
+}
