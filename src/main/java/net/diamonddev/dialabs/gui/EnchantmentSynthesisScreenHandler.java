@@ -2,6 +2,7 @@ package net.diamonddev.dialabs.gui;
 
 import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
+import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -19,16 +21,20 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
     private final Property selectedEnchantment;
     private final ArrayList<Enchantment> availableEnchants;
     private final ItemStack inputStack;
-    private final Inventory inventory;
+    private final SynthesisInventory inventory;
     private final World world;
     private final ScreenHandlerContext context;
     private final PlayerInventory playerInventory;
+
+    private final int lapisCount = 0;
+    private final boolean hasDisc = false;
 
     public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
@@ -49,11 +55,26 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
         this.addSlot(new Slot(this.inventory, 0, 15, 47) {
             // Empty Disc Input Slot
-
             @Override
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 if (!EnchantHelper.hasAnySyntheticEnchantmentStored(stack)) {
-                    EnchantHelper.storeEnchantment(stack, new EnchantmentLevelEntry(SyntheticEnchantmentDiscItem.getRandomSyntheticEnchantment(), 1));
+                    // Get match status
+                    Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
+
+                    if (match.isPresent()) { // If a matching recipe is found, perform actions
+                        inventory.getStack(getDiscSlotIndex()).decrement(1); // DECREMENT ALL THE SLOTS
+
+                        inventory.getStack(getInputASlotIndex()).decrement(1);
+                        inventory.getStack(getInputBSlotIndex()).decrement(1);
+                        inventory.getStack(getInputCSlotIndex()).decrement(1);
+
+                        inventory.getStack(getLapisSlotIndex()).decrement(match.get().getLapisRequirement());
+
+                        // After Decrementing Everything, copy result stack to output.
+                        inventory.setStack(getDiscSlotIndex(), match.get().getOutput().copy());
+
+
+                    }
                 }
             }
 
@@ -102,10 +123,25 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     }
 
     public int getLapisCount() {
-        ItemStack itemStack = this.inventory.getStack(1);
+        ItemStack itemStack = this.inventory.getStack(getLapisSlotIndex());
         return itemStack.isEmpty() ? 0 : itemStack.getCount();
     }
 
+    public int getDiscSlotIndex() {
+        return 0;
+    }
+    public int getLapisSlotIndex() {
+        return 1;
+    }
+    public int getInputASlotIndex() {
+        return 2;
+    }
+    public int getInputBSlotIndex() {
+        return 3;
+    }
+    public int getInputCSlotIndex() {
+        return 4;
+    }
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -151,7 +187,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         return itemStack;
     }
 
-    public Inventory getInventory() {
+    public SynthesisInventory getInventory() {
         return inventory;
     }
 

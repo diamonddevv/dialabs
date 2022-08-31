@@ -4,6 +4,7 @@ import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
 import net.diamonddev.dialabs.recipe.serializer.SynthesisRecipeSerializer;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
+import net.diamonddev.dialabs.util.OrEmptyIngredient;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
@@ -16,17 +17,17 @@ import net.minecraft.world.World;
 
 public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
-    private final Ingredient inputA;
-    private final Ingredient inputB;
-    private final Ingredient inputC;
+    private final OrEmptyIngredient inputA;
+    private final OrEmptyIngredient inputB;
+    private final OrEmptyIngredient inputC;
     private final int payment;
     private final Enchantment result;
     private final int resultLvl;
 
     public SynthesisRecipe(Enchantment resultEnchantment, int enchantmentLevel, Ingredient inputA, Ingredient inputB, Ingredient inputC, int lapisRequirement) {
-        this.inputA = inputA;
-        this.inputB = inputB;
-        this.inputC = inputC;
+        this.inputA = new OrEmptyIngredient(inputA);
+        this.inputB = new OrEmptyIngredient(inputB);
+        this.inputC = new OrEmptyIngredient(inputC);
         this.payment = lapisRequirement;
         this.result = resultEnchantment;
         this.resultLvl = enchantmentLevel;
@@ -35,15 +36,15 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     // Inputs & Output
 
     public Ingredient getInputA() {
-        return this.inputA;
+        return this.inputA.get();
     }
 
     public Ingredient getInputB() {
-        return this.inputB;
+        return this.inputB.get();
     }
 
     public Ingredient getInputC() {
-        return inputC;
+        return inputC.get();
     }
 
     public int getLapisRequirement() {
@@ -69,10 +70,11 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     @Override
     public boolean matches(SynthesisInventory inv, World world) {
         if (inv.size() < 5) return false;
-        return inputA.test(inv.getStack(3)) &&
-                inputB.test(inv.getStack(4)) &&
-                inputC.test(inv.getStack(5)) &&
-                inv.getStack(2).getCount() >= getLapisRequirement();
+
+        return getInputA().test(inv.getStack(3)) &&
+                getInputB().test(inv.getStack(4)) &&
+                getInputC().test(inv.getStack(5)) &&
+                getLapisRequirement() >= inv.getStack(2).getCount();
     }
 
     // misc stuff lol

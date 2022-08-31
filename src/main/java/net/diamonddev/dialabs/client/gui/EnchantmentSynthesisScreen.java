@@ -11,11 +11,14 @@ import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.AirBlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.ColorHelper;
+
+import java.util.Random;
 
 @Environment(EnvType.CLIENT)
 public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthesisScreenHandler> {
@@ -23,7 +26,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
     private static final Identifier TEXTURE = new Identifier("textures/gui/enchantment_synthesis_screen.png");
     private static final net.minecraft.util.Identifier FONT_ID = new net.minecraft.util.Identifier("minecraft", "alt");
 
-    private static Style TEXT_STYLE = Style.EMPTY.withFont(FONT_ID);
+    private static final Style TEXT_STYLE = Style.EMPTY.withFont(FONT_ID);
 
     public EnchantmentSynthesisScreen(EnchantmentSynthesisScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
@@ -57,17 +60,24 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
     protected void init() {
         super.init();
 
-        // The title was slightly too high, I might revert this and make the rest of the ui one pixel lower
-        titleY = titleY - 1;
+        // The title was slightly too high
+        titleY = titleY - 2;
     }
     public static Text getText(TextRenderer renderer, ItemStack stack) {
         Text key;
         if (stack.getItem() instanceof SyntheticEnchantmentIngredientItem seii) {
             key = Text.translatable(seii.getSynthesisUiTranslationKey());
+        } else if (stack.getItem() instanceof AirBlockItem) {
+            StringBuilder stringBuilder = new StringBuilder();
+            Random r = new Random();
+            for (int i = r.nextInt(80); i > 0; i--) {
+                stringBuilder.append((char) r.nextInt(65, 90));
+            }
+            key = Text.translatable("synthesis.dialabs.air", stringBuilder);
         } else {
             key = Text.translatable(stack.getTranslationKey());
         }
-        StringVisitable stringVisitable = renderer.getTextHandler().trimToWidth(key, 86, Style.EMPTY);
+        StringVisitable stringVisitable = renderer.getTextHandler().trimToWidth(key, 80, Style.EMPTY);
         return Text.literal(stringVisitable.getString()).setStyle(TEXT_STYLE);
     }
 

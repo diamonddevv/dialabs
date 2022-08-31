@@ -57,9 +57,10 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
 
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
-        if (EnchantHelper.hasAnySyntheticEnchantmentStored(stack)) {
+        if (!EnchantHelper.hasAnySyntheticEnchantmentStored(stack)) {
             tooltip.add(Text.translatable("text.dialabs.empty_synthetic_enchantment_disc"));
         }
+        super.appendTooltip(stack, world, tooltip, context);
     }
 
     public static ArrayList<Enchantment> getAllSyntheticEnchantments() {

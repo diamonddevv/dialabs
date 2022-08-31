@@ -15,8 +15,7 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
 
     private SynthesisRecipeSerializer() {}
     public static final SynthesisRecipeSerializer INSTANCE = new SynthesisRecipeSerializer();
-    public static final Identifier ID = new Identifier("dialabs:enchantment_synthesis");
-
+    public static final Identifier ID = new net.diamonddev.dialabs.api.Identifier("enchantment_synthesis");
 
 
     @Override // Turns JSON into Recipe
@@ -26,19 +25,19 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         if (format.lapis_count == 0) format.lapis_count = 1;
         if (format.level == 0) format.level = 1;
 
-        Ingredient inputA = Ingredient.fromJson(format.inputA) == null ? Ingredient.fromJson(format.inputA) : Ingredient.EMPTY;
-        Ingredient inputB = Ingredient.fromJson(format.inputB) == null ? Ingredient.fromJson(format.inputB) : Ingredient.EMPTY;
-        Ingredient inputC = Ingredient.fromJson(format.inputC) == null ? Ingredient.fromJson(format.inputC) : Ingredient.EMPTY;
+        Ingredient inputA = Ingredient.fromJson(format.inputA);
+        Ingredient inputB = Ingredient.fromJson(format.inputB);
+        Ingredient inputC = Ingredient.fromJson(format.inputC); // todo: Make it possible to not use all three slots in a non-janky way
+
         int lapis = format.lapis_count;
         int level = format.level;
         Enchantment ench = Registry.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
                 new JsonSyntaxException("No such enchantment: " + format.enchantment +""));
 
         return new SynthesisRecipe(ench, level, inputA, inputB, inputC, lapis);
-
     }
 
-    @Override // Turns Recipe into PacketByteBuf
+    @Override // Turns PacketByteBuf into Recipe
     public SynthesisRecipe read(Identifier id, PacketByteBuf buf) {
         Ingredient a = Ingredient.fromPacket(buf);
         Ingredient b = Ingredient.fromPacket(buf);
@@ -49,7 +48,7 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         return new SynthesisRecipe(enchantment, lvl, a, b, c, lapis);
     }
 
-    @Override // Turns PacketByteBuf into Recipe
+    @Override // Turns Recipe into PacketByteBuf
     public void write(PacketByteBuf buf, SynthesisRecipe recipe) {
         recipe.getInputA().write(buf);
         recipe.getInputB().write(buf);

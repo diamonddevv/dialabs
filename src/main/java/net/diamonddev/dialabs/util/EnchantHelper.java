@@ -18,6 +18,10 @@ import static net.minecraft.item.EnchantedBookItem.STORED_ENCHANTMENTS_KEY;
 
 public class EnchantHelper {
 
+    public static boolean hasEnchantment(Enchantment enchantment, ItemStack stack) {
+        return EnchantmentHelper.getLevel(enchantment, stack) > 0;
+    }
+
     public static boolean hasEnchantmentStored(ItemStack stack, Enchantment enchantment) {
         boolean bl = false;
         if (stack.getItem() instanceof EnchantedBookItem) {

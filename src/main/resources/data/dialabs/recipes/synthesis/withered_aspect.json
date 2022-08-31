@@ -6,6 +6,9 @@
   "inputB": {
     "item": "minecraft:wither_skeleton_skull"
   },
+  "inputC": {
+    "item": "minecraft:dragon_breath"
+  },
   "lapis_count": 5,
   "enchantment": "dialabs:withered_aspect",
   "level": 1
