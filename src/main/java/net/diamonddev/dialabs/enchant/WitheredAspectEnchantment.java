@@ -43,9 +43,4 @@ public class WitheredAspectEnchantment extends Enchantment implements SyntheticE
             ((LivingEntity) target).addStatusEffect(new StatusEffectInstance(StatusEffects.WITHER, level * witheredAspectSpl, level * witheredAspectApl));
         }
     }
-
-    @Override
-    public boolean canBeSynthesized() {
-        return true;
-    }
 }

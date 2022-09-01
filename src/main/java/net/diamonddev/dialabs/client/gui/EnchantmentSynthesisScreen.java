@@ -42,11 +42,13 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
-        for (int i = 0; i < 3; i++) {
-            ItemStack stack = this.handler.getInventory().getStack(i + 2);
-            drawTextWithShadow(matrices, this.textRenderer, getText(textRenderer, stack), x + 83, y + 15 + i * 19,
+        if (delta == 1.0f) {
+            for (int i = 0; i < 3; i++) {
+                ItemStack stack = this.handler.getInventory().getStack(i + 2);
+                drawTextWithShadow(matrices, this.textRenderer, getText(textRenderer, stack), x + 83, y + 15 + i * 19,
                         ColorHelper.Argb.getArgb(0, 170, 170, 170));
             }
+        }
         }
 
     @Override
@@ -73,7 +75,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
             for (int i = r.nextInt(80); i > 0; i--) {
                 stringBuilder.append((char) r.nextInt(65, 90));
             }
-            key = Text.translatable("synthesis.dialabs.air", stringBuilder);
+            key = Text.translatable("synthesis.dialabs.empty", stringBuilder);
         } else {
             key = Text.translatable(stack.getTranslationKey());
         }

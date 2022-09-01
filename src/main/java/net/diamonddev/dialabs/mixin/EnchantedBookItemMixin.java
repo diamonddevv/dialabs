@@ -27,9 +27,11 @@ public abstract class EnchantedBookItemMixin {
             if (stack.getItem() instanceof EnchantedBookItem) {
                 Map<Enchantment, Integer> enchantMapData = EnchantmentHelper.fromNbt(getEnchantmentNbt(stack));
                 for (Enchantment e : enchantMapData.keySet()) {
-                    if (e instanceof SyntheticEnchantment) {
-                        bl = true;
-                        break;
+                    if (e instanceof SyntheticEnchantment synth) {
+                        if (!synth.shouldMakeEnchantmentBook()) {
+                            bl = true;
+                            break;
+                        }
                     }
                 }
             }

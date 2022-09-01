@@ -3,6 +3,7 @@ package net.diamonddev.dialabs.recipe.serializer;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.network.PacketByteBuf;
@@ -32,7 +33,7 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         int lapis = format.lapis_count;
         int level = format.level;
         Enchantment ench = Registry.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
-                new JsonSyntaxException("No such enchantment: " + format.enchantment +""));
+                new JsonSyntaxException("No such valid synthetic enchantment: " + format.enchantment +""));
 
         return new SynthesisRecipe(ench, level, inputA, inputB, inputC, lapis);
     }

@@ -12,7 +12,7 @@
   "item.dialabs.protective_tome": "Protective Tome",
   "item.dialabs.aspection_tome": "Aspection Tome",
 
-  "synthesis.dialabs.air": "%s",
+  "synthesis.dialabs.empty": "%s",
   "synthesis.dialabs.strength_tome": "Strength",
   "synthesis.dialabs.protective_tome": "Protection",
   "synthesis.dialabs.aspection_tome" : "Aspect",
@@ -56,6 +56,7 @@
   "death.attack.charge.player": "%s couldn't withstand %s's current",
 
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
+  "enchantment.dialabs.harvester": "Harvester",
 
   "gamerule.crystalShardStrength": "Crystal Shard Strength",
   "gamerule.staticCoreStrength": "Static Core Strength",

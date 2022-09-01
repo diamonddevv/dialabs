@@ -69,7 +69,6 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     // Matches
     @Override
     public boolean matches(SynthesisInventory inv, World world) {
-        if (inv.size() < 5) return false;
 
         return getInputA().test(inv.getStack(3)) &&
                 getInputB().test(inv.getStack(4)) &&

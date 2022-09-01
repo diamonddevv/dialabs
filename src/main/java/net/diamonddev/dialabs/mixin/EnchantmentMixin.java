@@ -12,22 +12,28 @@ public class EnchantmentMixin {
 
     @Inject(method = "isAvailableForEnchantedBookOffer", at = @At("HEAD"), cancellable = true)
     private void dialabs$preventSyntheticSale(CallbackInfoReturnable<Boolean> cir) {
-        if (this instanceof SyntheticEnchantment) {
-            cir.setReturnValue(true);
+        if (this instanceof SyntheticEnchantment s) {
+            if (!s.shouldBookBeTradable()) {
+                cir.setReturnValue(true);
+            }
         }
     }
 
     @Inject(method = "isTreasure", at = @At("HEAD"), cancellable = true)
     private void dialabs$preventEnchantmentTableSynthetic(CallbackInfoReturnable<Boolean> cir) {
-        if (this instanceof SyntheticEnchantment) {
-            cir.setReturnValue(true);
+        if (this instanceof SyntheticEnchantment s) {
+            if (!s.shouldBookBeLootable()) {
+                cir.setReturnValue(true);
+            }
         }
     }
 
     @Inject(method = "isAvailableForRandomSelection", at = @At("HEAD"), cancellable = true)
     private void dialabs$preventSyntheticSelection(CallbackInfoReturnable<Boolean> cir) {
-        if (this instanceof SyntheticEnchantment) {
-            cir.setReturnValue(true);
+        if (this instanceof SyntheticEnchantment s) {
+            if (!s.shouldBookBeRandomlySelectable()) {
+                cir.setReturnValue(true);
+            }
         }
     }
 }

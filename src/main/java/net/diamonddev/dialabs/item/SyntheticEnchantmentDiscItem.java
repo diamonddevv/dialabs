@@ -2,6 +2,7 @@ package net.diamonddev.dialabs.item;
 
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.InitItem;
+import net.diamonddev.dialabs.util.CollectionUtil;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.diamonddev.dialabs.util.ItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -19,11 +20,12 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
 
+    public static Collection<Enchantment> externalEntries = new ArrayList<>();
     public SyntheticEnchantmentDiscItem() {
         super(new FabricItemSettings().group(ItemGroups.SYNTHETIC_ENCHANT_GROUP).maxCount(1).rarity(Rarity.RARE));
     }
@@ -36,6 +38,7 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
     public static ItemStack forEnchantment(EnchantmentLevelEntry info) {
         ItemStack itemStack = new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC);
         addEnchantment(itemStack, info);
+        SyntheticEnchantment.validSyntheticEnchantments.add(info.enchantment);
         return itemStack;
     }
 
@@ -44,12 +47,22 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
         if (group == ItemGroups.SYNTHETIC_ENCHANT_GROUP || group == ItemGroup.SEARCH) {
             Enchantment e;
             stacks.add(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
+
+            // Predetermined Synthetic Enchantments (from registry)
             for (Enchantment enchantment : Registry.ENCHANTMENT) {
                 e = enchantment;
                 if (e instanceof SyntheticEnchantment) {
                     for(int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
                         stacks.add(forEnchantment(new EnchantmentLevelEntry(enchantment, i)));
                     }
+                }
+            }
+
+            // External Entries
+            for (Enchantment enchant : externalEntries) {
+                Collection<Integer> levelData = CollectionUtil.getEachIntegerRange(enchant.getMinLevel(), enchant.getMaxLevel());
+                for (Integer i : levelData) {
+                    stacks.add(forEnchantment(new EnchantmentLevelEntry(enchant, i)));
                 }
             }
         }
@@ -74,12 +87,4 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
         }
         return enchants;
     }
-
-    public static Enchantment getRandomSyntheticEnchantment() {
-        Random r = new Random();
-        int limit = getAllSyntheticEnchantments().size();
-        return getAllSyntheticEnchantments().get(r.nextInt(limit));
-    }
-
-
 }

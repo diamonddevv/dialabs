@@ -7,13 +7,11 @@ import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -46,7 +44,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         this.availableEnchants = SyntheticEnchantmentDiscItem.getAllSyntheticEnchantments();
         this.inputStack = ItemStack.EMPTY;
 
-        this.inventory = new SynthesisInventory(5) {
+        this.inventory = new SynthesisInventory(7) {
             public void markDirty() {
                 super.markDirty();
                 EnchantmentSynthesisScreenHandler.this.onContentChanged(this);
@@ -55,29 +53,6 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
         this.addSlot(new Slot(this.inventory, 0, 15, 47) {
             // Empty Disc Input Slot
-            @Override
-            public void onTakeItem(PlayerEntity player, ItemStack stack) {
-                if (!EnchantHelper.hasAnySyntheticEnchantmentStored(stack)) {
-                    // Get match status
-                    Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
-
-                    if (match.isPresent()) { // If a matching recipe is found, perform actions
-                        inventory.getStack(getDiscSlotIndex()).decrement(1); // DECREMENT ALL THE SLOTS
-
-                        inventory.getStack(getInputASlotIndex()).decrement(1);
-                        inventory.getStack(getInputBSlotIndex()).decrement(1);
-                        inventory.getStack(getInputCSlotIndex()).decrement(1);
-
-                        inventory.getStack(getLapisSlotIndex()).decrement(match.get().getLapisRequirement());
-
-                        // After Decrementing Everything, copy result stack to output.
-                        inventory.setStack(getDiscSlotIndex(), match.get().getOutput().copy());
-
-
-                    }
-                }
-            }
-
             @Override
             public boolean canInsert(ItemStack stack) {
                 return stack.getItem() instanceof SyntheticEnchantmentDiscItem && !EnchantHelper.hasAnySyntheticEnchantmentStored(stack);
@@ -90,6 +65,21 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             @Override
             public boolean canInsert(ItemStack stack) {
                 return stack.isIn(DataDrivenTagKeys.SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS);
+            }
+        });
+
+        this.addSlot(new Slot(this.inventory, 6, 23, 16) {
+           // Output Slot
+
+            @Override
+            public boolean canInsert(ItemStack stack) {
+                return false;
+            }
+
+            @Override
+            protected void onTake(int amount) {
+                decrementSlots();
+                super.onTake(amount);
             }
         });
 
@@ -142,6 +132,18 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     public int getInputCSlotIndex() {
         return 4;
     }
+
+    public int getOutputSlotIndex() {
+        return 6;
+    }
+
+
+    @Override
+    public void onContentChanged(Inventory inventory) {
+        validate(inventory.getStack(getDiscSlotIndex()));
+        super.onContentChanged(inventory);
+    }
+
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -194,5 +196,28 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     public void close(PlayerEntity player) {
         super.close(player);
         this.context.run((world, pos) -> this.dropInventory(player, this.inventory));
+    }
+
+    public void validate(ItemStack discInputStack) {
+        if (!EnchantHelper.hasAnySyntheticEnchantmentStored(discInputStack)) {
+            // Get match status
+            Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
+            // If a matching recipe is found, perform actions
+            // Copy result stack to output.
+            match.ifPresent(synthesisRecipe -> inventory.setStack(getOutputSlotIndex(), synthesisRecipe.getOutput().copy()));
+        }
+    }
+
+    public void decrementSlots() {
+        Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world); // Get Matched recipe
+        if (match.isPresent()) {
+            inventory.getStack(getDiscSlotIndex()).decrement(1); // DECREMENT ALL THE SLOTS
+
+            inventory.getStack(getInputASlotIndex()).decrement(1);
+            inventory.getStack(getInputBSlotIndex()).decrement(1);
+            inventory.getStack(getInputCSlotIndex()).decrement(1);
+
+            inventory.getStack(getLapisSlotIndex()).decrement(match.get().getLapisRequirement());
+        }
     }
 }
