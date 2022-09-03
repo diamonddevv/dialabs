@@ -6,12 +6,12 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ToolItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static net.minecraft.item.EnchantedBookItem.STORED_ENCHANTMENTS_KEY;
@@ -76,6 +76,30 @@ public class EnchantHelper {
         stack.getOrCreateNbt().put("StoredEnchantments", nbtList);
     }
 
+    public static void storeAllEnchantments(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
+        mappedEnchantsToAdd.forEach((enchantment, integer) -> {
+            if (hasEnchantmentStored(stack, enchantment)) {
+                if (integer >= getEnchantmentLevel(stack, enchantment)) {
+                    upgradeStoredEnchantment(stack, enchantment);
+                }
+            } else {
+                storeEnchantment(stack, new EnchantmentLevelEntry(enchantment, integer));
+            }
+        });
+    }
+
+    public static void addAllEnchantments(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
+        mappedEnchantsToAdd.forEach((enchantment, integer) -> {
+            if (hasEnchantment(enchantment, stack)) {
+                if (integer >= getEnchantmentLevel(stack, enchantment)) {
+                    upgradeExistingEnchantment(stack, enchantment);
+                }
+            } else {
+                stack.addEnchantment(enchantment, integer);
+            }
+        });
+    }
+
     public static NbtList getStoredEnchantments(ItemStack stack) {
         NbtCompound nbt = stack.getNbt();
         return nbt != null ? nbt.getList(STORED_ENCHANTMENTS_KEY, 10) : new NbtList();
@@ -83,5 +107,63 @@ public class EnchantHelper {
 
     public static Map<Enchantment, Integer> getMappedStoredEnchantments(ItemStack stack) {
         return EnchantmentHelper.fromNbt(getStoredEnchantments(stack));
+    }
+
+    public static void upgradeStoredEnchantment(ItemStack stack, Enchantment enchantment) {
+        Map<Enchantment, Integer> existingMap = getMappedStoredEnchantments(stack);
+        int existingLevel = existingMap.get(enchantment);
+        if (existingLevel >= enchantment.getMaxLevel()) {
+            existingMap.put(enchantment, existingLevel + 1);
+        }
+    }
+
+    public static void upgradeExistingEnchantment(ItemStack stack, Enchantment enchantment) {
+        Map<Enchantment, Integer> existingMap = EnchantmentHelper.get(stack);
+        int existingLevel = existingMap.get(enchantment);
+        if (existingLevel >= enchantment.getMaxLevel()) {
+            existingMap.put(enchantment, existingLevel + 1);
+        }
+    }
+
+    public static int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
+        Map<Enchantment, Integer> mappedEnchants = getMappedStoredEnchantments(stack);
+        return mappedEnchants.get(enchantment);
+    }
+
+    public static int getXpCostForAddingEnchants(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
+        float cost = 0.0f;
+        if (stack.getItem() instanceof ToolItem toolItem) {
+            cost = cost + toolItem.getEnchantability() * 0.75f;
+        }
+        for (Enchantment e : mappedEnchantsToAdd.keySet()) {
+            int thisLevel = mappedEnchantsToAdd.get(e);
+            float f = 0;
+
+            switch (e.getRarity()) {
+                case COMMON -> f = 1.25f;
+                case UNCOMMON -> f = 1.5f;
+                case RARE -> f = 1.75f;
+                case VERY_RARE -> f = 2.0f;
+            }
+            f = f * thisLevel;
+            cost = cost + f;
+        }
+        return (int) Math.floor(cost);
+    }
+
+    public static boolean allCompatible(Map<Enchantment, Integer> map1, Map<Enchantment, Integer> map2) {
+        boolean bl = true;
+        for (Enchantment e : map1.keySet()) {
+            for (Enchantment e2 : map2.keySet()) {
+                bl = e.canCombine(e2);
+                if (!bl) {
+                    break;
+                }
+            }
+            if (!bl) {
+                break;
+            }
+        }
+        return bl;
     }
 }

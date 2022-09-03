@@ -11,7 +11,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
@@ -21,12 +20,9 @@ import java.util.Optional;
 
 public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
-    private final Property selectedEnchantment;
-    private final ItemStack inputStack;
     private final SynthesisInventory inventory;
     private final World world;
     private final ScreenHandlerContext context;
-    private final PlayerInventory playerInventory;
 
     private final int lapisCount = 0;
     private final boolean hasDisc = false;
@@ -37,8 +33,6 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
     public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(InitScreenHandler.ENCHANT_SYNTHESIS, syncId);
-        this.selectedEnchantment = Property.create();
-        this.inputStack = ItemStack.EMPTY;
 
         this.inventory = new SynthesisInventory(6) {
             public void markDirty() {
@@ -81,7 +75,6 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
         this.context = context;
         this.world = playerInventory.player.world;
-        this.playerInventory = playerInventory;
 
         int i;
         int j;
