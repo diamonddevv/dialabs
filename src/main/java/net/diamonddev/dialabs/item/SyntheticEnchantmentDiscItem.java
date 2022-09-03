@@ -38,7 +38,6 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
     public static ItemStack forEnchantment(EnchantmentLevelEntry info) {
         ItemStack itemStack = new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC);
         addEnchantment(itemStack, info);
-        SyntheticEnchantment.validSyntheticEnchantments.add(info.enchantment);
         return itemStack;
     }
 
@@ -74,17 +73,5 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
             tooltip.add(Text.translatable("text.dialabs.empty_synthetic_enchantment_disc"));
         }
         super.appendTooltip(stack, world, tooltip, context);
-    }
-
-    public static ArrayList<Enchantment> getAllSyntheticEnchantments() {
-        ArrayList<Enchantment> enchants = new ArrayList<>();
-        for (Enchantment e : Registry.ENCHANTMENT) {
-            if (e instanceof SyntheticEnchantment synthesis) {
-                if (synthesis.canBeSynthesized()) {
-                    enchants.add(e);
-                }
-            }
-        }
-        return enchants;
     }
 }

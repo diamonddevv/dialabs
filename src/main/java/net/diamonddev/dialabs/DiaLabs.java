@@ -1,6 +1,5 @@
 package net.diamonddev.dialabs;
 
-import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DiaLabsGamerules;
 import net.diamonddev.dialabs.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -39,4 +38,5 @@ public class DiaLabs implements ModInitializer {
 		long initializationTime = System.currentTimeMillis() - startInitTime;
 		LOGGER.info("DiaLabs {" + MOD_ID + " - " + VERSION + "} for Minecraft " + MC_VER + " has initialized (" + initializationTime + " milliseconds elapsed)");
 	}
+
 }

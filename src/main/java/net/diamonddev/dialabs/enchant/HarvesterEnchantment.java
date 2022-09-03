@@ -12,11 +12,6 @@ public class HarvesterEnchantment extends Enchantment implements SyntheticEnchan
     }
 
     @Override
-    public boolean canBeSynthesized() {
-        return true;
-    }
-
-    @Override
     public int getMaxLevel() {
         return 1;
     }
@@ -24,5 +19,10 @@ public class HarvesterEnchantment extends Enchantment implements SyntheticEnchan
     @Override
     protected boolean canAccept(Enchantment other) {
         return !(other instanceof MendingEnchantment);
+    }
+
+    @Override
+    public boolean shouldMakeEnchantmentBook() {
+        return true;
     }
 }

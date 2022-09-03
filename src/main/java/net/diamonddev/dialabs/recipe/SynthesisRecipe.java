@@ -1,10 +1,10 @@
 package net.diamonddev.dialabs.recipe;
 
 import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
+import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
 import net.diamonddev.dialabs.recipe.serializer.SynthesisRecipeSerializer;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
-import net.diamonddev.dialabs.util.OrEmptyIngredient;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
@@ -17,34 +17,33 @@ import net.minecraft.world.World;
 
 public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
-    private final OrEmptyIngredient inputA;
-    private final OrEmptyIngredient inputB;
-    private final OrEmptyIngredient inputC;
+    private final Ingredient inputA;
+    private final Ingredient inputB;
+    private final Ingredient inputC;
     private final int payment;
     private final Enchantment result;
     private final int resultLvl;
 
     public SynthesisRecipe(Enchantment resultEnchantment, int enchantmentLevel, Ingredient inputA, Ingredient inputB, Ingredient inputC, int lapisRequirement) {
-        this.inputA = new OrEmptyIngredient(inputA);
-        this.inputB = new OrEmptyIngredient(inputB);
-        this.inputC = new OrEmptyIngredient(inputC);
+        this.inputA = inputA;
+        this.inputB = inputB;
+        this.inputC = inputC;
         this.payment = lapisRequirement;
         this.result = resultEnchantment;
         this.resultLvl = enchantmentLevel;
     }
 
     // Inputs & Output
-
     public Ingredient getInputA() {
-        return this.inputA.get();
+        return this.inputA;
     }
 
     public Ingredient getInputB() {
-        return this.inputB.get();
+        return this.inputB;
     }
 
     public Ingredient getInputC() {
-        return inputC.get();
+        return inputC;
     }
 
     public int getLapisRequirement() {
@@ -70,10 +69,11 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     @Override
     public boolean matches(SynthesisInventory inv, World world) {
 
-        return getInputA().test(inv.getStack(3)) &&
-                getInputB().test(inv.getStack(4)) &&
-                getInputC().test(inv.getStack(5)) &&
-                getLapisRequirement() >= inv.getStack(2).getCount();
+        return inv.getStack(0).getItem() == InitItem.SYNTHETIC_ENCHANTMENT_DISC &&
+                getInputA().test(inv.getStack(2)) &&
+                getInputB().test(inv.getStack(3)) &&
+                getInputC().test(inv.getStack(4)) &&
+                getLapisRequirement() <= inv.getStack(1).getCount();
     }
 
     // misc stuff lol

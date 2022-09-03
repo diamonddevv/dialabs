@@ -7,7 +7,6 @@ import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.registry.InitEffects;
 import net.diamonddev.dialabs.registry.InitEnchants;
 import net.diamonddev.dialabs.util.EnchantHelper;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ExperienceOrbEntity;

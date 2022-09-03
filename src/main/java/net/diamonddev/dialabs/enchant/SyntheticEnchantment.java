@@ -1,5 +1,7 @@
 package net.diamonddev.dialabs.enchant;
 
+
+import net.diamonddev.dialabs.api.ModIntegration;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.minecraft.enchantment.Enchantment;
 
@@ -8,9 +10,6 @@ import java.util.Collection;
 
 public interface SyntheticEnchantment {
     Collection<Enchantment> validSyntheticEnchantments = new ArrayList<>();
-    default boolean canBeSynthesized() {
-        return true;
-    }
     default boolean shouldMakeEnchantmentBook() {
         return false;
     }
@@ -25,7 +24,13 @@ public interface SyntheticEnchantment {
     }
 
 
-    static void makeSyntheticDiscItemForEnchantment(Enchantment enchantment) {
+    static void makeSyntheticDiscItemFromEnchantment(Enchantment enchantment) {
         SyntheticEnchantmentDiscItem.externalEntries.add(enchantment);
+    }
+
+    static void makeSyntheticDiscItemFromModIntegration(ModIntegration modIntegration, String enchantmentPath) {
+        if (modIntegration.isModLoaded()) {
+            SyntheticEnchantmentDiscItem.externalEntries.add(modIntegration.getEnchantment(enchantmentPath));
+        }
     }
 }

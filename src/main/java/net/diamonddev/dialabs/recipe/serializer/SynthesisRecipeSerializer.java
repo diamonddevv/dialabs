@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
+import net.diamonddev.dialabs.util.CollectionUtil;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
@@ -28,12 +29,11 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
 
         Ingredient inputA = Ingredient.fromJson(format.inputA);
         Ingredient inputB = Ingredient.fromJson(format.inputB);
-        Ingredient inputC = Ingredient.fromJson(format.inputC); // todo: Make it possible to not use all three slots in a non-janky way
+        Ingredient inputC = Ingredient.fromJson(format.inputC);
 
         int lapis = format.lapis_count;
         int level = format.level;
-        Enchantment ench = Registry.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
-                new JsonSyntaxException("No such valid synthetic enchantment: " + format.enchantment +""));
+        Enchantment ench = readEnchantment(format);
 
         return new SynthesisRecipe(ench, level, inputA, inputB, inputC, lapis);
     }
@@ -59,6 +59,16 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         buf.writeInt(recipe.getResultLvl());
     }
 
+    private Enchantment readEnchantment(SynthesisRecipeJsonFormat format) {
+        Enchantment candidate = Registry.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
+                new JsonSyntaxException("No such valid enchantment in registry: " + format.enchantment));
+
+        if (SyntheticEnchantment.validSyntheticEnchantments.contains(candidate)) {
+            return candidate;
+        } else {
+            throw new JsonSyntaxException("Enchantment " + format.enchantment + " was found in registry, but was not validly considered Synthetic!");
+        }
+    }
 
 
     static class SynthesisRecipeJsonFormat {

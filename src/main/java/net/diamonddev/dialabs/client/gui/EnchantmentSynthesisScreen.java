@@ -49,7 +49,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
                         ColorHelper.Argb.getArgb(0, 170, 170, 170));
             }
         }
-        }
+    }
 
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {

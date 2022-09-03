@@ -4,11 +4,13 @@
   "package": "net.diamonddev.dialabs.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AnvilScreenHandlerMixin",
     "BrewingRecipeInvoker",
     "DamageTrackerMixin",
     "EmptyBottleMixin",
     "EnchantedBookItemMixin",
     "EnchantmentMixin",
+    "IngredientMixin",
     "LightningEntityMixin",
     "LivingEntityMixin"
   ],

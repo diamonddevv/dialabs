@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import net.minecraft.util.registry.Registry;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static net.minecraft.item.EnchantedBookItem.STORED_ENCHANTMENTS_KEY;
@@ -41,7 +41,7 @@ public class EnchantHelper {
     public static boolean hasAnySyntheticEnchantmentStored(ItemStack stack) {
         boolean bl = false;
         for (Enchantment e : Registry.ENCHANTMENT) {
-            if (e instanceof SyntheticEnchantment) {
+            if (SyntheticEnchantment.validSyntheticEnchantments.contains(e)) {
                 if (hasEnchantmentStored(stack, e)) {
                     bl = true;
                     break;
@@ -51,7 +51,7 @@ public class EnchantHelper {
         return bl;
     }
 
-    public static ItemStack storeEnchantment(ItemStack stack, EnchantmentLevelEntry enchantmentLevelEntry) {
+    public static void storeEnchantment(ItemStack stack, EnchantmentLevelEntry enchantmentLevelEntry) {
         NbtList nbtList = getStoredEnchantments(stack);
         boolean bl = true;
         Identifier identifier = EnchantmentHelper.getEnchantmentId(enchantmentLevelEntry.enchantment);
@@ -74,11 +74,14 @@ public class EnchantHelper {
         }
 
         stack.getOrCreateNbt().put("StoredEnchantments", nbtList);
-        return stack;
     }
 
     public static NbtList getStoredEnchantments(ItemStack stack) {
         NbtCompound nbt = stack.getNbt();
         return nbt != null ? nbt.getList(STORED_ENCHANTMENTS_KEY, 10) : new NbtList();
+    }
+
+    public static Map<Enchantment, Integer> getMappedStoredEnchantments(ItemStack stack) {
+        return EnchantmentHelper.fromNbt(getStoredEnchantments(stack));
     }
 }

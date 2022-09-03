@@ -6,7 +6,6 @@ import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -18,13 +17,11 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
     private final Property selectedEnchantment;
-    private final ArrayList<Enchantment> availableEnchants;
     private final ItemStack inputStack;
     private final SynthesisInventory inventory;
     private final World world;
@@ -41,10 +38,9 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(InitScreenHandler.ENCHANT_SYNTHESIS, syncId);
         this.selectedEnchantment = Property.create();
-        this.availableEnchants = SyntheticEnchantmentDiscItem.getAllSyntheticEnchantments();
         this.inputStack = ItemStack.EMPTY;
 
-        this.inventory = new SynthesisInventory(7) {
+        this.inventory = new SynthesisInventory(6) {
             public void markDirty() {
                 super.markDirty();
                 EnchantmentSynthesisScreenHandler.this.onContentChanged(this);
@@ -68,7 +64,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             }
         });
 
-        this.addSlot(new Slot(this.inventory, 6, 23, 16) {
+        this.addSlot(new Slot(this.inventory, 5, 24, 17) {
            // Output Slot
 
             @Override
@@ -77,9 +73,9 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             }
 
             @Override
-            protected void onTake(int amount) {
+            public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 decrementSlots();
-                super.onTake(amount);
+                super.onTakeItem(player, stack);
             }
         });
 
@@ -117,6 +113,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         return itemStack.isEmpty() ? 0 : itemStack.getCount();
     }
 
+
     public int getDiscSlotIndex() {
         return 0;
     }
@@ -134,7 +131,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     }
 
     public int getOutputSlotIndex() {
-        return 6;
+        return 5;
     }
 
 
@@ -143,6 +140,8 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         validate(inventory.getStack(getDiscSlotIndex()));
         super.onContentChanged(inventory);
     }
+
+
 
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
@@ -204,20 +203,26 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
             // If a matching recipe is found, perform actions
             // Copy result stack to output.
-            match.ifPresent(synthesisRecipe -> inventory.setStack(getOutputSlotIndex(), synthesisRecipe.getOutput().copy()));
+            if (match.isPresent()) {
+                inventory.setStack(getOutputSlotIndex(), match.get().getOutput().copy());
+            } else {
+                inventory.setStack(getOutputSlotIndex(), ItemStack.EMPTY);
+            }
         }
     }
 
     public void decrementSlots() {
         Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world); // Get Matched recipe
         if (match.isPresent()) {
-            inventory.getStack(getDiscSlotIndex()).decrement(1); // DECREMENT ALL THE SLOTS
 
-            inventory.getStack(getInputASlotIndex()).decrement(1);
-            inventory.getStack(getInputBSlotIndex()).decrement(1);
-            inventory.getStack(getInputCSlotIndex()).decrement(1);
+            inventory.decrementStackSize(getDiscSlotIndex(), 1); // DECREMENT ALL THE SLOTS
 
-            inventory.getStack(getLapisSlotIndex()).decrement(match.get().getLapisRequirement());
+            inventory.decrementStackSize(getInputASlotIndex(), 1);
+            inventory.decrementStackSize(getInputBSlotIndex(), 1);
+            inventory.decrementStackSize(getInputCSlotIndex(), 1);
+
+            inventory.decrementStackSize(getLapisSlotIndex(), match.get().getLapisRequirement());
         }
     }
+
 }
