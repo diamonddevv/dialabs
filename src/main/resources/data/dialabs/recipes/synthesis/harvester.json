@@ -1,0 +1,14 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "item": "minecraft:experience_bottle"
+  },
+  "inputB": {
+    "item": "minecraft:emerald"
+  },
+  "inputC": {
+    "item": "minecraft:blaze_powder"
+  },
+  "lapis_count": 30,
+  "enchantment": "dialabs:harvester"
+}

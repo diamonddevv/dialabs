@@ -126,8 +126,7 @@ public class EnchantHelper {
     }
 
     public static int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
-        Map<Enchantment, Integer> mappedEnchants = getMappedStoredEnchantments(stack);
-        return mappedEnchants.get(enchantment);
+        return EnchantmentHelper.getLevel(enchantment, stack);
     }
 
     public static int getXpCostForAddingEnchants(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
@@ -160,6 +159,17 @@ public class EnchantHelper {
                     break;
                 }
             }
+            if (!bl) {
+                break;
+            }
+        }
+        return bl;
+    }
+
+    public static boolean allAcceptable(Map<Enchantment, Integer> map, ItemStack stack) {
+        boolean bl = true;
+        for (Enchantment e : map.keySet()) {
+            bl = e.isAcceptableItem(stack);
             if (!bl) {
                 break;
             }

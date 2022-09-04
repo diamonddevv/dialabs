@@ -128,4 +128,11 @@ public interface ImplementedInventory extends Inventory {
     default boolean canPlayerUse(PlayerEntity player) {
         return true;
     }
+
+
+    default void decrementStackSize(int slot, int decrement) {
+        ItemStack stack = getStack(slot);
+        stack.decrement(decrement);
+        this.setStack(slot, stack);
+    }
 }

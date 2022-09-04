@@ -2,6 +2,7 @@ package net.diamonddev.dialabs.gui;
 
 import net.diamonddev.dialabs.block.inventory.DiscBurnerInventory;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
+import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -10,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -43,11 +45,11 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
             }
         };
 
-        this.addSlot(new Slot(this.inventory, 0, 27, 47) {
+        this.addSlot(new Slot(this.inventory, getInputASlotIndex(), 27, 47) {
             // Input A - Item Slot
         });
 
-        this.addSlot(new Slot(this.inventory, 1, 76, 47) {
+        this.addSlot(new Slot(this.inventory, getInputBSlotIndex(), 76, 47) {
             // Input B - Disc Slot
 
             @Override
@@ -56,12 +58,18 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
             }
         });
 
-        this.addSlot(new Slot(this.inventory, 2, 134, 47) {
+        this.addSlot(new Slot(this.inventory, getOutputSlotIndex(), 134, 47) {
             // Output
 
             @Override
             public boolean canInsert(ItemStack stack) {
                 return false;
+            }
+
+            @Override
+            public void onTakeItem(PlayerEntity player, ItemStack stack) {
+                onOutputTaken();
+                super.onTakeItem(player, stack);
             }
         });
 
@@ -86,38 +94,58 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
 
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
-        return null;
+        return ItemStack.EMPTY;
     }
 
     @Override
     public boolean canUse(PlayerEntity player) {
-        return false;
+        return true;
     }
 
+    public void close(PlayerEntity player) {
+        super.close(player);
+        this.context.run((world, pos) -> {
+            this.inventory.removeStack(getOutputSlotIndex());
+            this.dropInventory(player, this.inventory);
+        });
+    }
+
+    public static int getInputASlotIndex() {
+        return 0;
+    }
+    public static int getInputBSlotIndex() {
+        return 1;
+    }
+    public static int getOutputSlotIndex() {
+        return 2;
+    }
     @Override
     public void onContentChanged(Inventory inventory) {
         super.onContentChanged(inventory);
 
-        int cost = this.xpRequirement.get();
-        ItemStack a = inventory.getStack(0);
-        ItemStack b = inventory.getStack(1);
+        int cost;
+        ItemStack a = inventory.getStack(getInputASlotIndex());
+        ItemStack b = inventory.getStack(getInputBSlotIndex());
         ItemStack out;
+
+        if (a.isEmpty() || b.isEmpty()) {
+            out = ItemStack.EMPTY;
+            this.inventory.setStack(getOutputSlotIndex(), out);
+        }
 
         if (b.getItem() instanceof SyntheticEnchantmentDiscItem) {
 
             if (a.getItem() instanceof SyntheticEnchantmentDiscItem) {
+                Map<Enchantment, Integer> mappedAdditiveEnchants = EnchantHelper.getMappedStoredEnchantments(b);
+                out = a.copy();
+                EnchantHelper.storeAllEnchantments(out, mappedAdditiveEnchants);
+                this.inventory.setStack(getOutputSlotIndex(), out);
 
             } else {
 
                 Map<Enchantment, Integer> mappedDiscEnchants = EnchantHelper.getMappedStoredEnchantments(b);
-                boolean allAcceptable = true;
+                boolean allAcceptable = EnchantHelper.allAcceptable(mappedDiscEnchants, a);
                 boolean allCompatible = true;
-                for (Enchantment e : mappedDiscEnchants.keySet()) {
-                    allAcceptable = !e.isAcceptableItem(a);
-                    if (!allAcceptable) {
-                        break;
-                    }
-                }
 
                 if (a.hasEnchantments()) {
                     Map<Enchantment, Integer> mappedAEnchants = EnchantmentHelper.get(a);
@@ -128,9 +156,17 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
                     out = a.copy();
                     EnchantHelper.addAllEnchantments(out, mappedDiscEnchants);
                     cost = EnchantHelper.getXpCostForAddingEnchants(a, mappedDiscEnchants);
+                    this.inventory.setStack(getOutputSlotIndex(), out);
+                    this.xpRequirement.set(cost);
                 }
 
             }
         }
+    }
+
+
+    public void onOutputTaken() {
+        inventory.decrementStackSize(getInputASlotIndex(), 1);
+        inventory.decrementStackSize(getInputBSlotIndex(), 1);
     }
 }

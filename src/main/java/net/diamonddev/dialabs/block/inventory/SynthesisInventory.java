@@ -24,9 +24,4 @@ public class SynthesisInventory implements ImplementedInventory {
         return ImplementedInventory.super.size();
     }
 
-    public void decrementStackSize(int slot, int decrement) {
-        ItemStack stack = getStack(slot);
-        stack.decrement(decrement);
-        this.setStack(slot, stack);
-    }
 }

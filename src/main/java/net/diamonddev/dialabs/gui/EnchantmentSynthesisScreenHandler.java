@@ -187,7 +187,10 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
     public void close(PlayerEntity player) {
         super.close(player);
-        this.context.run((world, pos) -> this.dropInventory(player, this.inventory));
+        this.context.run((world, pos) -> {
+            this.inventory.removeStack(getOutputSlotIndex());
+            this.dropInventory(player, this.inventory);
+        });
     }
 
     public void validate(ItemStack discInputStack) {

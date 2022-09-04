@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
-import net.diamonddev.dialabs.util.CollectionUtil;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
@@ -24,7 +23,6 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
     public SynthesisRecipe read(Identifier id, JsonObject json) {
         SynthesisRecipeJsonFormat format = new Gson().fromJson(json, SynthesisRecipeJsonFormat.class);
 
-        if (format.lapis_count == 0) format.lapis_count = 1;
         if (format.level == 0) format.level = 1;
 
         Ingredient inputA = Ingredient.fromJson(format.inputA);

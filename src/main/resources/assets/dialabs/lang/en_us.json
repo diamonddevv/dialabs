@@ -8,14 +8,19 @@
   "block.dialabs.enchantment_synthesizer": "Enchantment Synthesizer",
   "block.dialabs.enchantment_synthesizer.ui.title": "Enchantment Synthesis",
 
+  "block.dialabs.disc_burner": "Synthetic Disc Burner",
+  "block.dialabs.disc_burner.ui.title": "Apply Synthetic Enchantments",
+
   "item.dialabs.strength_tome": "Strength Tome",
   "item.dialabs.protective_tome": "Protective Tome",
   "item.dialabs.aspection_tome": "Aspection Tome",
+  "item.dialabs.destructive_tome": "Destructive Tome",
 
   "synthesis.dialabs.empty": "%s",
   "synthesis.dialabs.strength_tome": "Strength",
   "synthesis.dialabs.protective_tome": "Protection",
   "synthesis.dialabs.aspection_tome" : "Aspect",
+  "synthesis.dialabs.destructive_tome": "Destructive",
 
   "item.dialabs.static_core": "Static Core",
   "effect.dialabs.charged": "Charged",
