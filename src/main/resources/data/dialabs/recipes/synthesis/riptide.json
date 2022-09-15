@@ -1,0 +1,12 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "item": "minecraft:heart_of_the_sea"
+  },
+  "inputB": {
+    "item": "minecraft:prismarine_shard"
+  },
+  "countB": 16,
+  "lapis_count": 12,
+  "enchantment": "minecraft:riptide"
+}

@@ -113,7 +113,7 @@ public class EnchantHelper {
         Map<Enchantment, Integer> existingMap = getMappedStoredEnchantments(stack);
         int existingLevel = existingMap.get(enchantment);
         if (existingLevel >= enchantment.getMaxLevel()) {
-            existingMap.put(enchantment, existingLevel + 1);
+            existingMap.replace(enchantment, existingLevel + 1);
         }
     }
 

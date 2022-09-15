@@ -5,8 +5,11 @@ import net.diamonddev.dialabs.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.SharedConstants;
+import net.minecraft.util.registry.Registry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.Arrays;
 
 
 public class DiaLabs implements ModInitializer {

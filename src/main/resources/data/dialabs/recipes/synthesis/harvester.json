@@ -9,6 +9,9 @@
   "inputC": {
     "item": "minecraft:blaze_powder"
   },
+  "countA": 8,
+  "countB": 20,
+  "countC": 3,
   "lapis_count": 30,
   "enchantment": "dialabs:harvester"
 }

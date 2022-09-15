@@ -1,11 +1,15 @@
 package net.diamonddev.dialabs.block;
 
 import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
+import net.diamonddev.dialabs.recipe.SynthesisRecipe;
+import net.diamonddev.dialabs.registry.InitRecipe;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.recipe.SmithingRecipe;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
@@ -35,6 +39,7 @@ public class EnchantmentSynthesizerBlock extends Block {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient) {
+
             NamedScreenHandlerFactory screenHandlerFactory = state.createScreenHandlerFactory(world, pos);
 
             if (screenHandlerFactory != null) {

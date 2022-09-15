@@ -1,7 +1,6 @@
 package net.diamonddev.dialabs.recipe;
 
 import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
-import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
 import net.diamonddev.dialabs.recipe.serializer.SynthesisRecipeSerializer;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
@@ -23,11 +22,28 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     private final int payment;
     private final Enchantment result;
     private final int resultLvl;
+    private final Identifier id;
+    private final int cA;
+    private final int cB;
+    private final int cC;
 
-    public SynthesisRecipe(Enchantment resultEnchantment, int enchantmentLevel, Ingredient inputA, Ingredient inputB, Ingredient inputC, int lapisRequirement) {
+    public SynthesisRecipe(
+            Identifier id,
+            Enchantment resultEnchantment, int enchantmentLevel,
+            Ingredient inputA, Ingredient inputB, Ingredient inputC,
+            int countA, int countB, int countC,
+            int lapisRequirement) {
+
+        this.id = id;
+
         this.inputA = inputA;
         this.inputB = inputB;
         this.inputC = inputC;
+
+        this.cA = countA;
+        this.cB = countB;
+        this.cC = countC;
+
         this.payment = lapisRequirement;
         this.result = resultEnchantment;
         this.resultLvl = enchantmentLevel;
@@ -44,6 +60,18 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
     public Ingredient getInputC() {
         return inputC;
+    }
+
+    public int getCountA() {
+        return this.cA;
+    }
+
+    public int getCountB() {
+        return this.cB;
+    }
+
+    public int getCountC() {
+        return this.cC;
     }
 
     public int getLapisRequirement() {
@@ -68,12 +96,18 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     // Matches
     @Override
     public boolean matches(SynthesisInventory inv, World world) {
+        if (world.isClient) {
+            return false;
+        }
 
         return inv.getStack(0).getItem() == InitItem.SYNTHETIC_ENCHANTMENT_DISC &&
                 getInputA().test(inv.getStack(2)) &&
-                getInputB().test(inv.getStack(3)) &&
+                getInputB().test(inv.getStack(3)) && // Ingredient Item Checks
                 getInputC().test(inv.getStack(4)) &&
-                getLapisRequirement() <= inv.getStack(1).getCount();
+                getCountA() <= inv.getStack(2).getCount() &&
+                getCountB() <= inv.getStack(3).getCount() && // Ingredient Count Checks
+                getCountC() <= inv.getStack(4).getCount() &&
+                getLapisRequirement() <= inv.getStack(1).getCount(); // Lapis Count Check
     }
 
     // misc stuff lol
@@ -89,7 +123,7 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
     @Override
     public Identifier getId() {
-        return new net.diamonddev.dialabs.api.Identifier(Type.ID);
+        return this.id;
     }
 
     @Override

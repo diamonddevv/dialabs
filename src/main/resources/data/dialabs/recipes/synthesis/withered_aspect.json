@@ -6,6 +6,8 @@
   "inputB": {
     "item": "minecraft:wither_rose"
   },
+  "countA": 1,
+  "countB": 1,
   "lapis_count": 5,
   "enchantment": "dialabs:withered_aspect",
   "level": 1

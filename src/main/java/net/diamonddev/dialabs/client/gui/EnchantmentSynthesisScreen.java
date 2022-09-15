@@ -27,7 +27,6 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
     private static final net.minecraft.util.Identifier FONT_ID = new net.minecraft.util.Identifier("minecraft", "alt");
 
     private static final Style TEXT_STYLE = Style.EMPTY.withFont(FONT_ID);
-
     public EnchantmentSynthesisScreen(EnchantmentSynthesisScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
     }
@@ -42,13 +41,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
-        if (delta == 1.0f) {
-            for (int i = 0; i < 3; i++) {
-                ItemStack stack = this.handler.getInventory().getStack(i + 2);
-                drawTextWithShadow(matrices, this.textRenderer, getText(textRenderer, stack), x + 83, y + 15 + i * 19,
-                        ColorHelper.Argb.getArgb(0, 170, 170, 170));
-            }
-        }
+        drawEnchantmentText(matrices);
     }
 
     @Override
@@ -83,5 +76,13 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         return Text.literal(stringVisitable.getString()).setStyle(TEXT_STYLE);
     }
 
+
+    public void drawEnchantmentText(MatrixStack matrices) {
+        for (int i = 0; i < 3; i++) {
+            ItemStack stack = this.handler.getInventory().getStack(i + 2);
+            drawTextWithShadow(matrices, this.textRenderer, getText(textRenderer, stack), x + 83, y + 15 + i * 19,
+                    ColorHelper.Argb.getArgb(0, 170, 170, 170));
+        }
+    }
 
 }

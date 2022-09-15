@@ -25,9 +25,11 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
     private final DiscBurnerInventory inventory;
     private final ScreenHandlerContext context;
     private final World world;
+    private final PlayerEntity playerEntity;
 
     private boolean hasDisc;
     private Property xpRequirement;
+    private boolean possibleCombination = true;
 
     public DiscBurnerScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
@@ -37,6 +39,8 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
         super(InitScreenHandler.DISC_BURNER, syncId);
 
         this.xpRequirement = Property.create();
+
+        this.playerEntity = playerInventory.player;
 
         this.inventory = new DiscBurnerInventory(3) {
             public void markDirty() {
@@ -70,6 +74,11 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 onOutputTaken();
                 super.onTakeItem(player, stack);
+            }
+
+            @Override
+            public boolean canTakeItems(PlayerEntity playerEntity) {
+                return canTake();
             }
         });
 
@@ -140,6 +149,8 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
                 out = a.copy();
                 EnchantHelper.storeAllEnchantments(out, mappedAdditiveEnchants);
                 this.inventory.setStack(getOutputSlotIndex(), out);
+                cost = EnchantHelper.getXpCostForAddingEnchants(a, mappedAdditiveEnchants);
+                this.xpRequirement.set(cost);
 
             } else {
 
@@ -151,6 +162,8 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
                     Map<Enchantment, Integer> mappedAEnchants = EnchantmentHelper.get(a);
                     allCompatible = EnchantHelper.allCompatible(mappedAEnchants, mappedDiscEnchants);
                 }
+
+                this.possibleCombination = allCompatible && allAcceptable;
 
                 if (allAcceptable && allCompatible) {
                     out = a.copy();
@@ -168,5 +181,22 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
     public void onOutputTaken() {
         inventory.decrementStackSize(getInputASlotIndex(), 1);
         inventory.decrementStackSize(getInputBSlotIndex(), 1);
+
+        playerEntity.experienceLevel -= this.xpRequirement.get();
+    }
+
+    public boolean isAllSlotsRequiredFilled() {
+        return !this.inventory.getStack(getInputASlotIndex()).isEmpty() && !this.inventory.getStack(getInputBSlotIndex()).isEmpty();
+    }
+
+    public boolean canTake() {
+        return this.playerEntity.experienceLevel >= xpRequirement.get() || playerEntity.getAbilities().creativeMode;
+    }
+    public boolean isPossibleCombination() {
+        return possibleCombination;
+    }
+
+    public Property getXpRequirementProperty() {
+        return xpRequirement;
     }
 }

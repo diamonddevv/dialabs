@@ -24,9 +24,6 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     private final World world;
     private final ScreenHandlerContext context;
 
-    private final int lapisCount = 0;
-    private final boolean hasDisc = false;
-
     public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
     }
@@ -93,19 +90,12 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         for (i = 0; i < 3; i++) {
             this.addSlot(new Slot(this.inventory, i + 2, 60, 15 + i * 19));
         }
-
     }
 
     @Override
     public boolean canUse(PlayerEntity player) {
         return true;
     }
-
-    public int getLapisCount() {
-        ItemStack itemStack = this.inventory.getStack(getLapisSlotIndex());
-        return itemStack.isEmpty() ? 0 : itemStack.getCount();
-    }
-
 
     public int getDiscSlotIndex() {
         return 0;
@@ -122,7 +112,6 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     public int getInputCSlotIndex() {
         return 4;
     }
-
     public int getOutputSlotIndex() {
         return 5;
     }
@@ -130,11 +119,9 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
     @Override
     public void onContentChanged(Inventory inventory) {
-        validate(inventory.getStack(getDiscSlotIndex()));
+        validate();
         super.onContentChanged(inventory);
     }
-
-
 
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
@@ -155,6 +142,8 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
                 if (!this.insertItem(itemStack2, 1, 2, true)) {
                     return ItemStack.EMPTY;
                 }
+            } else if (!this.insertItem(itemStack2, 2, 5, false)) {
+                return ItemStack.EMPTY;
             } else {
                 if ((this.slots.get(0)).hasStack() || !(this.slots.get(0)).canInsert(itemStack2)) {
                     return ItemStack.EMPTY;
@@ -193,29 +182,31 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         });
     }
 
-    public void validate(ItemStack discInputStack) {
-        if (!EnchantHelper.hasAnySyntheticEnchantmentStored(discInputStack)) {
-            // Get match status
-            Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
-            // If a matching recipe is found, perform actions
-            // Copy result stack to output.
-            if (match.isPresent()) {
-                inventory.setStack(getOutputSlotIndex(), match.get().getOutput().copy());
-            } else {
-                inventory.setStack(getOutputSlotIndex(), ItemStack.EMPTY);
-            }
+    public ItemStack getOutput(SynthesisRecipe recipeMatch) {
+        return recipeMatch.getOutput();
+    }
+
+    public void validate() {
+        // If a matching recipe is found, perform actions
+        Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
+        // Copy result stack to output.
+        if (match.isPresent() && !EnchantHelper.hasAnySyntheticEnchantmentStored(inventory.getStack(getDiscSlotIndex()))) {
+            inventory.setStack(getOutputSlotIndex(), getOutput(match.get()));
+        } else {
+            inventory.setStack(getOutputSlotIndex(), ItemStack.EMPTY);
         }
     }
 
     public void decrementSlots() {
-        Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world); // Get Matched recipe
+        // Get Match
+        Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
         if (match.isPresent()) {
 
-            inventory.decrementStackSize(getDiscSlotIndex(), 1); // DECREMENT ALL THE SLOTS
+            inventory.decrementStackSize(getDiscSlotIndex(), 1); // DECREMENT ALL THE SLOTS THE REQUIRED AMOUNT
 
-            inventory.decrementStackSize(getInputASlotIndex(), 1);
-            inventory.decrementStackSize(getInputBSlotIndex(), 1);
-            inventory.decrementStackSize(getInputCSlotIndex(), 1);
+            inventory.decrementStackSize(getInputASlotIndex(), match.get().getCountA());
+            inventory.decrementStackSize(getInputBSlotIndex(), match.get().getCountB());
+            inventory.decrementStackSize(getInputCSlotIndex(), match.get().getCountC());
 
             inventory.decrementStackSize(getLapisSlotIndex(), match.get().getLapisRequirement());
         }

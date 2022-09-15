@@ -9,8 +9,8 @@ public class InitRecipe {
 
     public static void register() {
         // Synthesis
+        Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(SynthesisRecipeSerializer.ID), SynthesisRecipeSerializer.INSTANCE);
         Registry.register(Registry.RECIPE_TYPE, new Identifier(SynthesisRecipe.Type.ID), SynthesisRecipe.Type.INSTANCE);
-        Registry.register(Registry.RECIPE_SERIALIZER, SynthesisRecipeSerializer.ID, SynthesisRecipeSerializer.INSTANCE);
     }
 
 }
