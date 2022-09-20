@@ -3,6 +3,7 @@ package net.diamonddev.dialabs.gui;
 import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
+import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
@@ -123,6 +124,10 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         super.onContentChanged(inventory);
     }
 
+    public boolean transferItem(ItemStack stack, int startIndex, boolean fromLast) {
+        return !super.insertItem(stack, startIndex, startIndex + 1, fromLast);
+    }
+
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -130,19 +135,15 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         if (slot.hasStack()) {
             ItemStack itemStack2 = slot.getStack();
             itemStack = itemStack2.copy();
-            if (index == 0) {
-                if (!this.insertItem(itemStack2, 2, 38, true)) {
-                    return ItemStack.EMPTY;
-                }
-            } else if (index == 1) {
-                if (!this.insertItem(itemStack2, 2, 38, true)) {
+            if (itemStack2.isOf(InitItem.SYNTHETIC_ENCHANTMENT_DISC) && !EnchantHelper.hasAnySyntheticEnchantmentStored(itemStack2)) {
+                if (this.transferItem(itemStack2, getDiscSlotIndex(), true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (itemStack2.isOf(Items.LAPIS_LAZULI)) {
-                if (!this.insertItem(itemStack2, 1, 2, true)) {
+                if (this.transferItem(itemStack2, getLapisSlotIndex(), true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.insertItem(itemStack2, 2, 5, false)) {
+            } else if (!this.insertItem(itemStack2, getInputASlotIndex(), getInputCSlotIndex(), false)) {
                 return ItemStack.EMPTY;
             } else {
                 if ((this.slots.get(0)).hasStack() || !(this.slots.get(0)).canInsert(itemStack2)) {
@@ -204,9 +205,9 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
             inventory.decrementStackSize(getDiscSlotIndex(), 1); // DECREMENT ALL THE SLOTS THE REQUIRED AMOUNT
 
-            inventory.decrementStackSize(getInputASlotIndex(), match.get().getCountA());
-            inventory.decrementStackSize(getInputBSlotIndex(), match.get().getCountB());
-            inventory.decrementStackSize(getInputCSlotIndex(), match.get().getCountC());
+            inventory.decrementStackSize(getInputASlotIndex(), match.get().getInputA().getCountComponent());
+            inventory.decrementStackSize(getInputBSlotIndex(), match.get().getInputB().getCountComponent());
+            inventory.decrementStackSize(getInputCSlotIndex(), match.get().getInputC().getCountComponent());
 
             inventory.decrementStackSize(getLapisSlotIndex(), match.get().getLapisRequirement());
         }

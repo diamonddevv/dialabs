@@ -57,9 +57,9 @@ public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
                 ColorHelper.Argb.getArgb(0, 0, 255, 0) : ColorHelper.Argb.getArgb(0, 255, 0, 0);
 
         if (text != null) {
-            // fill(matrices, x + 26, y + 24, x + 26 + textRenderer.getWidth(text), y + 32, fillColor); hmm
-            drawTextWithShadow(matrices, this.textRenderer, text, x + 18, y + 28,
-                    fillColor);
+            fill(matrices, x + 18, y + 28, x + 28 + textRenderer.getWidth(text), y + 32,
+                    ColorHelper.Argb.getArgb(0, 8, 8, 8));
+            drawTextWithShadow(matrices, this.textRenderer, text, x + 18, y + 28, fillColor);
         }
     }
 

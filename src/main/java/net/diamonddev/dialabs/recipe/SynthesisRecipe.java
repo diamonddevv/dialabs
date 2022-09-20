@@ -1,13 +1,13 @@
 package net.diamonddev.dialabs.recipe;
 
 import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
+import net.diamonddev.dialabs.recipe.objects.CountedIngredient;
 import net.diamonddev.dialabs.recipe.serializer.SynthesisRecipeSerializer;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -16,22 +16,19 @@ import net.minecraft.world.World;
 
 public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
-    private final Ingredient inputA;
-    private final Ingredient inputB;
-    private final Ingredient inputC;
+
     private final int payment;
     private final Enchantment result;
     private final int resultLvl;
     private final Identifier id;
-    private final int cA;
-    private final int cB;
-    private final int cC;
+    private final CountedIngredient inputA;
+    private final CountedIngredient inputB;
+    private final CountedIngredient inputC;
 
     public SynthesisRecipe(
             Identifier id,
             Enchantment resultEnchantment, int enchantmentLevel,
-            Ingredient inputA, Ingredient inputB, Ingredient inputC,
-            int countA, int countB, int countC,
+            CountedIngredient inputA, CountedIngredient inputB, CountedIngredient inputC,
             int lapisRequirement) {
 
         this.id = id;
@@ -40,38 +37,22 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         this.inputB = inputB;
         this.inputC = inputC;
 
-        this.cA = countA;
-        this.cB = countB;
-        this.cC = countC;
-
         this.payment = lapisRequirement;
         this.result = resultEnchantment;
         this.resultLvl = enchantmentLevel;
     }
 
     // Inputs & Output
-    public Ingredient getInputA() {
+    public CountedIngredient getInputA() {
         return this.inputA;
     }
 
-    public Ingredient getInputB() {
+    public CountedIngredient getInputB() {
         return this.inputB;
     }
 
-    public Ingredient getInputC() {
+    public CountedIngredient getInputC() {
         return inputC;
-    }
-
-    public int getCountA() {
-        return this.cA;
-    }
-
-    public int getCountB() {
-        return this.cB;
-    }
-
-    public int getCountC() {
-        return this.cC;
     }
 
     public int getLapisRequirement() {
@@ -102,11 +83,8 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
         return inv.getStack(0).getItem() == InitItem.SYNTHETIC_ENCHANTMENT_DISC &&
                 getInputA().test(inv.getStack(2)) &&
-                getInputB().test(inv.getStack(3)) && // Ingredient Item Checks
+                getInputB().test(inv.getStack(3)) && // CountedIngredient Checks
                 getInputC().test(inv.getStack(4)) &&
-                getCountA() <= inv.getStack(2).getCount() &&
-                getCountB() <= inv.getStack(3).getCount() && // Ingredient Count Checks
-                getCountC() <= inv.getStack(4).getCount() &&
                 getLapisRequirement() <= inv.getStack(1).getCount(); // Lapis Count Check
     }
 
