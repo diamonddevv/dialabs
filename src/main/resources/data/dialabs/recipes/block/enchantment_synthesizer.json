@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "-@-",
+    "~#~",
+    "=e="
+  ],
+  "key": {
+    "-": {
+      "item": "minecraft:lapis_lazuli"
+    },
+    "@": {
+      "item": "minecraft:echo_shard"
+    },
+    "#": {
+      "item": "dialabs:staticite_ingot"
+    },
+    "e": {
+      "item": "minecraft:enchanting_table"
+    },
+    "=": {
+      "item": "dialabs:crystal_shard"
+    },
+    "~": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "result": {
+    "item": "dialabs:enchantment_synthesizer",
+    "count": 1
+  }
+}

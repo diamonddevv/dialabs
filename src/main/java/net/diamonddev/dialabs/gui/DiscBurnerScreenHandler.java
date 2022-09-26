@@ -2,7 +2,6 @@ package net.diamonddev.dialabs.gui;
 
 import net.diamonddev.dialabs.block.inventory.DiscBurnerInventory;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
-import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.enchantment.Enchantment;
@@ -11,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
@@ -27,9 +25,9 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
     private final World world;
     private final PlayerEntity playerEntity;
 
-    private boolean hasDisc;
     private Property xpRequirement;
     private boolean possibleCombination = true;
+    public boolean forceFail = false;
 
     public DiscBurnerScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
@@ -101,8 +99,27 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
 
     }
 
+    public boolean transferItem(ItemStack stack, int slotIndex) {
+        if (this.slots.get(slotIndex).getStack() != stack) return !super.insertItem(stack, slotIndex, slotIndex + 1, true);
+        return false;
+    }
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
+        this.onContentChanged(this.inventory);
+        Slot slot = this.slots.get(index);
+        if (slot.hasStack()) {
+            ItemStack stack = slot.getStack();
+
+            if (stack.getItem() instanceof SyntheticEnchantmentDiscItem && !slots.get(getInputBSlotIndex()).hasStack()) {
+                if (transferItem(stack, getInputBSlotIndex())) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (transferItem(stack, getInputASlotIndex())) {
+                    return ItemStack.EMPTY;
+            } else {
+                player.getInventory().insertStack(stack);
+            }
+        }
         return ItemStack.EMPTY;
     }
 
@@ -142,7 +159,8 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
             this.inventory.setStack(getOutputSlotIndex(), out);
         }
 
-        if (b.getItem() instanceof SyntheticEnchantmentDiscItem) {
+        if (!a.isEmpty() && b.getItem() instanceof SyntheticEnchantmentDiscItem && EnchantHelper.hasAnySyntheticEnchantmentStored(b)) {
+            forceFail = false;
 
             if (a.getItem() instanceof SyntheticEnchantmentDiscItem) {
                 Map<Enchantment, Integer> mappedAdditiveEnchants = EnchantHelper.getMappedStoredEnchantments(b);
@@ -166,14 +184,21 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
                 this.possibleCombination = allCompatible && allAcceptable;
 
                 if (allAcceptable && allCompatible) {
+                    forceFail = false;
                     out = a.copy();
                     EnchantHelper.addAllEnchantments(out, mappedDiscEnchants);
                     cost = EnchantHelper.getXpCostForAddingEnchants(a, mappedDiscEnchants);
                     this.inventory.setStack(getOutputSlotIndex(), out);
                     this.xpRequirement.set(cost);
+                } else {
+                    forceFail = true;
                 }
 
             }
+        } else {
+            out = ItemStack.EMPTY;
+            this.inventory.setStack(getOutputSlotIndex(), out);
+            forceFail = !b.isEmpty() && b.getItem() instanceof SyntheticEnchantmentDiscItem && !EnchantHelper.hasAnySyntheticEnchantmentStored(b);
         }
     }
 

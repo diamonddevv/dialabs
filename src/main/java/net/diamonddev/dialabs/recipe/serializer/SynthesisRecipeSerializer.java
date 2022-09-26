@@ -29,6 +29,10 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         CountedIngredient inputB = CountedIngredient.fromJson(format.inputB);
         CountedIngredient inputC = CountedIngredient.fromJson(format.inputC);
 
+        if (inputA == CountedIngredient.EMPTY && inputB == CountedIngredient.EMPTY && inputC == CountedIngredient.EMPTY) {
+            throw new JsonSyntaxException("Recipe '" + id + "' invalid; No defined ingredients found!");
+        }
+
         int lapis = format.lapis_count;
         int level = format.level;
         Enchantment ench = readEnchantment(format);

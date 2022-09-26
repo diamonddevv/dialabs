@@ -2,7 +2,7 @@ package net.diamonddev.dialabs.item;
 
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.InitItem;
-import net.diamonddev.dialabs.util.CollectionUtil;
+import net.diamonddev.dialabs.util.UtilityHelper;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.diamonddev.dialabs.util.ItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -59,7 +59,7 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
 
             // External Entries
             for (Enchantment enchant : externalEntries) {
-                Collection<Integer> levelData = CollectionUtil.getEachIntegerRange(enchant.getMinLevel(), enchant.getMaxLevel());
+                Collection<Integer> levelData = UtilityHelper.getEachIntegerRange(enchant.getMinLevel(), enchant.getMaxLevel());
                 for (Integer i : levelData) {
                     stacks.add(forEnchantment(new EnchantmentLevelEntry(enchant, i)));
                 }

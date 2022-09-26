@@ -9,7 +9,7 @@ import net.minecraft.util.collection.DefaultedList;
 /**
  * A simple {@code Inventory} implementation with only default methods + an item list getter.
  *
- * Originally by Juuz
+ * Originally by Juuz, edited by DiamondDev
  */
 public interface ImplementedInventory extends Inventory {
 
@@ -135,4 +135,5 @@ public interface ImplementedInventory extends Inventory {
         stack.decrement(decrement);
         this.setStack(slot, stack);
     }
+
 }

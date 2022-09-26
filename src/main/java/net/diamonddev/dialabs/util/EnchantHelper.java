@@ -79,7 +79,7 @@ public class EnchantHelper {
     public static void storeAllEnchantments(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
         mappedEnchantsToAdd.forEach((enchantment, integer) -> {
             if (hasEnchantmentStored(stack, enchantment)) {
-                if (integer >= getEnchantmentLevel(stack, enchantment)) {
+                if (integer >= getStoredEnchantmentLevel(stack, enchantment)) {
                     upgradeStoredEnchantment(stack, enchantment);
                 }
             } else {
@@ -112,21 +112,27 @@ public class EnchantHelper {
     public static void upgradeStoredEnchantment(ItemStack stack, Enchantment enchantment) {
         Map<Enchantment, Integer> existingMap = getMappedStoredEnchantments(stack);
         int existingLevel = existingMap.get(enchantment);
-        if (existingLevel >= enchantment.getMaxLevel()) {
-            existingMap.replace(enchantment, existingLevel + 1);
+        if (existingLevel < enchantment.getMaxLevel()) {
+            existingMap.put(enchantment, existingLevel + 1);
         }
+        setStoredEnchantsFromMap(existingMap, stack);
     }
 
     public static void upgradeExistingEnchantment(ItemStack stack, Enchantment enchantment) {
         Map<Enchantment, Integer> existingMap = EnchantmentHelper.get(stack);
         int existingLevel = existingMap.get(enchantment);
-        if (existingLevel >= enchantment.getMaxLevel()) {
+        if (existingLevel < enchantment.getMaxLevel()) {
             existingMap.put(enchantment, existingLevel + 1);
         }
+        EnchantmentHelper.set(existingMap, stack);
     }
 
     public static int getEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
         return EnchantmentHelper.getLevel(enchantment, stack);
+    }
+
+    public static int getStoredEnchantmentLevel(ItemStack stack, Enchantment enchantment) {
+        return getMappedStoredEnchantments(stack).get(enchantment);
     }
 
     public static int getXpCostForAddingEnchants(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
@@ -154,7 +160,7 @@ public class EnchantHelper {
         boolean bl = true;
         for (Enchantment e : map1.keySet()) {
             for (Enchantment e2 : map2.keySet()) {
-                bl = e.canCombine(e2);
+                bl = canMergeEnchants(e, e2);
                 if (!bl) {
                     break;
                 }
@@ -164,6 +170,10 @@ public class EnchantHelper {
             }
         }
         return bl;
+    }
+
+    public static boolean canMergeEnchants(Enchantment ench1, Enchantment ench2) {
+        return ench1.canCombine(ench2) || ench1 == ench2;
     }
 
     public static boolean allAcceptable(Map<Enchantment, Integer> map, ItemStack stack) {
@@ -176,4 +186,24 @@ public class EnchantHelper {
         }
         return bl;
     }
+
+    public static NbtList mappedEnchantmentsToNbtList(Map<Enchantment, Integer> enchantMap) {
+        NbtList nbt = new NbtList();
+
+        for (Map.Entry<Enchantment, Integer> mappedEntry : enchantMap.entrySet()) {
+            Enchantment enchant = mappedEntry.getKey();
+            if (enchant != null) {
+                Integer level = mappedEntry.getValue();
+                nbt.add(EnchantmentHelper.createNbt(EnchantmentHelper.getEnchantmentId(enchant), level));
+            }
+        }
+
+        return nbt;
+    }
+
+    public static void setStoredEnchantsFromMap(Map<Enchantment, Integer> enchantMap, ItemStack stack) {
+        NbtList nbt = mappedEnchantmentsToNbtList(enchantMap);
+        stack.getOrCreateNbt().put(STORED_ENCHANTMENTS_KEY, nbt);
+    }
+
 }

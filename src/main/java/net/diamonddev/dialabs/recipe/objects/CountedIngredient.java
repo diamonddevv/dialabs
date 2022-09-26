@@ -1,6 +1,5 @@
 package net.diamonddev.dialabs.recipe.objects;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
@@ -10,6 +9,8 @@ import net.minecraft.recipe.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
 public class CountedIngredient {
+
+    public static final CountedIngredient EMPTY = new CountedIngredient(Ingredient.EMPTY, 0);
 
     private static final String INGREDIENT_KEY = "ingredient";
     private static final String COUNT_KEY = "count";
@@ -50,13 +51,14 @@ public class CountedIngredient {
     public static CountedIngredient fromJson(@Nullable JsonElement json) {
         Ingredient ingredient;
         int count;
+
         if (json != null && !json.isJsonNull()) {
             if (json.isJsonObject()) {
                 JsonObject obj = json.getAsJsonObject();
                if (obj.has(INGREDIENT_KEY)) {
                    ingredient = Ingredient.fromJson(obj.get(INGREDIENT_KEY));
                    count = obj.has(COUNT_KEY) ? obj.get(COUNT_KEY).getAsInt() : 0;
-                   if (count == 0) count = 1; // todo: fix the bug here
+                   if (count == 0) count = 1;
                    return new CountedIngredient(ingredient, count);
                } else {
                    throw new JsonSyntaxException("Expected Ingredient Object, but none was found! (This could be because a normal Ingredient Format was used - this will not work, use a CountedIngredient Object Instead.)");
@@ -65,7 +67,8 @@ public class CountedIngredient {
                 throw new JsonSyntaxException("JSON was not null, but an Object was not found!");
             }
         }
-        throw new JsonSyntaxException("Expected CountedIngredient JSON Object! (JSON is apparently null)");
+
+        return EMPTY;
     }
     public static CountedIngredient fromPacket(PacketByteBuf buf) {
         Ingredient ingredient = Ingredient.fromPacket(buf);

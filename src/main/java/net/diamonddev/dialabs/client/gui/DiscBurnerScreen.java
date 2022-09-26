@@ -56,15 +56,13 @@ public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
         int fillColor = this.handler.canTake() ?
                 ColorHelper.Argb.getArgb(0, 0, 255, 0) : ColorHelper.Argb.getArgb(0, 255, 0, 0);
 
-        if (text != null) {
-            fill(matrices, x + 18, y + 28, x + 28 + textRenderer.getWidth(text), y + 32,
-                    ColorHelper.Argb.getArgb(0, 8, 8, 8));
-            drawTextWithShadow(matrices, this.textRenderer, text, x + 18, y + 28, fillColor);
+        if (text != null && !this.handler.forceFail) {
+            drawTextWithShadow(matrices, this.textRenderer, text, titleX, y + 28, fillColor);
         }
     }
 
     public void drawCrossedOutputArrow(MatrixStack matrices) {
-        if (!this.handler.isPossibleCombination() && this.handler.isAllSlotsRequiredFilled()) {
+        if ((!this.handler.isPossibleCombination() && this.handler.isAllSlotsRequiredFilled()) || this.handler.forceFail) {
             int i = (this.width - this.backgroundWidth) / 2;
             int j = (this.height - this.backgroundHeight) / 2;
             this.drawTexture(matrices, i + 99, j + 45, this.backgroundWidth, 0, 28, 21);
