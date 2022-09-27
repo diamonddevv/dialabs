@@ -7,7 +7,6 @@ import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
-import net.diamonddev.dialabs.util.UtilityHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -18,7 +17,6 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.world.World;
 
-import java.util.Collection;
 import java.util.Optional;
 
 public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
@@ -134,7 +132,6 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     }
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
-        this.onContentChanged(this.inventory);
         Slot slot = this.slots.get(index);
         if (slot.hasStack()) {
             ItemStack stack = slot.getStack();
@@ -149,6 +146,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
                 }
             } else {
                 player.getInventory().insertStack(stack);
+                this.inventory.markDirty();
             }
         }
         return ItemStack.EMPTY;

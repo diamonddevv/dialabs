@@ -31,6 +31,7 @@ public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
 
         drawXpRequirement(matrices);
         drawCrossedOutputArrow(matrices);
+        drawXpOrb(matrices);
     }
 
 
@@ -50,14 +51,14 @@ public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
         int requirement = this.handler.getXpRequirementProperty().get();
         Text text = null;
         if (this.handler.isAllSlotsRequiredFilled()) {
-            text = Text.translatable("block.dialabs.disc_burner.ui.xp", requirement);
+            text = Text.literal(String.valueOf(requirement));
         }
 
         int fillColor = this.handler.canTake() ?
                 ColorHelper.Argb.getArgb(0, 0, 255, 0) : ColorHelper.Argb.getArgb(0, 255, 0, 0);
 
         if (text != null && !this.handler.forceFail) {
-            drawTextWithShadow(matrices, this.textRenderer, text, titleX, y + 28, fillColor);
+            this.textRenderer.drawWithShadow(matrices, text, x + 80, y + 32, fillColor);
         }
     }
 
@@ -66,6 +67,14 @@ public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
             int i = (this.width - this.backgroundWidth) / 2;
             int j = (this.height - this.backgroundHeight) / 2;
             this.drawTexture(matrices, i + 99, j + 45, this.backgroundWidth, 0, 28, 21);
+        }
+    }
+
+    public void drawXpOrb(MatrixStack matrices) {
+        if (this.handler.hasOutput() || true) {
+            int i = (this.width - this.backgroundWidth) / 2;
+            int j = (this.height - this.backgroundHeight) / 2;
+            this.drawTexture(matrices, i + 51, j + 27, this.backgroundWidth, 21, 16, 16);
         }
     }
 }

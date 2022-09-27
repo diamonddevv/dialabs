@@ -41,6 +41,8 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
         this.playerEntity = playerInventory.player;
 
         this.inventory = new DiscBurnerInventory(3) {
+
+
             public void markDirty() {
                 super.markDirty();
                 DiscBurnerScreenHandler.this.onContentChanged(this);
@@ -105,7 +107,6 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
     }
     @Override
     public ItemStack transferSlot(PlayerEntity player, int index) {
-        this.onContentChanged(this.inventory);
         Slot slot = this.slots.get(index);
         if (slot.hasStack()) {
             ItemStack stack = slot.getStack();
@@ -115,11 +116,13 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
                     return ItemStack.EMPTY;
                 }
             } else if (transferItem(stack, getInputASlotIndex())) {
-                    return ItemStack.EMPTY;
+                return ItemStack.EMPTY;
             } else {
                 player.getInventory().insertStack(stack);
+                this.inventory.markDirty();
             }
         }
+        this.inventory.markDirty();
         return ItemStack.EMPTY;
     }
 
@@ -152,10 +155,12 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
         int cost;
         ItemStack a = inventory.getStack(getInputASlotIndex());
         ItemStack b = inventory.getStack(getInputBSlotIndex());
-        ItemStack out;
+        ItemStack out = ItemStack.EMPTY;
+
+        this.inventory.setStack(getOutputSlotIndex(), out);
+        forceFail = false;
 
         if (a.isEmpty() || b.isEmpty()) {
-            out = ItemStack.EMPTY;
             this.inventory.setStack(getOutputSlotIndex(), out);
         }
 
@@ -183,7 +188,7 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
 
                 this.possibleCombination = allCompatible && allAcceptable;
 
-                if (allAcceptable && allCompatible) {
+                if (possibleCombination) {
                     forceFail = false;
                     out = a.copy();
                     EnchantHelper.addAllEnchantments(out, mappedDiscEnchants);
@@ -196,7 +201,6 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
 
             }
         } else {
-            out = ItemStack.EMPTY;
             this.inventory.setStack(getOutputSlotIndex(), out);
             forceFail = !b.isEmpty() && b.getItem() instanceof SyntheticEnchantmentDiscItem && !EnchantHelper.hasAnySyntheticEnchantmentStored(b);
         }
@@ -221,6 +225,9 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
         return possibleCombination;
     }
 
+    public boolean hasOutput() {
+        return !this.inventory.getStack(getOutputSlotIndex()).isEmpty();
+    }
     public Property getXpRequirementProperty() {
         return xpRequirement;
     }
