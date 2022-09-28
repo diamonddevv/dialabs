@@ -159,17 +159,19 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
 
         this.inventory.setStack(getOutputSlotIndex(), out);
         forceFail = false;
+        boolean isCreative = this.playerEntity.getAbilities().creativeMode;
 
         if (a.isEmpty() || b.isEmpty()) {
             this.inventory.setStack(getOutputSlotIndex(), out);
         }
 
-        if (!a.isEmpty() && b.getItem() instanceof SyntheticEnchantmentDiscItem && EnchantHelper.hasAnySyntheticEnchantmentStored(b)) {
+        if ((!a.isEmpty() && b.getItem() instanceof SyntheticEnchantmentDiscItem && EnchantHelper.hasAnySyntheticEnchantmentStored(b)) || (isCreative && isAllSlotsRequiredFilled())) {
             forceFail = false;
 
             if (a.getItem() instanceof SyntheticEnchantmentDiscItem) {
                 Map<Enchantment, Integer> mappedAdditiveEnchants = EnchantHelper.getMappedStoredEnchantments(b);
                 out = a.copy();
+                if (!isCreative) out.setCount(1);
                 EnchantHelper.storeAllEnchantments(out, mappedAdditiveEnchants);
                 this.inventory.setStack(getOutputSlotIndex(), out);
                 cost = EnchantHelper.getXpCostForAddingEnchants(a, mappedAdditiveEnchants);
@@ -186,11 +188,12 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
                     allCompatible = EnchantHelper.allCompatible(mappedAEnchants, mappedDiscEnchants);
                 }
 
-                this.possibleCombination = allCompatible && allAcceptable;
+                this.possibleCombination = (allCompatible && allAcceptable) || (isCreative && isAllSlotsRequiredFilled());
 
                 if (possibleCombination) {
                     forceFail = false;
                     out = a.copy();
+                    if (!isCreative) out.setCount(1);
                     EnchantHelper.addAllEnchantments(out, mappedDiscEnchants);
                     cost = EnchantHelper.getXpCostForAddingEnchants(a, mappedDiscEnchants);
                     this.inventory.setStack(getOutputSlotIndex(), out);

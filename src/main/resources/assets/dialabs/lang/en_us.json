@@ -10,7 +10,7 @@
 
   "block.dialabs.disc_burner": "Synthetic Disc Burner",
   "block.dialabs.disc_burner.ui.title": "Apply Synthetic Enchantments",
-  "block.dialabs.disc_burner.ui.xp": "Experience Levels Required: %s",
+  "block.dialabs.disc_burner.ui.xp" : "%s Levels",
 
   "item.dialabs.strength_tome": "Tome of Strength",
   "item.dialabs.defense_tome": "Tome of Protection",
