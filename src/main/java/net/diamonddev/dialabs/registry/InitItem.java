@@ -3,7 +3,7 @@ package net.diamonddev.dialabs.registry;
 
 import net.diamonddev.dialabs.api.Identifier;
 import net.diamonddev.dialabs.item.*;
-import net.diamonddev.dialabs.item.SynthesisTranslatedTagItem;
+import net.diamonddev.dialabs.item.SyntheticEnchantmentTomeItem;
 import net.diamonddev.dialabs.util.ItemGroups;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
@@ -22,14 +22,14 @@ public class InitItem {
     public static final LightningBottleItem LIGHTNING_BOTTLE = new LightningBottleItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(8));
 
     public static final SyntheticEnchantmentDiscItem SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDiscItem();
-    public static final SynthesisTranslatedTagItem ASPECTION_TOME = new SynthesisTranslatedTagItem(
-            "synthesis.dialabs.aspection_tome", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
-    public static final SynthesisTranslatedTagItem DEFENSE_TOME = new SynthesisTranslatedTagItem(
-            "synthesis.dialabs.defense_tome", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
-    public static final SynthesisTranslatedTagItem DESTRUCTIVE_TOME = new SynthesisTranslatedTagItem(
-            "synthesis.dialabs.destructive_tome", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
-    public static final SynthesisTranslatedTagItem STRENGTH_TOME = new SynthesisTranslatedTagItem(
-            "synthesis.dialabs.strength_tome", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
+    public static final SyntheticEnchantmentTomeItem ASPECTION_TOME = new SyntheticEnchantmentTomeItem(
+            "aspection", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
+    public static final SyntheticEnchantmentTomeItem DEFENSE_TOME = new SyntheticEnchantmentTomeItem(
+            "defense", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
+    public static final SyntheticEnchantmentTomeItem DESTRUCTIVE_TOME = new SyntheticEnchantmentTomeItem(
+            "destructive", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
+    public static final SyntheticEnchantmentTomeItem STRENGTH_TOME = new SyntheticEnchantmentTomeItem(
+            "strength", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
 
     public static void initializeItem() {
 
