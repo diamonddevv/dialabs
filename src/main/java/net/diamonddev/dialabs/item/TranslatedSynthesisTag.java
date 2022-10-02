@@ -1,5 +1,5 @@
 package net.diamonddev.dialabs.item;
 
-public interface TranslatedTagSynthesisItem {
+public interface TranslatedSynthesisTag {
     String getSynthesisUiTranslationKey();
 }

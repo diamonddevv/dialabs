@@ -55,9 +55,9 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
 
     @Override // Turns Recipe into PacketByteBuf
     public void write(PacketByteBuf buf, SynthesisRecipe recipe) {
-        recipe.getInputA().writeToPacketBuf(buf);
-        recipe.getInputB().writeToPacketBuf(buf);
-        recipe.getInputC().writeToPacketBuf(buf);
+        recipe.getInputA().toPacket(buf);
+        recipe.getInputB().toPacket(buf);
+        recipe.getInputC().toPacket(buf);
 
         buf.writeInt(recipe.getLapisRequirement());
         buf.writeRegistryValue(Registry.ENCHANTMENT, recipe.getResultEnchantment());

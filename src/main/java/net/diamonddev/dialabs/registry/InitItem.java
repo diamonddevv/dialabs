@@ -2,9 +2,10 @@ package net.diamonddev.dialabs.registry;
 
 
 import net.diamonddev.dialabs.api.Identifier;
-import net.diamonddev.dialabs.item.*;
-import net.diamonddev.dialabs.item.SyntheticEnchantmentTomeItem;
-import net.diamonddev.dialabs.util.ItemGroups;
+import net.diamonddev.dialabs.item.CrystalShardItem;
+import net.diamonddev.dialabs.item.LightningBottleItem;
+import net.diamonddev.dialabs.item.StaticCoreItem;
+import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -22,14 +23,6 @@ public class InitItem {
     public static final LightningBottleItem LIGHTNING_BOTTLE = new LightningBottleItem(new FabricItemSettings().group(ItemGroup.MISC).maxCount(8));
 
     public static final SyntheticEnchantmentDiscItem SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDiscItem();
-    public static final SyntheticEnchantmentTomeItem ASPECTION_TOME = new SyntheticEnchantmentTomeItem(
-            "aspection", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
-    public static final SyntheticEnchantmentTomeItem DEFENSE_TOME = new SyntheticEnchantmentTomeItem(
-            "defense", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
-    public static final SyntheticEnchantmentTomeItem DESTRUCTIVE_TOME = new SyntheticEnchantmentTomeItem(
-            "destructive", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
-    public static final SyntheticEnchantmentTomeItem STRENGTH_TOME = new SyntheticEnchantmentTomeItem(
-            "strength", new FabricItemSettings().group(ItemGroups.SYNTHESIS_INGREDIENTS));
 
     public static void initializeItem() {
 
@@ -42,10 +35,6 @@ public class InitItem {
         Registry.register(Registry.ITEM, new Identifier("lightning_bottle"), LIGHTNING_BOTTLE);
 
         Registry.register(Registry.ITEM, new Identifier("synthetic_enchantment_disc"), SYNTHETIC_ENCHANTMENT_DISC);
-        Registry.register(Registry.ITEM, new Identifier("aspection_tome"), ASPECTION_TOME);
-        Registry.register(Registry.ITEM, new Identifier("defense_tome"), DEFENSE_TOME);
-        Registry.register(Registry.ITEM, new Identifier("destructive_tome"), DESTRUCTIVE_TOME);
-        Registry.register(Registry.ITEM, new Identifier("strength_tome"), STRENGTH_TOME);
 
     }
 }

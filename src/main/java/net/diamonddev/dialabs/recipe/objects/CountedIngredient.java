@@ -75,7 +75,7 @@ public class CountedIngredient {
         int count = buf.readInt();
         return new CountedIngredient(ingredient, count);
     }
-    public void writeToPacketBuf(PacketByteBuf buf) {
+    public void toPacket(PacketByteBuf buf) {
         this.ing.write(buf);
         buf.writeInt(this.cnt);
     }

@@ -1,5 +1,6 @@
 package net.diamonddev.dialabs;
 
+import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.util.DiaLabsGamerules;
 import net.diamonddev.dialabs.registry.*;
 import net.fabricmc.api.ModInitializer;
@@ -26,6 +27,8 @@ public class DiaLabs implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		long startInitTime = System.currentTimeMillis();
+
+		SyntheticEnchantment.makeSyntheticDiscItemsFromTag();
 
 
 		InitItem.initializeItem();

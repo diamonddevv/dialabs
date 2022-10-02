@@ -1,8 +1,9 @@
 {
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "top": "dialabs:block/enchantment_synthesizer_top",
-    "bottom": "dialabs:block/enchantment_synthesizer_bottom",
-    "side": "dialabs:block/enchantment_synthesizer_side"
-  }
+	"parent": "minecraft:block/enchanting_table",
+	"textures": {
+		"particle": "dialabs:block/enchantment_synthesizer_bottom",
+		"bottom": "dialabs:block/enchantment_synthesizer_bottom",
+		"top": "dialabs:block/enchantment_synthesizer_top",
+		"side": "dialabs:block/enchantment_synthesizer_side"
+	}
 }

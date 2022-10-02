@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "dialabs:block/defense_tome"
+    },
+    "facing=east": {
+      "model": "dialabs:block/defense_tome",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "dialabs:block/defense_tome",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "dialabs:block/defense_tome",
+      "y": 270
+    }
+  }
+}

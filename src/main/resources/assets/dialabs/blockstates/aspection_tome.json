@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "dialabs:block/aspection_tome"
+    },
+    "facing=east": {
+      "model": "dialabs:block/aspection_tome",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "dialabs:block/aspection_tome",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "dialabs:block/aspection_tome",
+      "y": 270
+    }
+  }
+}

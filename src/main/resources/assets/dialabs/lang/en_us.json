@@ -12,10 +12,10 @@
   "block.dialabs.disc_burner.ui.title": "Apply Synthetic Enchantments",
   "block.dialabs.disc_burner.ui.xp" : "%s Levels",
 
-  "item.dialabs.strength_tome": "Tome of Strength",
-  "item.dialabs.defense_tome": "Tome of Protection",
-  "item.dialabs.aspection_tome": "Tome of Aspection",
-  "item.dialabs.destructive_tome": "Tome of Destruction",
+  "block.dialabs.strength_tome": "Tome of Strength",
+  "block.dialabs.defense_tome": "Tome of Protection",
+  "block.dialabs.aspection_tome": "Tome of Aspection",
+  "block.dialabs.destructive_tome": "Tome of Destruction",
 
   "synthesis.dialabs.empty": "%s",
   "synthesis.dialabs.strength_tome": "Strength",

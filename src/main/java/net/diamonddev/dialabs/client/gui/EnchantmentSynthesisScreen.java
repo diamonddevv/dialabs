@@ -3,7 +3,7 @@ package net.diamonddev.dialabs.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.diamonddev.dialabs.api.Identifier;
 import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
-import net.diamonddev.dialabs.item.TranslatedTagSynthesisItem;
+import net.diamonddev.dialabs.item.TranslatedSynthesisTag;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
@@ -60,8 +60,8 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
     }
     public static Text getText(TextRenderer renderer, ItemStack stack) {
         Text key;
-        if (stack.getItem() instanceof TranslatedTagSynthesisItem seii) {
-            key = Text.translatable(seii.getSynthesisUiTranslationKey());
+        if (stack.getItem() instanceof TranslatedSynthesisTag tst) {
+            key = Text.translatable(tst.getSynthesisUiTranslationKey());
         } else if (stack.getItem() instanceof AirBlockItem) {
             StringBuilder stringBuilder = new StringBuilder();
             Random r = new Random();
