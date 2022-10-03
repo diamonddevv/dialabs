@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class DiscBurnerBlock extends Block {
+public class DiscBurnerBlock extends Block { //todo: rotation, voxelshape
 
     public DiscBurnerBlock() {
         super(FabricBlockSettings.of(Material.METAL).strength(5f, 8f));

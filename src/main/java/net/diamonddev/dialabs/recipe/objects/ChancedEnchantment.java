@@ -96,11 +96,15 @@ public class ChancedEnchantment {
     }
 
     public static ChancedEnchantment fromPacket(PacketByteBuf buf) {
-       //todo
-       return null;
+       Enchantment e = buf.readRegistryValue(Registry.ENCHANTMENT);
+       int i = buf.readInt();
+       float f = buf.readFloat();
+       return new ChancedEnchantment(e, i, f);
     }
 
-    public static void toPacket(PacketByteBuf buf) {
-        //todo
+    public void toPacket(PacketByteBuf buf) {
+        buf.writeRegistryValue(Registry.ENCHANTMENT, this.enchantment);
+        buf.writeInt(this.level);
+        buf.writeFloat(this.chance);
     }
 }

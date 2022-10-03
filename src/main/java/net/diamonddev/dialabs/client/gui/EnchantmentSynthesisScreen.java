@@ -12,6 +12,7 @@ import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.AirBlockItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Style;
@@ -62,13 +63,15 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         Text key;
         if (stack.getItem() instanceof TranslatedSynthesisTag tst) {
             key = Text.translatable(tst.getSynthesisUiTranslationKey());
-        } else if (stack.getItem() instanceof AirBlockItem) {
-            StringBuilder stringBuilder = new StringBuilder();
-            Random r = new Random();
-            for (int i = r.nextInt(80); i > 0; i--) {
-                stringBuilder.append((char) r.nextInt(65, 90));
+        } else if (stack.getItem() instanceof BlockItem bi) {
+            if (bi.getBlock() instanceof TranslatedSynthesisTag tst) {
+                key = Text.translatable(tst.getSynthesisUiTranslationKey());
             }
-            key = Text.translatable("synthesis.dialabs.empty", stringBuilder);
+            else {
+                key = getRandomEnchantText();
+            }
+        } else if (stack.getItem() instanceof AirBlockItem) {
+            key = getRandomEnchantText();
         } else {
             key = Text.translatable(stack.getTranslationKey());
         }
@@ -76,7 +79,14 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         return Text.literal(stringVisitable.getString()).setStyle(TEXT_STYLE);
     }
 
-
+    public static Text getRandomEnchantText() {
+        StringBuilder stringBuilder = new StringBuilder();
+        Random r = new Random();
+        for (int i = r.nextInt(80); i > 0; i--) {
+            stringBuilder.append((char) r.nextInt(65, 90));
+        }
+        return Text.translatable("synthesis.dialabs.empty", stringBuilder);
+    }
     public void drawEnchantmentText(MatrixStack matrices) {
         for (int i = 0; i < 3; i++) {
             ItemStack stack = this.handler.getInventory().getStack(i + 2);
