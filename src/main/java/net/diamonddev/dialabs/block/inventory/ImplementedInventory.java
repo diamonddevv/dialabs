@@ -1,4 +1,4 @@
-package net.diamonddev.dialabs.interfaces;
+package net.diamonddev.dialabs.block.inventory;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;

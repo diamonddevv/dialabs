@@ -1,6 +1,5 @@
 package net.diamonddev.dialabs.block.inventory;
 
-import net.diamonddev.dialabs.interfaces.ImplementedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.collection.DefaultedList;
 

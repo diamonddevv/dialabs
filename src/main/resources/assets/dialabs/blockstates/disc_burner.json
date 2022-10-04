@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "dialabs:block/disc_burner"
+    },
+    "facing=east": {
+      "model": "dialabs:block/disc_burner",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "dialabs:block/disc_burner",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "dialabs:block/disc_burner",
+      "y": 270
     }
   }
 }
