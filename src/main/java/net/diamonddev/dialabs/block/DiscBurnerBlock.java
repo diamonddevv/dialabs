@@ -15,13 +15,17 @@ import net.minecraft.state.StateManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class DiscBurnerBlock extends HorizontalRotationalBlock implements HorizontalRotationModelShape { //todo: voxelshape
+import java.util.stream.Stream;
+
+public class DiscBurnerBlock extends HorizontalRotationalBlock {
 
     public DiscBurnerBlock() {
         super(FabricBlockSettings.of(Material.METAL).strength(5f, 8f));
@@ -50,21 +54,45 @@ public class DiscBurnerBlock extends HorizontalRotationalBlock implements Horizo
 
     @Override
     public VoxelShape getNorthShape() {
-        return null;
+        return Stream.of(
+                Block.createCuboidShape(7, 2, 9, 9, 9, 10),
+                Block.createCuboidShape(7, 2, 6, 9, 11, 7),
+                Block.createCuboidShape(3, 9, 3, 13, 11, 13),
+                Block.createCuboidShape(2, 0, 3, 14, 2, 13),
+                Block.createCuboidShape(6, 2, 7, 10, 10, 9)
+        ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
     }
 
     @Override
     public VoxelShape getEastShape() {
-        return null;
+        return Stream.of(
+                Block.createCuboidShape(6, 2, 7, 7, 9, 9),
+                Block.createCuboidShape(9, 2, 7, 10, 11, 9),
+                Block.createCuboidShape(4.530733729460355, 8.695518130045151, 3.000000000000001, 14.530733729460358, 10.695518130045151, 13),
+                Block.createCuboidShape(3, 0, 2, 13, 2, 14),
+                Block.createCuboidShape(7, 2, 6, 9, 10, 10)
+        ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
     }
 
     @Override
     public VoxelShape getSouthShape() {
-        return null;
+        return Stream.of(
+                Block.createCuboidShape(7, 2, 6, 9, 9, 7),
+                Block.createCuboidShape(7, 2, 9, 9, 11, 10),
+                Block.createCuboidShape(3, 8.695518130045151, 4.530733729460355, 13, 10.695518130045151, 14.530733729460358),
+                Block.createCuboidShape(2, 0, 3, 14, 2, 13),
+                Block.createCuboidShape(6, 2, 7, 10, 10, 9)
+        ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
     }
 
     @Override
     public VoxelShape getWestShape() {
-        return null;
+        return Stream.of(
+                Block.createCuboidShape(9, 2, 7, 10, 9, 9),
+                Block.createCuboidShape(6, 2, 7, 7, 11, 9),
+                Block.createCuboidShape(1.4692662705396415, 8.695518130045151, 3, 11.469266270539645, 10.695518130045151, 13),
+                Block.createCuboidShape(3, 0, 2, 13, 2, 14),
+                Block.createCuboidShape(7, 2, 6, 9, 10, 10)
+        ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
     }
 }

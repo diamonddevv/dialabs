@@ -28,8 +28,6 @@ public class DiaLabs implements ModInitializer {
 	public void onInitialize() {
 		long startInitTime = System.currentTimeMillis();
 
-		SyntheticEnchantment.makeSyntheticDiscItemsFromTag();
-
 
 		InitItem.initializeItem();
         InitEffects.initializeEffects();

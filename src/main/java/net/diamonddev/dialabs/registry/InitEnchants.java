@@ -3,6 +3,7 @@ package net.diamonddev.dialabs.registry;
 
 import net.diamonddev.dialabs.api.Identifier;
 import net.diamonddev.dialabs.enchant.HarvesterEnchantment;
+import net.diamonddev.dialabs.enchant.SoulAspectEnchantment;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.enchant.WitheredAspectEnchantment;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
@@ -15,6 +16,7 @@ public class InitEnchants {
 
     public static final Enchantment WITHERED_ASPECT = new WitheredAspectEnchantment();
     public static final Enchantment HARVESTER = new HarvesterEnchantment();
+    public static final Enchantment SOUL_ASPECT = new SoulAspectEnchantment();
 
 
 
@@ -23,16 +25,18 @@ public class InitEnchants {
         // Register new Enchantments
         Registry.register(Registry.ENCHANTMENT, new Identifier("withered_aspect"), WITHERED_ASPECT);
         Registry.register(Registry.ENCHANTMENT, new Identifier("harvester"), HARVESTER);
+        Registry.register(Registry.ENCHANTMENT, new Identifier("soul_aspect"), SOUL_ASPECT);
 
-        // Create new Synthetic Discs for existing enchantments
-        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.MENDING);
+//        // Create new Synthetic Discs for existing enchantments todo: make recipes, this is a future me problem
+//        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.MENDING);
         SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);
-        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.THORNS);
+//        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.THORNS);
 
-        // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already
-        SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");
+//        // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already
+//        SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");
 
         // Register List of Synthetics
+        SyntheticEnchantment.makeSyntheticDiscItemsFromTag(); // todo: fix pls
         createValidSyntheticEnchantmentsList();
     }
 

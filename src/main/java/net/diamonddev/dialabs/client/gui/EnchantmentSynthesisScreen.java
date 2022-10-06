@@ -59,15 +59,14 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         // The title was slightly too high
         titleY = titleY - 2;
     }
-    public static Text getText(TextRenderer renderer, ItemStack stack) {
+    public static Text getText(TextRenderer renderer, ItemStack stack) { // todo: add tag
         Text key;
         if (stack.getItem() instanceof TranslatedSynthesisTag tst) {
             key = Text.translatable(tst.getSynthesisUiTranslationKey());
         } else if (stack.getItem() instanceof BlockItem bi) {
             if (bi.getBlock() instanceof TranslatedSynthesisTag tst) {
                 key = Text.translatable(tst.getSynthesisUiTranslationKey());
-            }
-            else {
+            } else {
                 key = getRandomEnchantText();
             }
         } else if (stack.getItem() instanceof AirBlockItem) {

@@ -21,25 +21,12 @@ import net.minecraft.world.BlockView;
 
 import java.util.stream.Stream;
 
-public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock implements TranslatedSynthesisTag, Wearable, HorizontalRotationModelShape {
+public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock implements TranslatedSynthesisTag, Wearable {
 
 
     private final String key;
     public static final FabricItemSettings TOME_ITEM_SETTINGS = new FabricItemSettings()
             .group(ItemGroup.MISC).equipmentSlot(new TomeEquipmentSlotProvider());
-
-
-    @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        // Generated VoxelShape with Blockbench and Modding Utils Plugin
-        // Its Imperfect on rotations, so i might fix it or just make it a square that fits each rotation. I don't know, i doubt it matters much
-        return switch (state.get(FACING)) {
-            case SOUTH -> getSouthShape();
-            case WEST -> getWestShape();
-            case EAST -> getEastShape();
-            default -> getNorthShape();
-        };
-    }
 
     public SyntheticEnchantmentTomeBlock(String typeKey) {
         super(FabricBlockSettings.of(Material.DECORATION));

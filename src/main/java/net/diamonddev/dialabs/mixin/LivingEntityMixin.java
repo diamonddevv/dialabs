@@ -14,6 +14,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -33,6 +34,8 @@ public abstract class LivingEntityMixin extends Entity {
     public LivingEntityMixin(EntityType<?> type, World world) {
         super(type, world);
     }
+
+    Random r = new Random();
 
     @Shadow
     public abstract boolean hasStatusEffect(StatusEffect effect);
@@ -92,6 +95,20 @@ public abstract class LivingEntityMixin extends Entity {
                     int amount = this.getXpToDrop();
                     new ExperienceOrbEntity(this.world, this.getX(), this.getY(), this.getZ(), amount);
                 }
+            }
+        }
+    }
+
+    @Inject(at = @At("HEAD"), method = "onDeath")
+    private void dialabs$healSoulAspect(DamageSource damageSource, CallbackInfo ci) {
+        if (damageSource.getSource() instanceof LivingEntity user) {
+            LivingEntity target = (LivingEntity) (Object) this;
+            ItemStack stack = user.getStackInHand(Hand.MAIN_HAND);
+            if (EnchantHelper.hasEnchantment(InitEnchants.SOUL_ASPECT, stack)) {
+                int lvl = EnchantHelper.getEnchantmentLevel(stack, InitEnchants.SOUL_ASPECT);
+                int targetMaxHealth = (int) target.getMaxHealth();
+                int gain = (targetMaxHealth / 100) * (lvl * 10);
+                user.setHealth(user.getHealth() + gain);
             }
         }
     }

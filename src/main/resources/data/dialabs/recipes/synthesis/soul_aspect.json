@@ -1,0 +1,17 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "minecraft:ghast_tear"
+    },
+    "count": 10
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "minecraft:soul_soil"
+    },
+    "count": 5
+  },
+  "lapis_count": 12,
+  "enchantment": "dialabs:soul_aspect"
+}
