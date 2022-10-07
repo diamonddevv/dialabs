@@ -1,6 +1,7 @@
 package net.diamonddev.dialabs.recipe;
 
 import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
+import net.diamonddev.dialabs.recipe.objects.ChancedEnchantment;
 import net.diamonddev.dialabs.recipe.objects.CountedIngredient;
 import net.diamonddev.dialabs.recipe.serializer.SynthesisRecipeSerializer;
 import net.diamonddev.dialabs.registry.InitItem;
@@ -14,6 +15,8 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
+
 public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
 
@@ -24,11 +27,13 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     private final CountedIngredient inputA;
     private final CountedIngredient inputB;
     private final CountedIngredient inputC;
+    private final ArrayList<ChancedEnchantment> chancedEnchants;
 
     public SynthesisRecipe(
             Identifier id,
             Enchantment resultEnchantment, int enchantmentLevel,
             CountedIngredient inputA, CountedIngredient inputB, CountedIngredient inputC,
+            ArrayList<ChancedEnchantment> chancedEnchantments,
             int lapisRequirement) {
 
         this.id = id;
@@ -36,6 +41,8 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         this.inputA = inputA;
         this.inputB = inputB;
         this.inputC = inputC;
+
+        this.chancedEnchants = chancedEnchantments;
 
         this.payment = lapisRequirement;
         this.result = resultEnchantment;
@@ -53,6 +60,21 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
     public CountedIngredient getInputC() {
         return inputC;
+    }
+
+    public ArrayList<ChancedEnchantment> getChancedEnchantments() {
+        return chancedEnchants;
+    }
+
+    public ArrayList<EnchantmentLevelEntry> getOutputRolledEnchants() {
+        ArrayList<EnchantmentLevelEntry> eles = new ArrayList<>();
+        for (ChancedEnchantment ce : this.getChancedEnchantments()) {
+            EnchantmentLevelEntry ele = ce.rollAndGet();
+            if (ele != null) {
+                eles.add(ele);
+            }
+        }
+        return eles;
     }
 
     public int getLapisRequirement() {

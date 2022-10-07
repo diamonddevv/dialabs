@@ -1,0 +1,17 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "count": 20
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "minecraft:redstone_dust"
+    },
+    "count": 5
+  },
+  "lapis_count": 20,
+  "enchantment": "incombustium:spectral"
+}

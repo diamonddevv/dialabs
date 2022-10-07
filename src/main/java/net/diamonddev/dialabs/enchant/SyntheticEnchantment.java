@@ -36,13 +36,4 @@ public interface SyntheticEnchantment {
             SyntheticEnchantmentDiscItem.externalEntries.add(modIntegration.getEnchantment(enchantmentPath));
         }
     }
-
-    static void makeSyntheticDiscItemsFromTag() {
-        for (Enchantment e : Registry.ENCHANTMENT) {
-            if (Helpers.isInTag(DataDrivenTagKeys.SYNTHETIC_ENCHANTMENTS_FROM_TAG, e)) {
-                System.out.println(e);
-                makeSyntheticDiscItemFromEnchantment(e);
-            }
-        }
-    }
 }

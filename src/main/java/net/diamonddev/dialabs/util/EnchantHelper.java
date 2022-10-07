@@ -12,6 +12,8 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import static net.minecraft.item.EnchantedBookItem.STORED_ENCHANTMENTS_KEY;
@@ -204,6 +206,14 @@ public class EnchantHelper {
     public static void setStoredEnchantsFromMap(Map<Enchantment, Integer> enchantMap, ItemStack stack) {
         NbtList nbt = mappedEnchantmentsToNbtList(enchantMap);
         stack.getOrCreateNbt().put(STORED_ENCHANTMENTS_KEY, nbt);
+    }
+
+    public static Map<Enchantment, Integer> enchantmentLevelEntryArrayToMap(ArrayList<EnchantmentLevelEntry> eles) {
+        Map<Enchantment, Integer> map = new HashMap<>();
+        for (EnchantmentLevelEntry ele : eles) {
+            map.put(ele.enchantment, ele.level);
+        }
+        return map;
     }
 
 }

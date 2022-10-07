@@ -7,6 +7,9 @@ import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -17,6 +20,7 @@ import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
@@ -26,6 +30,8 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     private final World world;
     private final ScreenHandlerContext context;
     private final PlayerEntity player;
+
+    public ArrayList<EnchantmentLevelEntry> recipeEles;
 
     public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory) {
         this(syncId, playerInventory, ScreenHandlerContext.EMPTY);
@@ -72,6 +78,12 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             @Override
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 decrementSlots();
+
+                EnchantHelper.storeAllEnchantments(
+                        stack,
+                        EnchantHelper.enchantmentLevelEntryArrayToMap(recipeEles)
+                );
+
                 super.onTakeItem(player, stack);
             }
         });
@@ -169,6 +181,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
         // Copy result stack to output.
         if (match.isPresent()) {
+            this.recipeEles = match.get().getOutputRolledEnchants();
             this.out.set(match.get().getOutput().copy());
         } else {
             this.out.clear();

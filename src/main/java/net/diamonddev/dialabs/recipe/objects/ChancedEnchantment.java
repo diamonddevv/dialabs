@@ -5,13 +5,17 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.collection.Weighted;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Optional;
+import java.util.Random;
 
 public class ChancedEnchantment {
 
@@ -35,9 +39,9 @@ public class ChancedEnchantment {
      Example ChancedEnchantment Json:
 
      <pre>
-     "ChancedEnchantmentObjecy": {
-        "enchantment": "minecraft:sharpness"
-        "level": 2
+     "ChancedEnchantmentObject": {
+        "enchantment": "minecraft:sharpness",
+        "level": 2,
         "chance": 0.8
      }
      </pre>
@@ -55,7 +59,9 @@ public class ChancedEnchantment {
         this.chance = chance;
     }
 
-    public ChancedEnchantment fromJson(@Nullable JsonElement json) {
+    Random random = new Random();
+
+    public static ChancedEnchantment fromJson(@Nullable JsonElement json) {
         String enchantId;
         Enchantment e;
         int lvl;
@@ -107,4 +113,51 @@ public class ChancedEnchantment {
         buf.writeInt(this.level);
         buf.writeFloat(this.chance);
     }
+
+
+    public static void writeArrayListPacket(ArrayList<ChancedEnchantment> array, PacketByteBuf buf) {
+        buf.writeInt(array.size());
+        for (ChancedEnchantment ce : array) {
+            ce.toPacket(buf);
+        }
+    }
+
+    public static ArrayList<ChancedEnchantment> readArrayListPacket(PacketByteBuf buf) {
+        ArrayList<ChancedEnchantment> array = new ArrayList<>();
+        int size = buf.readInt();
+        for (int i = size; i > 0; i--) {
+            array.add(fromPacket(buf));
+        }
+        return array;
+    }
+
+    /**
+     * Rolls the Chanced Enchantment.
+     * @return Enchantment Entry if rolled, Null if not.
+     */
+    public EnchantmentLevelEntry rollAndGet() {
+        if (this.roll()) {
+            return get();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Gets an EnchantmentLevelEntry based on this Chanced Enchantment.
+     * @return Enchantment & Level
+     */
+    public EnchantmentLevelEntry get() {
+        return new EnchantmentLevelEntry(this.enchantment, this.level);
+    }
+
+    /**
+     * Rolls this Chanced Enchantment.
+     * @return true if the roll was successful.
+     */
+    public boolean roll() {
+        float roll = random.nextFloat(1.0f);
+        return this.chance >= roll;
+    }
+
 }

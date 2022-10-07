@@ -27,16 +27,13 @@ public class InitEnchants {
         Registry.register(Registry.ENCHANTMENT, new Identifier("harvester"), HARVESTER);
         Registry.register(Registry.ENCHANTMENT, new Identifier("soul_aspect"), SOUL_ASPECT);
 
-//        // Create new Synthetic Discs for existing enchantments todo: make recipes, this is a future me problem
-//        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.MENDING);
-        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);
-//        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.THORNS);
 
-//        // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already
-//        SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");
+        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);
+
+        // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already
+        SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");
 
         // Register List of Synthetics
-        SyntheticEnchantment.makeSyntheticDiscItemsFromTag(); // todo: fix pls
         createValidSyntheticEnchantmentsList();
     }
 

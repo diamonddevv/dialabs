@@ -12,6 +12,13 @@
     },
     "count": 5
   },
+  "chancedEnchantments": [
+    {
+      "enchantment": "minecraft:sharpness",
+      "level": 2,
+      "chance": 0.8
+    }
+  ],
   "lapis_count": 12,
   "enchantment": "dialabs:soul_aspect"
 }

@@ -1,16 +1,17 @@
 package net.diamonddev.dialabs.recipe.serializer;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSyntaxException;
+import com.google.gson.*;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
+import net.diamonddev.dialabs.recipe.objects.ChancedEnchantment;
 import net.diamonddev.dialabs.recipe.objects.CountedIngredient;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+
+import java.util.ArrayList;
 
 public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisRecipe> {
 
@@ -29,6 +30,14 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         CountedIngredient inputB = CountedIngredient.fromJson(format.inputB);
         CountedIngredient inputC = CountedIngredient.fromJson(format.inputC);
 
+        ArrayList<ChancedEnchantment> chancedEnchantments = new ArrayList<>();
+        for (JsonElement obj : format.chancedEnchantments) {
+                  ChancedEnchantment chancedEnchantment = ChancedEnchantment.fromJson(obj);
+                  if (chancedEnchantment != ChancedEnchantment.EMPTY) {
+                      chancedEnchantments.add(chancedEnchantment);
+                  }
+        }
+
         if (inputA == CountedIngredient.EMPTY && inputB == CountedIngredient.EMPTY && inputC == CountedIngredient.EMPTY) {
             throw new JsonSyntaxException("Recipe '" + id + "' invalid; No defined ingredients found!");
         }
@@ -37,7 +46,7 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         int level = format.level;
         Enchantment ench = readEnchantment(format);
 
-        return new SynthesisRecipe(id, ench, level, inputA, inputB, inputC, lapis);
+        return new SynthesisRecipe(id, ench, level, inputA, inputB, inputC, chancedEnchantments, lapis);
     }
 
     @Override // Turns PacketByteBuf into Recipe
@@ -46,11 +55,13 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         CountedIngredient b = CountedIngredient.fromPacket(buf);
         CountedIngredient c = CountedIngredient.fromPacket(buf);
 
+        ArrayList<ChancedEnchantment> chances = ChancedEnchantment.readArrayListPacket(buf);
+
         int lapis = buf.readInt();
         Enchantment enchantment = buf.readRegistryValue(Registry.ENCHANTMENT);
         int lvl = buf.readInt();
 
-        return new SynthesisRecipe(id, enchantment, lvl, a, b, c, lapis);
+        return new SynthesisRecipe(id, enchantment, lvl, a, b, c, chances, lapis);
     }
 
     @Override // Turns Recipe into PacketByteBuf
@@ -58,6 +69,8 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         recipe.getInputA().toPacket(buf);
         recipe.getInputB().toPacket(buf);
         recipe.getInputC().toPacket(buf);
+
+        ChancedEnchantment.writeArrayListPacket(recipe.getChancedEnchantments(), buf);
 
         buf.writeInt(recipe.getLapisRequirement());
         buf.writeRegistryValue(Registry.ENCHANTMENT, recipe.getResultEnchantment());
@@ -80,6 +93,8 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         JsonObject inputA;
         JsonObject inputB;
         JsonObject inputC;
+
+        JsonArray chancedEnchantments;
 
         int lapis_count;
         String enchantment;
