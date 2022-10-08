@@ -7,7 +7,7 @@ import net.diamonddev.dialabs.enchant.SoulAspectEnchantment;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.enchant.WitheredAspectEnchantment;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
-import net.diamonddev.dialabs.util.ModIntegrations;
+import net.diamonddev.dialabs.integration.ModIntegrations;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.util.registry.Registry;
@@ -30,8 +30,8 @@ public class InitEnchants {
 
         SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);
 
-        // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already
-        SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");
+        // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already todo: fix
+//        SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");
 
         // Register List of Synthetics
         createValidSyntheticEnchantmentsList();

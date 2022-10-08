@@ -79,10 +79,10 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 decrementSlots();
 
-                EnchantHelper.storeAllEnchantments(
-                        stack,
-                        EnchantHelper.enchantmentLevelEntryArrayToMap(recipeEles)
-                );
+//                EnchantHelper.storeAllEnchantments(
+//                        stack,
+//                        EnchantHelper.enchantmentLevelEntryArrayToMap(recipeEles)
+//                );
 
                 super.onTakeItem(player, stack);
             }

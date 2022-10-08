@@ -16,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
-
 public class ChancedEnchantment {
 
     /**
@@ -61,41 +60,42 @@ public class ChancedEnchantment {
 
     Random random = new Random();
 
-    public static ChancedEnchantment fromJson(@Nullable JsonElement json) {
+    public static ChancedEnchantment fromJson(@Nullable JsonElement json) { // todo: fix this whole thing
         String enchantId;
         Enchantment e;
         int lvl;
         float c;
 
         if (json != null && !json.isJsonNull()) {
-            if (json.isJsonObject()) {
-                JsonObject obj = json.getAsJsonObject();
-                if (obj.has(ENCHANT_KEY)) {
-                    if (obj.has(CHANCE_KEY)) {
-                        enchantId = obj.get(ENCHANT_KEY).getAsString();
-                        lvl = obj.has(LEVEL_KEY) ? obj.get(LEVEL_KEY).getAsInt() : 1;
-                        if (lvl == 0) lvl = 1;
-                        c = obj.get(CHANCE_KEY).getAsFloat();
-                        Optional<Enchantment> enchant = Registry.ENCHANTMENT.getOrEmpty(new Identifier(enchantId));
-                        if (enchant.isPresent()) {
-                            if (c < 1.0f) {
-                                e = enchant.get();
-                                return new ChancedEnchantment(e, lvl, c);
-                            } else {
-                                throw new JsonSyntaxException("The provided chance was greater than 100% (1.0); Please use a decimal chance. (Divide percentage by 100)");
-                            }
-                        } else {
-                            throw new JsonSyntaxException("The provided Enchantment reference was invalid!");
-                        }
-                    } else {
-                        throw new JsonSyntaxException("A Float Chance was expected, but was not found!");
-                    }
-                } else {
-                    throw new JsonSyntaxException("An Enchantment ID was expected, but was not found!");
-                }
-            } else {
-                throw new JsonSyntaxException("JSON was not null, but an Object was not found!");
-            }
+            throw new JsonSyntaxException("The ChancedEnchantment Object is not yet supported, and to prevent bad things from happening this JSON was not loaded.");
+//            if (json.isJsonObject()) {
+//                JsonObject obj = json.getAsJsonObject();
+//                if (obj.has(ENCHANT_KEY)) {
+//                    if (obj.has(CHANCE_KEY)) {
+//                        enchantId = obj.get(ENCHANT_KEY).getAsString();
+//                        lvl = obj.has(LEVEL_KEY) ? obj.get(LEVEL_KEY).getAsInt() : 1;
+//                        if (lvl == 0) lvl = 1;
+//                        c = obj.get(CHANCE_KEY).getAsFloat();
+//                        Optional<Enchantment> enchant = Registry.ENCHANTMENT.getOrEmpty(new Identifier(enchantId));
+//                        if (enchant.isPresent()) {
+//                            if (c < 1.0f) {
+//                                e = enchant.get();
+//                                return new ChancedEnchantment(e, lvl, c);
+//                            } else {
+//                                throw new JsonSyntaxException("The provided chance was greater than 100% (1.0); Please use a decimal chance. (Divide percentage by 100)");
+//                            }
+//                        } else {
+//                            throw new JsonSyntaxException("The provided Enchantment reference was invalid!");
+//                        }
+//                    } else {
+//                        throw new JsonSyntaxException("A Float Chance was expected, but was not found!");
+//                    }
+//                } else {
+//                    throw new JsonSyntaxException("An Enchantment ID was expected, but was not found!");
+//                }
+//            } else {
+//                throw new JsonSyntaxException("JSON was not null, but an Object was not found!");
+//            }
         }
 
         return EMPTY;

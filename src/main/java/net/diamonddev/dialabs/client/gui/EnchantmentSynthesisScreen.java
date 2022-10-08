@@ -69,7 +69,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
             } else if (TranslatedSynthesisTag.mappedTags.containsKey(bi)) {
                 key = Text.of(TranslatedSynthesisTag.mappedTags.get(bi).getSynthesisUiTranslationKey());
             } else {
-                    key = getRandomEnchantText();
+                key = Text.translatable(bi.getTranslationKey());
             }
         } else if (TranslatedSynthesisTag.mappedTags.containsKey(stack.getItem())) {
             key = Text.of(TranslatedSynthesisTag.mappedTags.get(stack.getItem()).getSynthesisUiTranslationKey());

@@ -19,6 +19,12 @@ import java.util.ArrayList;
 
 public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
+    public static final SynthesisRecipe PASSED_RECIPE = new SynthesisRecipe(
+            null, null,
+            0,
+            null, null, null,
+            null,
+            0); // ALL NULL
 
     private final int payment;
     private final Enchantment result;

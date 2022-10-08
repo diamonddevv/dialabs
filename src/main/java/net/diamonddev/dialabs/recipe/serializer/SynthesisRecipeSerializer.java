@@ -14,7 +14,6 @@ import net.minecraft.util.registry.Registry;
 import java.util.ArrayList;
 
 public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisRecipe> {
-
     private SynthesisRecipeSerializer() {}
     public static final SynthesisRecipeSerializer INSTANCE = new SynthesisRecipeSerializer();
     public static final String ID = SynthesisRecipe.Type.ID;
@@ -22,6 +21,7 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
 
     @Override // Turns JSON into Recipe
     public SynthesisRecipe read(Identifier id, JsonObject json) {
+        // Pass JSON through Format
         SynthesisRecipeJsonFormat format = new Gson().fromJson(json, SynthesisRecipeJsonFormat.class);
 
         if (format.level == 0) format.level = 1;
@@ -31,11 +31,14 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         CountedIngredient inputC = CountedIngredient.fromJson(format.inputC);
 
         ArrayList<ChancedEnchantment> chancedEnchantments = new ArrayList<>();
-        for (JsonElement obj : format.chancedEnchantments) {
-                  ChancedEnchantment chancedEnchantment = ChancedEnchantment.fromJson(obj);
-                  if (chancedEnchantment != ChancedEnchantment.EMPTY) {
-                      chancedEnchantments.add(chancedEnchantment);
-                  }
+        format.chancedEnchantments = null; // temporary - not supported doofus
+        if (format.chancedEnchantments != null) {
+            for (JsonElement obj : format.chancedEnchantments) {
+                ChancedEnchantment chancedEnchantment = ChancedEnchantment.fromJson(obj);
+                if (chancedEnchantment != ChancedEnchantment.EMPTY) {
+                    chancedEnchantments.add(chancedEnchantment);
+                }
+            }
         }
 
         if (inputA == CountedIngredient.EMPTY && inputB == CountedIngredient.EMPTY && inputC == CountedIngredient.EMPTY) {

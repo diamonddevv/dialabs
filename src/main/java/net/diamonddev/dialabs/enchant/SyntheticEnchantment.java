@@ -1,10 +1,8 @@
 package net.diamonddev.dialabs.enchant;
 
 
-import net.diamonddev.dialabs.api.ModIntegration;
+import net.diamonddev.dialabs.integration.ModIntegration;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
-import net.diamonddev.dialabs.util.DataDrivenTagKeys;
-import net.diamonddev.dialabs.util.Helpers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.util.registry.Registry;
 
@@ -33,7 +31,7 @@ public interface SyntheticEnchantment {
 
     static void makeSyntheticDiscItemFromModIntegration(ModIntegration modIntegration, String enchantmentPath) {
         if (modIntegration.isModLoaded()) {
-            SyntheticEnchantmentDiscItem.externalEntries.add(modIntegration.getEnchantment(enchantmentPath));
+            SyntheticEnchantmentDiscItem.externalEntries.add(modIntegration.getRegistryValue(Registry.ENCHANTMENT, enchantmentPath));
         }
     }
 }
