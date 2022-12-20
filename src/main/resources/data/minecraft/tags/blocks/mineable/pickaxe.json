@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "dialabs:staticite_block",
-    "dialabs:shocked_iron_block"
+    "dialabs:shocked_iron_block",
+    "dialabs:disc_burner",
+    "dialabs:enchantment_synthesizer"
   ]
 }

@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class EnchantHelper {
 
     public static boolean hasAnySyntheticEnchantmentStored(ItemStack stack) {
         boolean bl = false;
-        for (Enchantment e : Registry.ENCHANTMENT) {
+        for (Enchantment e : Registries.ENCHANTMENT) {
             if (SyntheticEnchantment.validSyntheticEnchantments.contains(e)) {
                 if (hasEnchantmentStored(stack, e)) {
                     bl = true;

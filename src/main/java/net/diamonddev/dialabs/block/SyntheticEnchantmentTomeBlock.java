@@ -5,19 +5,14 @@ import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Material;
-import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Wearable;
 import net.minecraft.util.function.BooleanBiFunction;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
 
 import java.util.stream.Stream;
 
@@ -25,8 +20,7 @@ public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock imp
 
 
     private final String key;
-    public static final FabricItemSettings TOME_ITEM_SETTINGS = new FabricItemSettings()
-            .group(ItemGroup.MISC).equipmentSlot(new TomeEquipmentSlotProvider());
+    public static final FabricItemSettings TOME_ITEM_SETTINGS = new FabricItemSettings().equipmentSlot(new TomeEquipmentSlotProvider());
 
     public SyntheticEnchantmentTomeBlock(String typeKey) {
         super(FabricBlockSettings.of(Material.DECORATION));

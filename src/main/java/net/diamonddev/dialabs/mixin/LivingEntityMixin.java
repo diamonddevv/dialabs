@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.mixin;
 
 
-import net.diamonddev.dialabs.api.DamageSources;
+import net.diamonddev.dialabs.util.DamageSources;
 import net.diamonddev.dialabs.effect.ChargeEffect;
 import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.registry.InitEffects;

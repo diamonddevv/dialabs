@@ -5,11 +5,12 @@ import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.recipe.objects.ChancedEnchantment;
 import net.diamonddev.dialabs.recipe.objects.CountedIngredient;
+import net.diamonddev.dialabs.recipe.objects.MiscObjectSerializers;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,10 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         int level = format.level;
         Enchantment ench = readEnchantment(format);
 
-        return new SynthesisRecipe(id, ench, level, inputA, inputB, inputC, chancedEnchantments, lapis);
+        ArrayList<String> modids = new ArrayList<>();
+        if (format.modRequirementIds != null) format.modRequirementIds.forEach(element -> modids.add(element.getAsString()));
+
+        return new SynthesisRecipe(id, modids, ench, level, inputA, inputB, inputC, chancedEnchantments, lapis);
     }
 
     @Override // Turns PacketByteBuf into Recipe
@@ -61,10 +65,12 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         ArrayList<ChancedEnchantment> chances = ChancedEnchantment.readArrayListPacket(buf);
 
         int lapis = buf.readInt();
-        Enchantment enchantment = buf.readRegistryValue(Registry.ENCHANTMENT);
+        Enchantment enchantment = buf.readRegistryValue(Registries.ENCHANTMENT);
         int lvl = buf.readInt();
 
-        return new SynthesisRecipe(id, enchantment, lvl, a, b, c, chances, lapis);
+        ArrayList<String> strings = MiscObjectSerializers.readStringArray(buf);
+
+        return new SynthesisRecipe(id, strings, enchantment, lvl, a, b, c, chances, lapis);
     }
 
     @Override // Turns Recipe into PacketByteBuf
@@ -76,12 +82,14 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         ChancedEnchantment.writeArrayListPacket(recipe.getChancedEnchantments(), buf);
 
         buf.writeInt(recipe.getLapisRequirement());
-        buf.writeRegistryValue(Registry.ENCHANTMENT, recipe.getResultEnchantment());
+        buf.writeRegistryValue(Registries.ENCHANTMENT, recipe.getResultEnchantment());
         buf.writeInt(recipe.getResultLvl());
+
+        MiscObjectSerializers.writeStringArray(buf, recipe.getModids());
     }
 
     private Enchantment readEnchantment(SynthesisRecipeJsonFormat format) {
-        Enchantment candidate = Registry.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
+        Enchantment candidate = Registries.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
                 new JsonSyntaxException("No such valid enchantment in registry: " + format.enchantment));
 
         if (SyntheticEnchantment.validSyntheticEnchantments.contains(candidate)) {
@@ -102,5 +110,6 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         int lapis_count;
         String enchantment;
         int level;
+        JsonArray modRequirementIds;
     }
 }

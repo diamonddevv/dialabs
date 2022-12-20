@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:book"
+  },
+  "addition": {
+    "item": "minecraft:scute"
+  },
+  "result": {
+    "item": "dialabs:defense_tome"
+  }
+}

@@ -102,14 +102,21 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
     }
 
     public boolean transferItem(ItemStack stack, int slotIndex) {
-        if (this.slots.get(slotIndex).getStack() != stack) return !super.insertItem(stack, slotIndex, slotIndex + 1, true);
+        if (this.slots.get(slotIndex).getStack() != stack)
+            return !super.insertItem(stack, slotIndex, slotIndex + 1, true);
         return false;
     }
+
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
-        Slot slot = this.slots.get(index);
-        if (slot.hasStack()) {
-            ItemStack stack = slot.getStack();
+    public boolean canUse(PlayerEntity player) {
+        return true;
+    }
+
+    @Override
+    public ItemStack quickMove(PlayerEntity player, int slot) {
+        Slot s = this.slots.get(slot);
+        if (s.hasStack()) {
+            ItemStack stack = s.getStack();
 
             if (stack.getItem() instanceof SyntheticEnchantmentDiscItem && !slots.get(getInputBSlotIndex()).hasStack()) {
                 if (transferItem(stack, getInputBSlotIndex())) {
@@ -124,11 +131,6 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
         }
         this.inventory.markDirty();
         return ItemStack.EMPTY;
-    }
-
-    @Override
-    public boolean canUse(PlayerEntity player) {
-        return true;
     }
 
     public void close(PlayerEntity player) {

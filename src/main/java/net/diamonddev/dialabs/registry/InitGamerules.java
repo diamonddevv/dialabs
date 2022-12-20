@@ -1,10 +1,11 @@
-package net.diamonddev.dialabs.util;
+package net.diamonddev.dialabs.registry;
 
+import net.diamonddev.dialabs.lib.RegistryInit;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.minecraft.world.GameRules;
 
-public class DiaLabsGamerules {
+public class InitGamerules implements RegistryInit {
 
     public static GameRules.Key<GameRules.IntRule> CRYSTAL_SHARD_STRENGTH;
     public static GameRules.Key<GameRules.IntRule> STATIC_CORE_STRENGTH;
@@ -15,7 +16,8 @@ public class DiaLabsGamerules {
     public static GameRules.Key<GameRules.IntRule> WITHERED_ASPECT_APL;
 
 
-    public static void registerGamerules() {
+    @Override
+    public void init() {
        CRYSTAL_SHARD_STRENGTH = GameRuleRegistry.register("crystalShardStrength", GameRules.Category.MOBS,
                 GameRuleFactory.createIntRule(1));
 

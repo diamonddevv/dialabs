@@ -4,7 +4,7 @@ package net.diamonddev.dialabs.enchant;
 import net.diamonddev.dialabs.integration.ModIntegration;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +31,7 @@ public interface SyntheticEnchantment {
 
     static void makeSyntheticDiscItemFromModIntegration(ModIntegration modIntegration, String enchantmentPath) {
         if (modIntegration.isModLoaded()) {
-            SyntheticEnchantmentDiscItem.externalEntries.add(modIntegration.getRegistryValue(Registry.ENCHANTMENT, enchantmentPath));
+            SyntheticEnchantmentDiscItem.externalEntries.add(modIntegration.getRegistryValue(Registries.ENCHANTMENT, enchantmentPath));
         }
     }
 }

@@ -9,8 +9,8 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
-import static net.diamonddev.dialabs.util.DiaLabsGamerules.STATIC_CORE_LENGTH;
-import static net.diamonddev.dialabs.util.DiaLabsGamerules.STATIC_CORE_STRENGTH;
+import static net.diamonddev.dialabs.registry.InitGamerules.STATIC_CORE_LENGTH;
+import static net.diamonddev.dialabs.registry.InitGamerules.STATIC_CORE_STRENGTH;
 
 public class StaticCoreItem extends Item {
     public StaticCoreItem(Settings settings) {

@@ -1,4 +1,4 @@
-package net.diamonddev.dialabs.api;
+package net.diamonddev.dialabs.util;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.hit.BlockHitResult;

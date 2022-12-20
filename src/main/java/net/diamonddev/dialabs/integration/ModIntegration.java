@@ -1,11 +1,8 @@
 package net.diamonddev.dialabs.integration;
 
 import net.fabricmc.loader.impl.FabricLoaderImpl;
-import net.minecraft.enchantment.Enchantment;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
-
-import java.util.Optional;
 
 public class ModIntegration {
 

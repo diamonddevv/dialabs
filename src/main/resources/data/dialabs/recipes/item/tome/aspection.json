@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:book"
+  },
+  "addition": {
+    "item": "minecraft:lapis_lazuli"
+  },
+  "result": {
+    "item": "dialabs:aspection_tome"
+  }
+}

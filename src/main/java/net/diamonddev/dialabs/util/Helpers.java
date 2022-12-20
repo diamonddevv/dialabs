@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.util;
 
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 
 import java.util.ArrayList;
 import java.util.Collection;

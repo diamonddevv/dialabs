@@ -6,6 +6,7 @@ import net.diamonddev.dialabs.recipe.objects.CountedIngredient;
 import net.diamonddev.dialabs.recipe.serializer.SynthesisRecipeSerializer;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
+import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
@@ -15,12 +16,14 @@ import net.minecraft.recipe.RecipeType;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
     public static final SynthesisRecipe PASSED_RECIPE = new SynthesisRecipe(
             null, null,
+            null,
             0,
             null, null, null,
             null,
@@ -34,15 +37,19 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     private final CountedIngredient inputB;
     private final CountedIngredient inputC;
     private final ArrayList<ChancedEnchantment> chancedEnchants;
+    private final ArrayList<String> modids;
 
     public SynthesisRecipe(
             Identifier id,
+            @Nullable ArrayList<String> modRequirements,
             Enchantment resultEnchantment, int enchantmentLevel,
             CountedIngredient inputA, CountedIngredient inputB, CountedIngredient inputC,
             ArrayList<ChancedEnchantment> chancedEnchantments,
-            int lapisRequirement) {
-
+            int lapisRequirement
+    ) {
         this.id = id;
+
+        this.modids = modRequirements == null ? new ArrayList<>() : modRequirements;
 
         this.inputA = inputA;
         this.inputB = inputB;
@@ -53,6 +60,16 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         this.payment = lapisRequirement;
         this.result = resultEnchantment;
         this.resultLvl = enchantmentLevel;
+    }
+
+    public boolean canLoad() {
+        final boolean[] loadable = {true};
+        if (!modids.isEmpty()) modids.forEach(s -> {
+            if (loadable[0]) {
+                loadable[0] = FabricLoaderImpl.INSTANCE.isModLoaded(s);
+            }
+        });
+        return loadable[0];
     }
 
     // Inputs & Output
@@ -100,6 +117,10 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         ItemStack stack = new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC);
         EnchantHelper.storeEnchantment(stack, new EnchantmentLevelEntry(getResultEnchantment(), getResultLvl()));
         return stack;
+    }
+
+    public ArrayList<String> getModids() {
+        return modids;
     }
 
     // Matches

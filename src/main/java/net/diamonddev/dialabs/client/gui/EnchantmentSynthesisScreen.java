@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.diamonddev.dialabs.api.Identifier;
+import net.diamonddev.dialabs.DiaLabs;
 import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
 import net.diamonddev.dialabs.item.TranslatedSynthesisTag;
 import net.fabricmc.api.EnvType;
@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
 
 import java.util.Random;
@@ -24,7 +25,7 @@ import java.util.Random;
 @Environment(EnvType.CLIENT)
 public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthesisScreenHandler> {
 
-    private static final Identifier TEXTURE = new Identifier("textures/gui/enchantment_synthesis_screen.png");
+    private static final Identifier TEXTURE = DiaLabs.id.build("textures/gui/enchantment_synthesis_screen.png");
     private static final net.minecraft.util.Identifier FONT_ID = new net.minecraft.util.Identifier("minecraft", "alt");
 
     private static final Style TEXT_STYLE = Style.EMPTY.withFont(FONT_ID);
@@ -34,7 +35,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
 
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
+        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);
 

@@ -31,6 +31,8 @@
   "item.dialabs.crystal_shard": "Crystal Shard",
   "effect.dialabs.crystallising": "Crystallising",
 
+  "effect.dialabs.retribution": "Retribution",
+
   "item.dialabs.deepslate_plate": "Deepslate Plate",
   "item.dialabs.synthetic_enchantment_disc": "Synthetic Enchantment Disc",
   "text.dialabs.empty_synthetic_enchantment_disc": "§7Empty",
@@ -64,6 +66,7 @@
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
   "enchantment.dialabs.harvester": "Harvester",
   "enchantment.dialabs.soul_aspect": "Soul Aspect",
+  "enchantment.dialabs.retribution_aspect": "Retribution Aspect",
 
   "gamerule.crystalShardStrength": "Crystal Shard Strength",
   "gamerule.staticCoreStrength": "Static Core Strength",
@@ -71,6 +74,6 @@
   "gamerule.staticCoreLengthInSeconds": "Static Core Length in Seconds",
   "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level",
 
-  "itemGroup.dialabs.synthetic_enchantments": "Synthetic Enchantment Discs",
+  "itemGroup.dialabs.synthetic_enchantments": "Synthetic Enchanting",
   "itemGroup.dialabs.synthesis_ingredients": "Synthesis Ingredients"
 }

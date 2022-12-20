@@ -9,8 +9,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.world.World;
 
-import static net.diamonddev.dialabs.util.DiaLabsGamerules.WITHERED_ASPECT_APL;
-import static net.diamonddev.dialabs.util.DiaLabsGamerules.WITHERED_ASPECT_SPL;
+import static net.diamonddev.dialabs.registry.InitGamerules.WITHERED_ASPECT_APL;
+import static net.diamonddev.dialabs.registry.InitGamerules.WITHERED_ASPECT_SPL;
 
 public class WitheredAspectEnchantment extends Enchantment implements SyntheticEnchantment {
 

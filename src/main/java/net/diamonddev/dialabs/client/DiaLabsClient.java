@@ -5,6 +5,6 @@ import net.fabricmc.api.ClientModInitializer;
 public class DiaLabsClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
-        InitHandledScreen.register();
+        new InitHandledScreen().init();
     }
 }

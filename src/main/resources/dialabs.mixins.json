@@ -7,11 +7,11 @@
     "BrewingRecipeInvoker",
     "DamageTrackerMixin",
     "EmptyBottleMixin",
-    "EnchantedBookItemMixin",
     "EnchantmentMixin",
     "IngredientMixin",
     "LightningEntityMixin",
-    "LivingEntityMixin"
+    "LivingEntityMixin",
+    "RecipeManagerMixin"
   ],
   "client": [
   ],

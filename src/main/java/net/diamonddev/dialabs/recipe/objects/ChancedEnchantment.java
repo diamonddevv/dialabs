@@ -1,20 +1,15 @@
 package net.diamonddev.dialabs.recipe.objects;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.Weighted;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Random;
 public class ChancedEnchantment {
 
@@ -102,14 +97,14 @@ public class ChancedEnchantment {
     }
 
     public static ChancedEnchantment fromPacket(PacketByteBuf buf) {
-       Enchantment e = buf.readRegistryValue(Registry.ENCHANTMENT);
+       Enchantment e = buf.readRegistryValue(Registries.ENCHANTMENT);
        int i = buf.readInt();
        float f = buf.readFloat();
        return new ChancedEnchantment(e, i, f);
     }
 
     public void toPacket(PacketByteBuf buf) {
-        buf.writeRegistryValue(Registry.ENCHANTMENT, this.enchantment);
+        buf.writeRegistryValue(Registries.ENCHANTMENT, this.enchantment);
         buf.writeInt(this.level);
         buf.writeFloat(this.chance);
     }

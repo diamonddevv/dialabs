@@ -7,8 +7,6 @@ import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -79,10 +77,10 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
                 decrementSlots();
 
-//                EnchantHelper.storeAllEnchantments(
-//                        stack,
-//                        EnchantHelper.enchantmentLevelEntryArrayToMap(recipeEles)
-//                );
+                EnchantHelper.storeAllEnchantments(
+                        stack,
+                        EnchantHelper.enchantmentLevelEntryArrayToMap(recipeEles)
+                );
 
                 super.onTakeItem(player, stack);
             }
@@ -142,11 +140,15 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         if (this.slots.get(slotIndex).getStack() != stack) return !super.insertItem(stack, slotIndex, slotIndex + 1, true);
         return false;
     }
+    public SynthesisInventory getInventory() {
+        return inventory;
+    }
+
     @Override
-    public ItemStack transferSlot(PlayerEntity player, int index) {
-        Slot slot = this.slots.get(index);
-        if (slot.hasStack()) {
-            ItemStack stack = slot.getStack();
+    public ItemStack quickMove(PlayerEntity player, int slot) {
+        Slot s = this.slots.get(slot);
+        if (s.hasStack()) {
+            ItemStack stack = s.getStack();
 
             if (stack.getItem() instanceof SyntheticEnchantmentDiscItem && !EnchantHelper.hasAnySyntheticEnchantmentStored(stack)) {
                 if (transferItem(stack, getDiscSlotIndex())) {
@@ -162,10 +164,6 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             }
         }
         return ItemStack.EMPTY;
-    }
-
-    public SynthesisInventory getInventory() {
-        return inventory;
     }
 
     public void close(PlayerEntity player) {

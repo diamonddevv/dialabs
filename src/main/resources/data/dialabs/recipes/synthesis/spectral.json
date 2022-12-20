@@ -13,5 +13,8 @@
     "count": 5
   },
   "lapis_count": 20,
-  "enchantment": "incombustium:spectral"
+  "enchantment": "incombustium:spectral",
+  "modRequirementIds": [
+    "incombustium"
+  ]
 }

@@ -1,15 +1,14 @@
 package net.diamonddev.dialabs.util;
 
-
-import net.diamonddev.dialabs.api.Identifier;
+import net.diamonddev.dialabs.DiaLabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.Item;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 
 public class DataDrivenTagKeys {
 
-    public static TagKey<Item> SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS = TagKey.of(Registry.ITEM_KEY, new Identifier("synthetic_enchantment_payments"));
-    public static TagKey<Enchantment> SYNTHETIC_ENCHANTMENTS_FROM_TAG = TagKey.of(Registry.ENCHANTMENT_KEY, new Identifier("synthetic"));
+    public static TagKey<Item> SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS = TagKey.of(Registries.ITEM.getKey(), DiaLabs.id.build("synthetic_enchantment_payments"));
+    public static TagKey<Enchantment> SYNTHETIC_ENCHANTMENTS_FROM_TAG = TagKey.of(Registries.ENCHANTMENT.getKey(), DiaLabs.id.build("synthetic"));
 
 }

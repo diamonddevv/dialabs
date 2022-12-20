@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:book"
+  },
+  "addition": {
+    "item": "minecraft:blaze_powder"
+  },
+  "result": {
+    "item": "dialabs:strength_tome"
+  }
+}

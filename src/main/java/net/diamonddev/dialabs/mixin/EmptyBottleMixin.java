@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import net.diamonddev.dialabs.api.Raycast;
+import net.diamonddev.dialabs.util.Raycast;
 
 import static net.minecraft.block.LightningRodBlock.POWERED;
 
