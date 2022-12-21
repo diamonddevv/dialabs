@@ -25,8 +25,24 @@
     "main": [
       "net.diamonddev.dialabs.DiaLabs"
     ],
+
     "client": [
       "net.diamonddev.dialabs.client.DiaLabsClient"
+    ],
+
+    "cardinal-components": [
+      "net.diamonddev.dialabs.cca.DialabsCCA"
+    ],
+
+    "mm:early_risers": [
+      "net.diamonddev.dialabs.lib.asm.EarlyRiser"
+    ]
+  },
+
+  "custom": {
+    "cardinal-components": [
+      "dialabs:retributional_damage",
+      "dialabs:retributive"
     ]
   },
 
@@ -40,6 +56,8 @@
     "minecraft": "~1.19",
     "java": ">=17"
   },
+
+  "accessWidener" : "dialabs.accesswidener",
 
   "suggests": {
     "another-mod": "*"

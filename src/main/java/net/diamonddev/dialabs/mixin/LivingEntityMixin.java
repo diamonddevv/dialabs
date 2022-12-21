@@ -1,11 +1,12 @@
 package net.diamonddev.dialabs.mixin;
 
 
-import net.diamonddev.dialabs.util.DamageSources;
+import net.diamonddev.dialabs.cca.DialabsCCA;
 import net.diamonddev.dialabs.effect.ChargeEffect;
 import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.registry.InitEffects;
 import net.diamonddev.dialabs.registry.InitEnchants;
+import net.diamonddev.dialabs.util.DialabsDamageSource;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -66,7 +67,7 @@ public abstract class LivingEntityMixin extends Entity {
             if (target != null) {
                 if (target.isAlive()) {
                     if (CrystalliseEffect.shouldDamageAttacker(amp, rand)) {
-                        target.damage(DamageSources.CRYSTAL_SHARDS, (float) CrystalliseEffect.getDamageAmount(amp, rand));
+                        target.damage(DialabsDamageSource.CRYSTAL_SHARDS, (float) CrystalliseEffect.getDamageAmount(amp, rand));
                     }
                 }
             }
@@ -109,6 +110,16 @@ public abstract class LivingEntityMixin extends Entity {
                 int targetMaxHealth = (int) target.getMaxHealth();
                 int gain = (targetMaxHealth / 100) * (lvl * 10);
                 user.setHealth(user.getHealth() + gain);
+            }
+        }
+    }
+
+    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage")
+    private void dialabs$retributionalDamage(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
+        if (source.getSource() instanceof LivingEntity target) {
+            if (target.hasStatusEffect(InitEffects.RETRIBUTION)) {
+                int lvl = target.getStatusEffect(InitEffects.RETRIBUTION).getAmplifier() + 1;
+                DialabsCCA.RetributionalDamageManager.addDmg(target, amount * (0.5 + (lvl / 10d)));
             }
         }
     }

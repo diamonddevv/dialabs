@@ -63,10 +63,12 @@
   "death.attack.charge": "%s couldn't withstand the current",
   "death.attack.charge.player": "%s couldn't withstand %s's current",
 
+  "death.attack.retribution": "%s got what was coming to them",
+
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
   "enchantment.dialabs.harvester": "Harvester",
   "enchantment.dialabs.soul_aspect": "Soul Aspect",
-  "enchantment.dialabs.retribution_aspect": "Retribution Aspect",
+  "enchantment.dialabs.retributive": "Retributive",
 
   "gamerule.crystalShardStrength": "Crystal Shard Strength",
   "gamerule.staticCoreStrength": "Static Core Strength",
@@ -75,5 +77,8 @@
   "gamerule.witheredAspectSecondsPerLevel": "Effect length per Withered Aspect Level",
 
   "itemGroup.dialabs.synthetic_enchantments": "Synthetic Enchanting",
-  "itemGroup.dialabs.synthesis_ingredients": "Synthesis Ingredients"
+  "itemGroup.dialabs.synthesis_ingredients": "Synthesis Ingredients",
+
+  "subtitle.dialabs.synthesize_enchantment": "Enchantment synthesizes",
+  "subtitle.dialabs.burn_enchantment_disc": "Enchantment disc burns"
 }

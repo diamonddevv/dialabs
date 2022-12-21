@@ -5,6 +5,7 @@ import net.diamonddev.dialabs.block.inventory.SynthesisInventory;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
+import net.diamonddev.dialabs.registry.InitSoundEvent;
 import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
@@ -16,6 +17,8 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     private final World world;
     private final ScreenHandlerContext context;
     private final PlayerEntity player;
+    private final Optional<BlockPos> blockPos;
 
     public ArrayList<EnchantmentLevelEntry> recipeEles;
 
@@ -38,6 +42,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     public EnchantmentSynthesisScreenHandler(int syncId, PlayerInventory playerInventory, ScreenHandlerContext context) {
         super(InitScreenHandler.ENCHANT_SYNTHESIS, syncId);
 
+        this.blockPos = context.get((w, blockPos) -> blockPos);
         this.inventory = new SynthesisInventory(6) {
             public void markDirty() {
                 super.markDirty();
@@ -75,6 +80,8 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
             @Override
             public void onTakeItem(PlayerEntity player, ItemStack stack) {
+                blockPos.ifPresent(pos -> world.playSound(null, pos, InitSoundEvent.SYNTHESIZE_DISC, SoundCategory.BLOCKS));
+
                 decrementSlots();
 
                 EnchantHelper.storeAllEnchantments(

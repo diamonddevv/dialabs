@@ -33,6 +33,7 @@ public class InitItem implements RegistryInit {
         Registry.register(Registries.ITEM, DiaLabs.id.build("staticite_scrap"), STATICITE_SCRAP);
         Registry.register(Registries.ITEM, DiaLabs.id.build("staticite_scrap_heap"), STATICITE_SCRAP_HEAP);
         Registry.register(Registries.ITEM, DiaLabs.id.build("static_core"), STATIC_CORE);
+        Registry.register(Registries.ITEM, DiaLabs.id.build("deepslate_plate"), DEEPSLATE_PLATE);
         Registry.register(Registries.ITEM, DiaLabs.id.build("crystal_shard"), CRYSTAL_SHARD);
         Registry.register(Registries.ITEM, DiaLabs.id.build("lightning_bottle"), LIGHTNING_BOTTLE);
 

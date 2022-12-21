@@ -3,6 +3,7 @@ package net.diamonddev.dialabs.gui;
 import net.diamonddev.dialabs.block.inventory.DiscBurnerInventory;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.diamonddev.dialabs.registry.InitScreenHandler;
+import net.diamonddev.dialabs.registry.InitSoundEvent;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -14,9 +15,12 @@ import net.minecraft.screen.Property;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class DiscBurnerScreenHandler extends ScreenHandler {
 
@@ -24,6 +28,7 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
     private final ScreenHandlerContext context;
     private final World world;
     private final PlayerEntity playerEntity;
+    private final Optional<BlockPos> blockPos;
 
     private Property xpRequirement;
     private boolean possibleCombination = true;
@@ -39,6 +44,8 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
         this.xpRequirement = Property.create();
 
         this.playerEntity = playerInventory.player;
+
+        this.blockPos = context.get((w, blockPos) -> blockPos);
 
         this.inventory = new DiscBurnerInventory(3) {
 
@@ -213,6 +220,8 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
 
 
     public void onOutputTaken() {
+        blockPos.ifPresent(pos -> world.playSound(null, pos, InitSoundEvent.BURN_DISC, SoundCategory.BLOCKS));
+
         inventory.decrementStackSize(getInputASlotIndex(), 1);
         inventory.decrementStackSize(getInputBSlotIndex(), 1);
 

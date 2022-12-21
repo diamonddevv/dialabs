@@ -1,0 +1,14 @@
+{
+  "synthesis.dialabs.synthesize": {
+    "subtitle": "subtitle.dialabs.synthesize_enchantment",
+    "sounds": [
+      "dialabs:synthesis/synthesizer_use"
+    ]
+  },
+  "synthesis.dialabs.burn": {
+    "subtitle": "subtitle.dialabs.burn_enchantment_disc",
+    "sounds": [
+      "dialabs:synthesis/disc_burner_use"
+    ]
+  }
+}

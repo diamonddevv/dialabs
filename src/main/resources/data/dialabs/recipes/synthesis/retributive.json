@@ -1,0 +1,24 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "dialabs:aspection_tome"
+    },
+    "count": 3
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "dialabs:destruction_tome"
+    },
+    "count": 1
+  },
+  "inputC": {
+    "ingredient": {
+      "item": "minecraft:soul_soil"
+    },
+    "count": 20
+  },
+
+  "lapis_count": 32,
+  "enchantment": "dialabs:retributive"
+}

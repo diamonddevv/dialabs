@@ -2,10 +2,7 @@ package net.diamonddev.dialabs.registry;
 
 
 import net.diamonddev.dialabs.DiaLabs;
-import net.diamonddev.dialabs.enchant.HarvesterEnchantment;
-import net.diamonddev.dialabs.enchant.SoulAspectEnchantment;
-import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
-import net.diamonddev.dialabs.enchant.WitheredAspectEnchantment;
+import net.diamonddev.dialabs.enchant.*;
 import net.diamonddev.dialabs.integration.ModIntegrations;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.diamonddev.dialabs.lib.RegistryInit;
@@ -19,6 +16,7 @@ public class InitEnchants implements RegistryInit {
     public static final Enchantment WITHERED_ASPECT = new WitheredAspectEnchantment();
     public static final Enchantment HARVESTER = new HarvesterEnchantment();
     public static final Enchantment SOUL_ASPECT = new SoulAspectEnchantment();
+    public static final Enchantment RETRIBUTIVE = new RetributiveEnchantment();
 
 
     public static void createValidSyntheticEnchantmentsList() {
@@ -36,6 +34,7 @@ public class InitEnchants implements RegistryInit {
         Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("withered_aspect"), WITHERED_ASPECT);
         Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("harvester"), HARVESTER);
         Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("soul_aspect"), SOUL_ASPECT);
+        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("retributive"), RETRIBUTIVE);
 
 
         SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);

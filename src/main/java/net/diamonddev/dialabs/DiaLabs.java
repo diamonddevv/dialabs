@@ -2,8 +2,8 @@ package net.diamonddev.dialabs;
 
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.lib.IdentifierBuilder;
+import net.diamonddev.dialabs.lib.RegistryInit;
 import net.diamonddev.dialabs.registry.*;
-import net.diamonddev.dialabs.registry.InitGamerules;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -50,15 +50,21 @@ public class DiaLabs implements ModInitializer {
 		new InitPotion().init();
 		new InitScreenHandler().init();
 		new InitRecipe().init();
+		new InitSoundEvent().init();
 
-		ItemGroupEditor.placeItemsInGroups();
-		ItemGroupEditor.removeItemsInGroups();
+		new ItemGroupEditor().init(); // Edit Item Groups - keep last!
 
 		long initializationTime = System.currentTimeMillis() - startInitTime;
 		LOGGER.info("DiaLabs {" + MOD_ID + " - " + VERSION + "} for Minecraft " + MC_VER + " has initialized (" + initializationTime + " milliseconds elapsed)");
 	}
 
-	private static class ItemGroupEditor {
+	private static class ItemGroupEditor implements RegistryInit {
+
+		@Override
+		public void init() {
+			placeItemsInGroups();
+			removeItemsInGroups();
+		}
 
 		public static void placeItemsInGroups() {
 
@@ -81,10 +87,10 @@ public class DiaLabs implements ModInitializer {
 			});
 
 			ItemGroupEvents.modifyEntriesEvent(INGREDIENTS).register(content -> {
-				content.add(InitItem.DEEPSLATE_PLATE);
-				content.add(InitItem.STATICITE_SCRAP);
-				content.add(InitItem.STATICITE_SCRAP_HEAP);
-				content.add(InitItem.STATICITE_INGOT);
+				content.addAfter(Items.DISC_FRAGMENT_5, InitItem.DEEPSLATE_PLATE);
+				content.addAfter(Items.NETHERITE_INGOT, InitItem.STATICITE_SCRAP);
+				content.addAfter(InitItem.STATICITE_SCRAP, InitItem.STATICITE_SCRAP_HEAP);
+				content.addAfter(InitItem.STATICITE_SCRAP_HEAP, InitItem.STATICITE_INGOT);
 				placeTomes(content);
 			});
 

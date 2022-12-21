@@ -5,12 +5,15 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BrewingRecipeInvoker",
+    "CrossbowItemMixin",
     "DamageTrackerMixin",
     "EmptyBottleMixin",
     "EnchantmentMixin",
+    "EnchantmentTargetMixin",
     "IngredientMixin",
     "LightningEntityMixin",
     "LivingEntityMixin",
+    "PersistentProjectileEntityMixin",
     "RecipeManagerMixin"
   ],
   "client": [
