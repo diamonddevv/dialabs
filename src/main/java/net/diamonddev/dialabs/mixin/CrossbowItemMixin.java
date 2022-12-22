@@ -42,7 +42,8 @@ public class CrossbowItemMixin {
             persProj.setSound(SoundEvents.ITEM_CROSSBOW_HIT);
 
             // Actual Retribution Info
-            persProj.setDamage(1d);
+            persProj.setDamage(persProj.getDamage() * 0.5);
+            persProj.setVelocity(persProj.getVelocity().multiply(0.25));
             DialabsCCA.RetributiveArrowManager.setRetributive(persProj, true);
 
             // Return
