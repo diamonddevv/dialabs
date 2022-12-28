@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 32],
 	"textures": {
-		"0": "dialabs:modelled/block/tomes",
-		"particle": "dialabs:particle/block/tomes"
+		"0": "dialabs:block/tomes",
+		"particle": "dialabs:block/tomes_particle"
 	},
 	"elements": [
 		{

@@ -25,6 +25,7 @@ public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock imp
     public SyntheticEnchantmentTomeBlock(String typeKey) {
         super(FabricBlockSettings.of(Material.DECORATION));
         this.key = typeKey;
+
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
     }
 
@@ -58,24 +59,12 @@ public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock imp
 
     @Override
     public VoxelShape getSouthShape() {
-        return Stream.of(
-                Block.createCuboidShape(2.9749999999999996, 0.05, 4, 8.975, 1, 12),
-                Block.createCuboidShape(2, 0.025, 3, 9, 0.025, 13),
-                Block.createCuboidShape(9, 0.025, 3, 9, 1.025, 13),
-                Block.createCuboidShape(2, 1.025, 3, 9, 1.025, 13),
-                Block.createCuboidShape(4, 1.026, 7, 6, 1.026, 9)
-        ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
+        return getNorthShape();
     }
 
     @Override
     public VoxelShape getWestShape() {
-        return Stream.of(
-                Block.createCuboidShape(3, 0.05, 3.9749999999999996, 11, 1, 9.975),
-                Block.createCuboidShape(2, 0.025, 3, 12, 0.025, 10),
-                Block.createCuboidShape(2, 0.025, 10, 12, 1.025, 10),
-                Block.createCuboidShape(2, 1.025, 3, 12, 1.025, 10),
-                Block.createCuboidShape(6, 1.026, 5, 8, 1.026, 7)
-        ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
+        return getEastShape();
     }
 
 

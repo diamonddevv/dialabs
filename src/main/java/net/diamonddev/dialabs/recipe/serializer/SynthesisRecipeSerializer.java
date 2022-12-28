@@ -6,6 +6,7 @@ import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.diamonddev.dialabs.recipe.objects.ChancedEnchantment;
 import net.diamonddev.dialabs.recipe.objects.CountedIngredient;
 import net.diamonddev.dialabs.recipe.objects.MiscObjectSerializers;
+import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.recipe.RecipeSerializer;
@@ -33,14 +34,14 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
 
         ArrayList<ChancedEnchantment> chancedEnchantments = new ArrayList<>();
         format.chancedEnchantments = null; // temporary - not supported doofus
-        if (format.chancedEnchantments != null) {
-            for (JsonElement obj : format.chancedEnchantments) {
-                ChancedEnchantment chancedEnchantment = ChancedEnchantment.fromJson(obj);
-                if (chancedEnchantment != ChancedEnchantment.EMPTY) {
-                    chancedEnchantments.add(chancedEnchantment);
-                }
-            }
-        }
+//        if (format.chancedEnchantments != null) {
+//            for (JsonElement obj : format.chancedEnchantments) {
+//                ChancedEnchantment chancedEnchantment = ChancedEnchantment.fromJson(obj);
+//                if (chancedEnchantment != ChancedEnchantment.EMPTY) {
+//                    chancedEnchantments.add(chancedEnchantment);
+//                }
+//            }
+//        }
 
         if (inputA == CountedIngredient.EMPTY && inputB == CountedIngredient.EMPTY && inputC == CountedIngredient.EMPTY) {
             throw new JsonSyntaxException("Recipe '" + id + "' invalid; No defined ingredients found!");
@@ -89,14 +90,28 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
     }
 
     private Enchantment readEnchantment(SynthesisRecipeJsonFormat format) {
-        Enchantment candidate = Registries.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
-                new JsonSyntaxException("No such valid enchantment in registry: " + format.enchantment));
 
-        if (SyntheticEnchantment.validSyntheticEnchantments.contains(candidate)) {
-            return candidate;
-        } else {
-            throw new JsonSyntaxException("Enchantment " + format.enchantment + " was found in registry, but was not validly considered Synthetic!");
+        boolean canLoad = true;
+        if (format.modRequirementIds != null) {
+            for (JsonElement element : format.modRequirementIds) {
+                String id = element.getAsString();
+                if (canLoad) {
+                    canLoad = FabricLoaderImpl.INSTANCE.isModLoaded(id);
+                }
+            }
         }
+
+        if (canLoad) {
+            Enchantment candidate = Registries.ENCHANTMENT.getOrEmpty(new Identifier(format.enchantment)).orElseThrow(() ->
+                    new JsonSyntaxException("No such valid enchantment in registry: " + format.enchantment));
+
+            if (SyntheticEnchantment.validSyntheticEnchantments.contains(candidate)) {
+                return candidate;
+            } else {
+                throw new JsonSyntaxException("Enchantment " + format.enchantment + " was found in registry, but was not validly considered Synthetic!");
+            }
+        }
+        return null;
     }
 
 

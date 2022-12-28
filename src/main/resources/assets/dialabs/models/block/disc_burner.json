@@ -3,8 +3,8 @@
 	"parent": "minecraft:block/block",
 	"texture_size": [64, 32],
 	"textures": {
-		"3": "dialabs:modelled/block/disc_burner",
-		"particle": "dialabs:modelled/block/disc_burner"
+		"3": "dialabs:block/disc_burner",
+		"particle": "dialabs:block/disc_burner"
 	},
 	"elements": [
 		{

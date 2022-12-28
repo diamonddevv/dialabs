@@ -1,2 +1,8 @@
 accessWidener	v1	named
-extendable   class   net/minecraft/enchantment/EnchantmentTarget
+
+
+# Enchantment Targets
+extendable class   net/minecraft/enchantment/EnchantmentTarget
+
+# Heart Types
+accessible class    net/minecraft/client/gui/hud/InGameHud$HeartType

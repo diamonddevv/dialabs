@@ -43,7 +43,6 @@ public class CrossbowItemMixin {
 
             // Actual Retribution Info
             persProj.setDamage(persProj.getDamage() * 0.5);
-            persProj.setVelocity(persProj.getVelocity().multiply(0.25));
             DialabsCCA.RetributiveArrowManager.setRetributive(persProj, true);
 
             // Return
