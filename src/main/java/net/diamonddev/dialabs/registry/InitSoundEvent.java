@@ -11,11 +11,15 @@ public class InitSoundEvent implements RegistryInit {
 
     public static SoundEvent SYNTHESIZE_DISC;
     public static SoundEvent BURN_DISC;
+    public static SoundEvent USE_CRYSTAL_SHARDS;
+    public static SoundEvent USE_STATIC_CORE;
 
     @Override
     public void init() {
         SYNTHESIZE_DISC = createSound("synthesis.dialabs.synthesize");
         BURN_DISC = createSound("synthesis.dialabs.burn");
+        USE_CRYSTAL_SHARDS = createSound("item.dialabs.crystal_shards.use");
+        USE_STATIC_CORE = createSound("item.dialabs.static_core.use");
     }
 
     private SoundEvent createSound(String name) {

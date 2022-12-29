@@ -1,11 +1,11 @@
 package net.diamonddev.dialabs.item;
 
 import net.diamonddev.dialabs.registry.InitEffects;
+import net.diamonddev.dialabs.registry.InitSoundEvent;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
@@ -27,7 +27,9 @@ public class CrystalShardItem extends Item {
         int durationInSec = world.getGameRules().getInt(CRYSTAL_SHARD_LENGTH);
 
         player.addStatusEffect(new StatusEffectInstance(InitEffects.CRYSTALLISE, durationInSec * 20, effectStrength - 1));
-        player.playSound(SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL, 1.0f, 2.0f);
+
+        player.playSound(InitSoundEvent.USE_CRYSTAL_SHARDS, 1.0f, 2.0f);
+
         player.getStackInHand(hand).decrement(1);
 
         return TypedActionResult.success(player.getStackInHand(hand));

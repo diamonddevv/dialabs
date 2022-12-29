@@ -23,7 +23,7 @@ public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock imp
     public static final FabricItemSettings TOME_ITEM_SETTINGS = new FabricItemSettings().equipmentSlot(new TomeEquipmentSlotProvider());
 
     public SyntheticEnchantmentTomeBlock(String typeKey) {
-        super(FabricBlockSettings.of(Material.DECORATION));
+        super(FabricBlockSettings.of(Material.WOOL));
         this.key = typeKey;
 
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
@@ -49,11 +49,11 @@ public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock imp
     @Override
     public VoxelShape getEastShape() {
         return Stream.of(
-                Block.createCuboidShape(3, 0.05, 6.025, 11, 1, 12.025),
-                Block.createCuboidShape(2, 0.025, 6, 12, 0.025, 13),
-                Block.createCuboidShape(2, 0.025, 6, 12, 1.025, 6),
-                Block.createCuboidShape(2, 1.025, 6, 12, 1.025, 13),
-                Block.createCuboidShape(6, 1.026, 9, 8, 1.026, 11)
+                Block.createCuboidShape(4, 0.05, 5.025, 12, 1, 11.025),
+                Block.createCuboidShape(3, 0.025, 5, 13, 0.025, 12),
+                Block.createCuboidShape(3, 0.025, 5, 13, 1.025, 5),
+                Block.createCuboidShape(3, 1.025, 5, 13, 1.025, 12),
+                Block.createCuboidShape(7, 1.026, 8, 9, 1.026, 10)
         ).reduce((v1, v2) -> VoxelShapes.combineAndSimplify(v1, v2, BooleanBiFunction.OR)).get();
     }
 

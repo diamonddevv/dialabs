@@ -5,6 +5,7 @@ import net.diamonddev.dialabs.lib.IdentifierBuilder;
 import net.diamonddev.dialabs.lib.RegistryInit;
 import net.diamonddev.dialabs.registry.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
@@ -13,6 +14,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,6 +44,8 @@ public class DiaLabs implements ModInitializer {
 	public void onInitialize() {
 		long startInitTime = System.currentTimeMillis();
 
+		addCallbackReferences(); // Keep BEFORE Registry Initialization
+
 		new InitItem().init();
         new InitEffects().init();
 		new InitBlocks().init();
@@ -58,6 +62,15 @@ public class DiaLabs implements ModInitializer {
 		LOGGER.info("DiaLabs {" + MOD_ID + " - " + VERSION + "} for Minecraft " + MC_VER + " has initialized (" + initializationTime + " milliseconds elapsed)");
 	}
 
+
+	private void addCallbackReferences() {
+		// Synthetic Enchantment Registration
+		RegistryEntryAddedCallback.event(Registries.ENCHANTMENT).register((rawId, identifier, enchantment) -> {
+			if (enchantment instanceof SyntheticEnchantment) {
+				SyntheticEnchantment.validSyntheticEnchantments.add(enchantment);
+			}
+		});
+	}
 	private static class ItemGroupEditor implements RegistryInit {
 
 		@Override

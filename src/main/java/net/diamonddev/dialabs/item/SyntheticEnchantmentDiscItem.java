@@ -41,16 +41,12 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
 
 
     public void putSyntheticDiscStacks(FabricItemGroupEntries content) {
-        Enchantment e;
         content.add(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
 
         // Predetermined Synthetic Enchantments (from registry)
-        for (Enchantment enchantment : Registries.ENCHANTMENT) {
-            e = enchantment;
-            if (e instanceof SyntheticEnchantment) {
-                for(int i = enchantment.getMinLevel(); i <= enchantment.getMaxLevel(); ++i) {
-                    content.add(forEnchantment(new EnchantmentLevelEntry(enchantment, i)));
-                }
+        for (Enchantment enchant : Registries.ENCHANTMENT) {
+            if (enchant instanceof SyntheticEnchantment) {
+                content.add(forEnchantment(new EnchantmentLevelEntry(enchant, enchant.getMaxLevel())));
             }
         }
 

@@ -11,15 +11,35 @@ import java.util.Collection;
 
 public interface SyntheticEnchantment {
     Collection<Enchantment> validSyntheticEnchantments = new ArrayList<>();
+
+
+    /**
+     * @return Whether an Enchantment Book should also be made for this synthetic enchantment.
+     */
     default boolean shouldMakeEnchantmentBook() {
         return false;
     }
+
+
+    /**
+     * @return Whether an Enchantment Book made for this synthetic enchantment should be tradable by villagers.
+     */
     default boolean shouldBookBeTradable() {
         return this.shouldMakeEnchantmentBook();
     }
+
+
+    /**
+     * @return Whether an Enchantment Book made for this synthetic enchantment should be found in loot tables
+     */
     default boolean shouldBookBeLootable() {
         return this.shouldMakeEnchantmentBook();
     }
+
+
+    /**
+     * @return Whether an Enchantment Book made for this synthetic enchantment should be obtainable through enchantment tables.
+     */
     default boolean shouldBookBeRandomlySelectable() {
         return this.shouldMakeEnchantmentBook();
     }

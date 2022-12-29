@@ -1,9 +1,9 @@
-package net.diamonddev.dialabs.cca;
+package net.diamonddev.dialabs.cca.entity;
 
-import dev.onyxstudios.cca.api.v3.component.Component;
+import net.diamonddev.dialabs.cca.BoolComponent;
 import net.minecraft.nbt.NbtCompound;
 
-public class BooleanComponent implements Component {
+public class BooleanComponent implements BoolComponent {
 
     private final String key;
 

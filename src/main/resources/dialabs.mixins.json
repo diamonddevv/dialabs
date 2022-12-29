@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "BrewingRecipeInvoker",
+    "ChannelingEnchantmentMixin",
+    "CrossbowItemAccessor",
     "CrossbowItemMixin",
     "DamageTrackerMixin",
     "EmptyBottleMixin",
@@ -12,9 +14,12 @@
     "EnchantmentTargetMixin",
     "IngredientMixin",
     "LightningEntityMixin",
+    "LightningRodBlockMixin",
     "LivingEntityMixin",
     "PersistentProjectileEntityMixin",
-    "RecipeManagerMixin"
+    "RecipeManagerMixin",
+    "TridentEntityAccessor",
+    "TridentEntityMixin"
   ],
   "client": [
     "InGameHudMixin"

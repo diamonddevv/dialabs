@@ -17,16 +17,8 @@ public class InitEnchants implements RegistryInit {
     public static final Enchantment HARVESTER = new HarvesterEnchantment();
     public static final Enchantment SOUL_ASPECT = new SoulAspectEnchantment();
     public static final Enchantment RETRIBUTIVE = new RetributiveEnchantment();
-
-
-    public static void createValidSyntheticEnchantmentsList() {
-        for (Enchantment e : Registries.ENCHANTMENT) {
-            if (e instanceof SyntheticEnchantment) {
-                SyntheticEnchantment.validSyntheticEnchantments.add(e);
-            }
-        }
-        SyntheticEnchantment.validSyntheticEnchantments.addAll(SyntheticEnchantmentDiscItem.externalEntries);
-    }
+    public static final Enchantment MULTICLIP = new MulticlipEnchantment();
+    public static final Enchantment SNIPING = new SnipingEnchantment();
 
     @Override
     public void init() {
@@ -35,14 +27,15 @@ public class InitEnchants implements RegistryInit {
         Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("harvester"), HARVESTER);
         Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("soul_aspect"), SOUL_ASPECT);
         Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("retributive"), RETRIBUTIVE);
-
+        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("multiclip"), MULTICLIP);
+        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("sniping"), SNIPING);
 
         SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);
 
         // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already
         SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");
 
-        // Register List of Synthetics
-        createValidSyntheticEnchantmentsList();
+        // Register List of External Synthetic Enchantments
+        SyntheticEnchantment.validSyntheticEnchantments.addAll(SyntheticEnchantmentDiscItem.externalEntries);
     }
 }

@@ -1,9 +1,9 @@
-package net.diamonddev.dialabs.cca;
+package net.diamonddev.dialabs.cca.entity;
 
-import dev.onyxstudios.cca.api.v3.component.Component;
+import net.diamonddev.dialabs.cca.DecimalComponent;
 import net.minecraft.nbt.NbtCompound;
 
-public class DoubleComponent implements Component {
+public class DoubleComponent implements DecimalComponent {
 
     private final String key;
 
@@ -15,20 +15,20 @@ public class DoubleComponent implements Component {
 
     @Override
     public void readFromNbt(NbtCompound tag) {
-        setNum(tag.getDouble(key));
+        setValue(tag.getDouble(key));
     }
 
     @Override
     public void writeToNbt(NbtCompound tag) {
-        tag.putDouble(key, getNum());
+        tag.putDouble(key, getValue());
     }
 
 
-    public double getNum() {
+    public double getValue() {
         return num;
     }
 
-    public void setNum(double retributionalDamage) {
-        this.num = retributionalDamage;
+    public void setValue(double d) {
+        this.num = d;
     }
 }

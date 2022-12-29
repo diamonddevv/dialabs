@@ -69,6 +69,10 @@
   "enchantment.dialabs.harvester": "Harvester",
   "enchantment.dialabs.soul_aspect": "Soul Aspect",
   "enchantment.dialabs.retributive": "Retributive",
+  "enchantment.dialabs.multiclip": "Multiclip",
+  "enchantment.dialabs.sniping": "Sniping",
+
+  "text.dialabs.multiclip_loaded_count": "Loaded Projectiles: %s",
 
   "gamerule.crystalShardStrength": "Crystal Shard Strength",
   "gamerule.staticCoreStrength": "Static Core Strength",
@@ -80,5 +84,7 @@
   "itemGroup.dialabs.synthesis_ingredients": "Synthesis Ingredients",
 
   "subtitle.dialabs.synthesize_enchantment": "Enchantment synthesizes",
-  "subtitle.dialabs.burn_enchantment_disc": "Enchantment disc burns"
+  "subtitle.dialabs.burn_enchantment_disc": "Enchantment disc burns",
+  "subtitle.dialabs.crystal_shards.use": "Crystal Shards is used",
+  "subtitle.dialabs.static_core.use": "Static Core is used"
 }

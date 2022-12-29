@@ -2,13 +2,26 @@
   "synthesis.dialabs.synthesize": {
     "subtitle": "subtitle.dialabs.synthesize_enchantment",
     "sounds": [
-      "dialabs:synthesis/synthesizer_use"
+      "dialabs:block/enchantment_synthesizer/use"
     ]
   },
   "synthesis.dialabs.burn": {
     "subtitle": "subtitle.dialabs.burn_enchantment_disc",
     "sounds": [
-      "dialabs:synthesis/disc_burner_use"
+      "dialabs:block/disc_burner/use"
+    ]
+  },
+  "item.dialabs.crystal_shards.use": {
+    "subtitle": "subtitle.dialabs.crystal_shards.use",
+    "sounds": [
+      "minecraft:mob/evocation_illager/cast1",
+      "minecraft:mob/evocation_illager/cast2"
+    ]
+  },
+  "item.dialabs.static_core.use": {
+    "subtitle": "subtitle.dialabs.static_core.use",
+    "sounds": [
+      "dialabs:item/static_core/use"
     ]
   }
 }

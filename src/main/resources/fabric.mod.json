@@ -42,7 +42,8 @@
   "custom": {
     "cardinal-components": [
       "dialabs:retributional_damage",
-      "dialabs:retributive"
+      "dialabs:retributive",
+      "dialabs:multiclip_projectiles"
     ]
   },
 
