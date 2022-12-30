@@ -22,7 +22,9 @@
     "TridentEntityMixin"
   ],
   "client": [
-    "InGameHudMixin"
+    "InGameHudInvoker",
+    "InGameHudMixin",
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1  }

@@ -10,11 +10,13 @@ import dev.onyxstudios.cca.api.v3.item.ItemComponentInitializer;
 import net.diamonddev.dialabs.DiaLabs;
 import net.diamonddev.dialabs.cca.entity.BooleanComponent;
 import net.diamonddev.dialabs.cca.entity.DoubleComponent;
+import net.diamonddev.dialabs.cca.entity.VectorComponent;
 import net.diamonddev.dialabs.cca.item.ItemIntComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.Vec3d;
 
 public class DialabsCCA implements EntityComponentInitializer, ItemComponentInitializer {
 
@@ -25,6 +27,12 @@ public class DialabsCCA implements EntityComponentInitializer, ItemComponentInit
     public static final ComponentKey<BooleanComponent> RETRIBUTIVE_ARROW =
             ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("retributive"), BooleanComponent.class);
 
+    public static final ComponentKey<VectorComponent> SNIPING_ARROW_ORIGIN =
+            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("sniping_arrow_origin"), VectorComponent.class);
+
+    public static final ComponentKey<BooleanComponent> SNIPING_ARROW =
+            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("sniping"), BooleanComponent.class);
+
 
     // ITEM COMPONENTS
     public static final ComponentKey<ItemIntComponent> MULTICLIP_PROJECTILES =
@@ -34,6 +42,8 @@ public class DialabsCCA implements EntityComponentInitializer, ItemComponentInit
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerFor(LivingEntity.class, RETRIBUTIONAL_DAMAGE, livingEntity -> new DoubleComponent("retributionalDamage"));
         registry.registerFor(PersistentProjectileEntity.class, RETRIBUTIVE_ARROW, persProj -> new BooleanComponent("isRetributive", false));
+        registry.registerFor(PersistentProjectileEntity.class, SNIPING_ARROW_ORIGIN, persProj -> new VectorComponent("originVector"));
+        registry.registerFor(PersistentProjectileEntity.class, SNIPING_ARROW, persProj -> new BooleanComponent("isSniping", false));
     }
 
     @Override
@@ -62,6 +72,24 @@ public class DialabsCCA implements EntityComponentInitializer, ItemComponentInit
 
         public static void setRetributive(PersistentProjectileEntity target, boolean set) {
             RETRIBUTIVE_ARROW.get(target).setComponent(set);
+        }
+    }
+
+    public static class SnipingArrowManager {
+
+        public static boolean is(PersistentProjectileEntity target) {
+            return SNIPING_ARROW.get(target).isComponentTrue();
+        }
+
+        public static void setIs(PersistentProjectileEntity target, boolean val) {
+            SNIPING_ARROW.get(target).setComponent(val);
+        }
+        public static Vec3d get(PersistentProjectileEntity target) {
+            return SNIPING_ARROW_ORIGIN.get(target).get();
+        }
+
+        public static void set(PersistentProjectileEntity target, Vec3d vec) {
+            SNIPING_ARROW_ORIGIN.get(target).set(vec);
         }
     }
 

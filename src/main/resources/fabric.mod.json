@@ -43,7 +43,9 @@
     "cardinal-components": [
       "dialabs:retributional_damage",
       "dialabs:retributive",
-      "dialabs:multiclip_projectiles"
+      "dialabs:multiclip_projectiles",
+      "dialabs:sniping_arrow_origin",
+      "dialabs:sniping"
     ]
   },
 

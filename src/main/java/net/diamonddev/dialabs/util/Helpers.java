@@ -19,4 +19,5 @@ public class Helpers {
         RegistryEntry<T> entry = RegistryEntry.of(object);
         return entry.isIn(tag);
     }
+
 }
