@@ -11,23 +11,8 @@ public class MulticlipEnchantment extends Enchantment implements SyntheticEnchan
     }
 
     @Override
-    public boolean shouldMakeEnchantmentBook() {
-        return true; // Make an Enchantment Book too. Might remove.
-    }
-
-    @Override
     public int getMaxLevel() {
         return 4; // Each level should add one extra loaded arrow, but also a longer charge time. hopefully Quick Charge will balance this
-    }
-
-    @Override
-    public boolean shouldBookBeTradable() {
-        return false; // Makes the book unable to be traded by villagers.
-    }
-
-    @Override
-    public boolean shouldBookBeRandomlySelectable() {
-        return false; // Makes the book a treasure Enchantment. This *book* can only be found in loot chests, making it pretty rare.
     }
 
     @Override

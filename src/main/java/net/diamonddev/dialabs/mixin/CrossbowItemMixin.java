@@ -1,6 +1,7 @@
 package net.diamonddev.dialabs.mixin;
 
 import net.diamonddev.dialabs.cca.DialabsCCA;
+import net.diamonddev.dialabs.nbt.DialabsNBT;
 import net.diamonddev.dialabs.registry.InitEnchants;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.client.item.TooltipContext;
@@ -8,7 +9,9 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.*;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -19,7 +22,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -88,23 +91,28 @@ public abstract class CrossbowItemMixin {
             persProj.setSound(SoundEvents.ITEM_CROSSBOW_HIT);
 
             // Actual Sniping Info
+            DialabsCCA.SnipingArrowManager.setIs(persProj, true);
             DialabsCCA.SnipingArrowManager.set(persProj, entity.getPos());
+            DialabsCCA.SnipingArrowManager.setSpeedReference(persProj, (EnchantHelper.getEnchantmentLevel(crossbow, InitEnchants.SNIPING) * 0.5));
 
             // Return
             cir.setReturnValue(persProj);
         }
     }
 
-    @ModifyArg(
+
+    @Redirect(
             method = "shoot",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/projectile/ProjectileEntity;setVelocity(DDDFF)V"
-            ),
-            index = 3
+            )
     )
-    private static float dialabs$setSnipingSpeed(float speed) {
-        return speed * 2;
+    private static void dialabs$setSnipingSpeed(ProjectileEntity projEntity, double x, double y, double z, float speed, float divergence) {
+        if (!(projEntity instanceof FireworkRocketEntity)) {
+            speed *= 1 + (DialabsCCA.SnipingArrowManager.getSpeed((PersistentProjectileEntity) projEntity));
+        }
+        projEntity.setVelocity(x, y, z, speed, divergence);
     }
 
 
@@ -114,7 +122,8 @@ public abstract class CrossbowItemMixin {
             at = @At(
                     value = "HEAD"
             ),
-            cancellable = true)
+            cancellable = true
+    )
     private static void dialabs$loadMulticlipProjectiles(
             LivingEntity shooter, ItemStack crossbow, ItemStack projectile, boolean simulated, boolean creative, CallbackInfoReturnable<Boolean> cir
     ) {
@@ -138,18 +147,11 @@ public abstract class CrossbowItemMixin {
                     loadable = EnchantmentHelper.getLevel(InitEnchants.MULTICLIP, crossbow) + 1;
                 }
 
-                DialabsCCA.MulticlipProjectileManager.setProjectiles(crossbow, loadable);
+                DialabsNBT.MulticlipProjectileManager.setProjectiles(crossbow, loadable);
                 putProjectile(crossbow, itemStack);
                 cir.setReturnValue(true);
             }
         }
-    }
-
-
-
-    @Inject(method = "loadProjectile", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;"))
-    private static void dialabs$loadWhatYouCanGiveNothingBack(LivingEntity shooter, ItemStack crossbow, ItemStack projectile, boolean simulated, boolean creative, CallbackInfoReturnable<Boolean> cir) {
-
     }
 
     @Inject(method = "getPullTime", at = @At("HEAD"), cancellable = true)
@@ -167,7 +169,7 @@ public abstract class CrossbowItemMixin {
     @Inject(method = "appendTooltip", at = @At("TAIL"))
     private void dialabs$appendCrossbowTooltips(ItemStack stack, World world, List<Text> tooltip, TooltipContext context, CallbackInfo ci) {
         if (EnchantHelper.hasEnchantment(InitEnchants.MULTICLIP, stack)) {
-            tooltip.add(Text.translatable("text.dialabs.multiclip_loaded_count", DialabsCCA.MulticlipProjectileManager.getProjectiles(stack)));
+            tooltip.add(Text.translatable("text.dialabs.multiclip_loaded_count", DialabsNBT.MulticlipProjectileManager.getProjectiles(stack)));
         }
     }
 
@@ -180,8 +182,8 @@ public abstract class CrossbowItemMixin {
             cancellable = true)
     private static void dialabs$decrementMulticlipLoadedProjectileCountBeforeClearing(World world, LivingEntity entity, ItemStack stack, CallbackInfo ci) {
         if (EnchantHelper.hasEnchantment(InitEnchants.MULTICLIP, stack)) { // if stack has multiclip
-            if (DialabsCCA.MulticlipProjectileManager.getProjectiles(stack) > 0) { // if arrow count is greater than 0
-                DialabsCCA.MulticlipProjectileManager.decrementProjectileCount(stack); // decrement count
+            if (DialabsNBT.MulticlipProjectileManager.getProjectiles(stack) > 0) { // if arrow count is greater than 0
+                DialabsNBT.MulticlipProjectileManager.decrementProjectileCount(stack); // decrement count
                 ci.cancel(); // cancel
             }
         }
@@ -199,7 +201,7 @@ public abstract class CrossbowItemMixin {
     private void dialabs$preventMulticlipFromBecomingMultishot(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         ItemStack stack = user.getStackInHand(hand);
         if (EnchantHelper.hasEnchantment(InitEnchants.MULTICLIP, stack)) {
-            if (DialabsCCA.MulticlipProjectileManager.getProjectiles(stack) > 0) {
+            if (DialabsNBT.MulticlipProjectileManager.getProjectiles(stack) > 0) {
                 setCharged(stack, true);
                 ((CrossbowItemAccessor) stack.getItem()).setAccessedLoadedState(true);
                 cir.setReturnValue(TypedActionResult.consume(stack));

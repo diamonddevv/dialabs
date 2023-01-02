@@ -17,14 +17,14 @@
     "LightningRodBlockMixin",
     "LivingEntityMixin",
     "PersistentProjectileEntityMixin",
+    "PlayerEntityMixin",
     "RecipeManagerMixin",
     "TridentEntityAccessor",
     "TridentEntityMixin"
   ],
   "client": [
-    "InGameHudInvoker",
-    "InGameHudMixin",
-    "MinecraftClientMixin"
+    "AbstractClientPlayerEntityMixin",
+    "InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1  }

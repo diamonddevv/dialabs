@@ -29,8 +29,8 @@ public class InGameHudMixin extends DrawableHelper { // i stole this idea from p
     @Inject(method = "drawHeart", at = @At("HEAD"), cancellable = true)
     private void dialabs$drawHearts(MatrixStack matrices, InGameHud.HeartType type, int x, int y, int v, boolean blinking, boolean halfHeart, CallbackInfo ci) {
         if (!blinking && type == InGameHud.HeartType.NORMAL && MinecraftClient.getInstance().cameraEntity instanceof PlayerEntity player &&
-                (player.hasStatusEffect(InitEffects.RETRIBUTION)) &&
-                (player.hasStatusEffect(InitEffects.CHARGE))
+                (player.hasStatusEffect(InitEffects.RETRIBUTION) ||
+                player.hasStatusEffect(InitEffects.CHARGE))
         ) {
 
             if (player.hasStatusEffect(InitEffects.RETRIBUTION)) {

@@ -1,24 +1,18 @@
 package net.diamonddev.dialabs.cca;
 
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
-import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import dev.onyxstudios.cca.api.v3.item.ItemComponentFactoryRegistry;
-import dev.onyxstudios.cca.api.v3.item.ItemComponentInitializer;
 import net.diamonddev.dialabs.DiaLabs;
 import net.diamonddev.dialabs.cca.entity.BooleanComponent;
 import net.diamonddev.dialabs.cca.entity.DoubleComponent;
 import net.diamonddev.dialabs.cca.entity.VectorComponent;
-import net.diamonddev.dialabs.cca.item.ItemIntComponent;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.util.math.Vec3d;
 
-public class DialabsCCA implements EntityComponentInitializer, ItemComponentInitializer {
+public class DialabsCCA implements EntityComponentInitializer {
 
     // ENTITY COMPONENTS
     public static final ComponentKey<DoubleComponent> RETRIBUTIONAL_DAMAGE =
@@ -33,22 +27,17 @@ public class DialabsCCA implements EntityComponentInitializer, ItemComponentInit
     public static final ComponentKey<BooleanComponent> SNIPING_ARROW =
             ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("sniping"), BooleanComponent.class);
 
-
-    // ITEM COMPONENTS
-    public static final ComponentKey<ItemIntComponent> MULTICLIP_PROJECTILES =
-            ComponentRegistry.getOrCreate(DiaLabs.id.build("multiclip_projectiles"), ItemIntComponent.class);
+    public static final ComponentKey<DoubleComponent> SNIPING_SPEED_REF =
+            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("sniping_speed_ref"), DoubleComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
         registry.registerFor(LivingEntity.class, RETRIBUTIONAL_DAMAGE, livingEntity -> new DoubleComponent("retributionalDamage"));
         registry.registerFor(PersistentProjectileEntity.class, RETRIBUTIVE_ARROW, persProj -> new BooleanComponent("isRetributive", false));
+
         registry.registerFor(PersistentProjectileEntity.class, SNIPING_ARROW_ORIGIN, persProj -> new VectorComponent("originVector"));
         registry.registerFor(PersistentProjectileEntity.class, SNIPING_ARROW, persProj -> new BooleanComponent("isSniping", false));
-    }
-
-    @Override
-    public void registerItemComponentFactories(ItemComponentFactoryRegistry registry) {
-        registry.register(Items.CROSSBOW, MULTICLIP_PROJECTILES, stack -> new ItemIntComponent("projectileCount", stack));
+        registry.registerFor(PersistentProjectileEntity.class, SNIPING_SPEED_REF, persProj -> new DoubleComponent("snipingSpeedReference"));
     }
 
     public static class RetributionalDamageManager {
@@ -91,19 +80,13 @@ public class DialabsCCA implements EntityComponentInitializer, ItemComponentInit
         public static void set(PersistentProjectileEntity target, Vec3d vec) {
             SNIPING_ARROW_ORIGIN.get(target).set(vec);
         }
-    }
 
-    public static class MulticlipProjectileManager {
-        public static int getProjectiles(ItemStack stack) {
-            return MULTICLIP_PROJECTILES.get(stack).getValue();
+        public static double getSpeed(PersistentProjectileEntity target) {
+            return SNIPING_SPEED_REF.get(target).getValue();
         }
 
-        public static void setProjectiles(ItemStack stack, int count) {
-            MULTICLIP_PROJECTILES.get(stack).setValue(count);
-        }
-
-        public static void decrementProjectileCount(ItemStack stack) {
-            setProjectiles(stack, getProjectiles(stack) - 1);
+        public static void setSpeedReference(PersistentProjectileEntity target, double speed) {
+            SNIPING_SPEED_REF.get(target).setValue(speed);
         }
     }
 }
