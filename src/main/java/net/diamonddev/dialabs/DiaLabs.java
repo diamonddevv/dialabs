@@ -66,8 +66,14 @@ public class DiaLabs implements ModInitializer {
 	private void addCallbackReferences() {
 		// Synthetic Enchantment Registration
 		RegistryEntryAddedCallback.event(Registries.ENCHANTMENT).register((rawId, identifier, enchantment) -> {
-			if (enchantment instanceof SyntheticEnchantment) {
+			if (enchantment instanceof SyntheticEnchantment synth) {
 				SyntheticEnchantment.validSyntheticEnchantments.add(enchantment);
+
+				int i = enchantment.getMaxLevel();
+				if (synth.getMaxSyntheticLevel() >= 1) {
+					i = synth.getMaxSyntheticLevel();
+				}
+				SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(enchantment, i);
 			}
 		});
 	}

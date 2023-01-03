@@ -31,6 +31,7 @@ public class InitEnchants implements RegistryInit {
         Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("sniping"), SNIPING);
 
         SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);
+        SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.CHANNELING, 2);
 
         // Create new Synthetic Discs for ModIntegration enchantments, these have a catch for unloaded mods already
         SyntheticEnchantment.makeSyntheticDiscItemFromModIntegration(ModIntegrations.INCOMBUSTIUM, "spectral");

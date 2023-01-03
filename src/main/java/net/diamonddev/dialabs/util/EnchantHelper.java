@@ -114,8 +114,14 @@ public class EnchantHelper {
     public static void upgradeStoredEnchantment(ItemStack stack, Enchantment enchantment) {
         Map<Enchantment, Integer> existingMap = getMappedStoredEnchantments(stack);
         int existingLevel = existingMap.get(enchantment);
-        if (existingLevel < enchantment.getMaxLevel()) {
-            existingMap.put(enchantment, existingLevel + 1);
+        if (enchantment instanceof SyntheticEnchantment) {
+            if (existingLevel < SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchantment)) {
+                existingMap.put(enchantment, existingLevel + 1);
+            }
+        } else {
+            if (existingLevel < enchantment.getMaxLevel()) {
+                existingMap.put(enchantment, existingLevel + 1);
+            }
         }
         setStoredEnchantsFromMap(existingMap, stack);
     }
@@ -123,8 +129,14 @@ public class EnchantHelper {
     public static void upgradeExistingEnchantment(ItemStack stack, Enchantment enchantment) {
         Map<Enchantment, Integer> existingMap = EnchantmentHelper.get(stack);
         int existingLevel = existingMap.get(enchantment);
-        if (existingLevel < enchantment.getMaxLevel()) {
-            existingMap.put(enchantment, existingLevel + 1);
+        if (enchantment instanceof SyntheticEnchantment) {
+            if (existingLevel < SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchantment)) {
+                existingMap.put(enchantment, existingLevel + 1);
+            }
+        } else {
+            if (existingLevel < enchantment.getMaxLevel()) {
+                existingMap.put(enchantment, existingLevel + 1);
+            }
         }
         EnchantmentHelper.set(existingMap, stack);
     }

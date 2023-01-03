@@ -3,7 +3,6 @@ package net.diamonddev.dialabs.item;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
-import net.diamonddev.dialabs.util.Helpers;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.minecraft.client.item.TooltipContext;
@@ -46,16 +45,13 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
         // Predetermined Synthetic Enchantments (from registry)
         for (Enchantment enchant : Registries.ENCHANTMENT) {
             if (enchant instanceof SyntheticEnchantment) {
-                content.add(forEnchantment(new EnchantmentLevelEntry(enchant, enchant.getMaxLevel())));
+                content.add(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant))));
             }
         }
 
         // External Entries
         for (Enchantment enchant : externalEntries) {
-            Collection<Integer> levelData = Helpers.getEachIntegerRange(enchant.getMinLevel(), enchant.getMaxLevel());
-            for (Integer i : levelData) {
-                content.add(forEnchantment(new EnchantmentLevelEntry(enchant, i)));
-            }
+            content.add(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.getOrDefault(enchant, enchant.getMaxLevel()))));
         }
     }
 

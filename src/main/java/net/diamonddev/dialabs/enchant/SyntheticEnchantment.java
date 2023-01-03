@@ -8,9 +8,11 @@ import net.minecraft.registry.Registries;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 public interface SyntheticEnchantment {
     Collection<Enchantment> validSyntheticEnchantments = new ArrayList<>();
+    HashMap<Enchantment, Integer> hashSyntheticEnchantMaxLevel = new HashMap<>();
 
 
     /**
@@ -44,14 +46,36 @@ public interface SyntheticEnchantment {
         return this.shouldMakeEnchantmentBook();
     }
 
+    /**
+     * @return The max level for a synthetic disc of this enchantment. Can exceed the normal max level. Anything less than 1 defaults to the normal max level.
+     */
+    default int getMaxSyntheticLevel() {
+        return 0;
+    }
 
     static void makeSyntheticDiscItemFromEnchantment(Enchantment enchantment) {
         SyntheticEnchantmentDiscItem.externalEntries.add(enchantment);
+        SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(enchantment, enchantment.getMaxLevel());
+    }
+
+    static void makeSyntheticDiscItemFromEnchantment(Enchantment enchantment, int syntheticMaxLevel) {
+        SyntheticEnchantmentDiscItem.externalEntries.add(enchantment);
+        SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(enchantment, syntheticMaxLevel >= 1 ? syntheticMaxLevel : enchantment.getMaxLevel());
     }
 
     static void makeSyntheticDiscItemFromModIntegration(ModIntegration modIntegration, String enchantmentPath) {
         if (modIntegration.isModLoaded()) {
-            SyntheticEnchantmentDiscItem.externalEntries.add(modIntegration.getRegistryValue(Registries.ENCHANTMENT, enchantmentPath));
+            Enchantment e = modIntegration.getRegistryValue(Registries.ENCHANTMENT, enchantmentPath);
+            SyntheticEnchantmentDiscItem.externalEntries.add(e);
+            SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(e, e.getMaxLevel());
+        }
+    }
+
+    static void makeSyntheticDiscItemFromModIntegration(ModIntegration modIntegration, String enchantmentPath, int syntheticMaxLevel) {
+        if (modIntegration.isModLoaded()) {
+            Enchantment e = modIntegration.getRegistryValue(Registries.ENCHANTMENT, enchantmentPath);
+            SyntheticEnchantmentDiscItem.externalEntries.add(e);
+            SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(e, syntheticMaxLevel >= 1 ? syntheticMaxLevel : e.getMaxLevel());
         }
     }
 }
