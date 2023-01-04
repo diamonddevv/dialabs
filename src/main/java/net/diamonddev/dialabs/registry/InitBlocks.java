@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.registry;
 
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.block.DiscBurnerBlock;
 import net.diamonddev.dialabs.block.EnchantmentSynthesizerBlock;
 import net.diamonddev.dialabs.block.SyntheticEnchantmentTomeBlock;
@@ -34,15 +34,15 @@ public class InitBlocks implements RegistryInit {
 
     @Override
     public void init() {
-        registerBlockWithBlockItem(STATICITE_BLOCK, DiaLabs.id.build("staticite_block"), new FabricItemSettings());
-        registerBlockWithBlockItem(SHOCKED_IRON_BLOCK, DiaLabs.id.build("shocked_iron_block"), new FabricItemSettings());
-        registerBlockWithBlockItem(ENCHANTMENT_SYNTHESIZER, DiaLabs.id.build("enchantment_synthesizer"), new FabricItemSettings());
-        registerBlockWithBlockItem(DISC_BURNER, DiaLabs.id.build("disc_burner"), new FabricItemSettings());
+        registerBlockWithBlockItem(STATICITE_BLOCK, Dialabs.id.build("staticite_block"), new FabricItemSettings());
+        registerBlockWithBlockItem(SHOCKED_IRON_BLOCK, Dialabs.id.build("shocked_iron_block"), new FabricItemSettings());
+        registerBlockWithBlockItem(ENCHANTMENT_SYNTHESIZER, Dialabs.id.build("enchantment_synthesizer"), new FabricItemSettings());
+        registerBlockWithBlockItem(DISC_BURNER, Dialabs.id.build("disc_burner"), new FabricItemSettings());
 
-        registerBlockWithBlockItem(ASPECTION_TOME, DiaLabs.id.build("aspection_tome"), TOME_ITEM_SETTINGS);
-        registerBlockWithBlockItem(DEFENSE_TOME, DiaLabs.id.build("defense_tome"), TOME_ITEM_SETTINGS);
-        registerBlockWithBlockItem(DESTRUCTIVE_TOME, DiaLabs.id.build("destructive_tome"), TOME_ITEM_SETTINGS);
-        registerBlockWithBlockItem(STRENGTH_TOME, DiaLabs.id.build("strength_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(ASPECTION_TOME, Dialabs.id.build("aspection_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(DEFENSE_TOME, Dialabs.id.build("defense_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(DESTRUCTIVE_TOME, Dialabs.id.build("destructive_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(STRENGTH_TOME, Dialabs.id.build("strength_tome"), TOME_ITEM_SETTINGS);
     }
     public static void registerBlockWithBlockItem(Block block, Identifier identifier, FabricItemSettings blockItemSettings) {
         BlockItem bi = new BlockItem(block, blockItemSettings);

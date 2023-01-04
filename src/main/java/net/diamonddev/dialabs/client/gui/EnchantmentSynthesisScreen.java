@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
 import net.diamonddev.dialabs.item.TranslatedSynthesisTag;
 import net.fabricmc.api.EnvType;
@@ -24,7 +24,7 @@ import java.util.Random;
 @Environment(EnvType.CLIENT)
 public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthesisScreenHandler> {
 
-    private static final Identifier TEXTURE = DiaLabs.id.build("textures/gui/enchantment_synthesis_screen.png");
+    private static final Identifier TEXTURE = Dialabs.id.build("textures/gui/enchantment_synthesis_screen.png");
     private static final net.minecraft.util.Identifier FONT_ID = new net.minecraft.util.Identifier("minecraft", "alt");
 
     private static final Style TEXT_STYLE = Style.EMPTY.withFont(FONT_ID);
@@ -109,7 +109,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
 
 
         int i = getLapisReq();
-        if (i >= 0) {
+        if (this.handler.allRecipeSlotsFilled) { // todo: fix, hmm
             drawTextWithShadow(matrices, this.textRenderer, getLapisRequirementText(i), x + 34 - (5 * (String.valueOf(i).length() - 1)), y + 64,
                     0x6e6e6e);
         };

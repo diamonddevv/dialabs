@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.registry;
 
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.lib.RegistryInit;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -23,7 +23,7 @@ public class InitSoundEvent implements RegistryInit {
     }
 
     private SoundEvent createSound(String name) {
-        Identifier id = DiaLabs.id.build(name);
+        Identifier id = Dialabs.id.build(name);
         return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
     }
 }

@@ -33,7 +33,9 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     private final Optional<BlockPos> blockPos;
 
     public ArrayList<EnchantmentLevelEntry> recipeEles;
+
     public int lapisReq;
+    public boolean allRecipeSlotsFilled;
 
     private OutSlot OUT_SLOT;
 
@@ -97,7 +99,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             }
         });
 
-        this.addSlot(new Slot(this.inventory, 1, 35, 47) {
+        this.addSlot(new Slot(this.inventory, 1, 34, 47) {
             // Payment Tag Input Slot
             @Override
             public boolean canInsert(ItemStack stack) {
@@ -219,6 +221,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         // If a matching recipe is found, perform actions
         Optional<SynthesisRecipe> match = world.getRecipeManager().getFirstMatch(SynthesisRecipe.Type.INSTANCE, getInventory(), world);
 
+        this.allRecipeSlotsFilled = match.isPresent();
 
         // Copy result stack to output.
         if (match.isPresent()) {
@@ -226,10 +229,10 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             this.out.set(match.get().getOutput().copy());
 
             this.lapisReq = match.get().getLapisRequirement();
+
             this.OUT_SLOT.canTake = match.get().lapisReqMet(this.inventory);
         } else {
             this.out.clear();
-            this.lapisReq = -1;
         }
     }
 

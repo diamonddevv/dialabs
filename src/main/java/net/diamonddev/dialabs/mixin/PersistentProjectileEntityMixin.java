@@ -5,6 +5,7 @@ import net.diamonddev.dialabs.registry.InitEffects;
 import net.diamonddev.dialabs.registry.InitGamerules;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -45,7 +46,9 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
     private void dialabs$onSnipingHit(LivingEntity target, CallbackInfo ci) {
         if (DialabsCCA.SnipingArrowManager.is((PersistentProjectileEntity)(Object)this)) {
             double distance = target.getPos().distanceTo(DialabsCCA.SnipingArrowManager.get((PersistentProjectileEntity)(Object)this));
-            ((PersistentProjectileEntity)(Object)this).setDamage(((PersistentProjectileEntity)(Object)this).getDamage() * Math.sqrt(distance));
+            target.damage(
+                    DamageSource.arrow(((PersistentProjectileEntity)(Object)this), this.getOwner()),
+                    (float) (((PersistentProjectileEntity)(Object)this).getDamage() * Math.sqrt(distance)));
         }
     }
 }

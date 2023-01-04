@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.registry;
 
 
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.enchant.*;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.diamonddev.dialabs.lib.RegistryInit;
@@ -24,14 +24,14 @@ public class InitEnchants implements RegistryInit {
     @Override
     public void init() {
         // Register new Enchantments
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("withered_aspect"), WITHERED_ASPECT);
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("harvester"), HARVESTER);
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("soul_aspect"), SOUL_ASPECT);
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("retributive"), RETRIBUTIVE);
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("multiclip"), MULTICLIP);
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("sniping"), SNIPING);
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("zooming"), ZOOMING);
-        Registry.register(Registries.ENCHANTMENT, DiaLabs.id.build("prismarine_spikes"), PRISMARINE_SPIKES);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("withered_aspect"), WITHERED_ASPECT);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("harvester"), HARVESTER);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("soul_aspect"), SOUL_ASPECT);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("retributive"), RETRIBUTIVE);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("multiclip"), MULTICLIP);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("sniping"), SNIPING);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("zooming"), ZOOMING);
+        Registry.register(Registries.ENCHANTMENT, Dialabs.id.build("prismarine_spikes"), PRISMARINE_SPIKES);
 
         SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.RIPTIDE);
         SyntheticEnchantment.makeSyntheticDiscItemFromEnchantment(Enchantments.CHANNELING, 2);

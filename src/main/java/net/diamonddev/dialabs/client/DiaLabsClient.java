@@ -2,7 +2,7 @@ package net.diamonddev.dialabs.client;
 
 import net.diamonddev.dialabs.client.registry.InitHandledScreen;
 import net.fabricmc.api.ClientModInitializer;
-public class DiaLabsClient implements ClientModInitializer {
+public class DialabsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {

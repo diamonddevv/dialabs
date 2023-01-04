@@ -173,4 +173,12 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         public static final Type INSTANCE = new Type();
         public static final String ID = "enchantment_synthesis";
     }
+
+    public static int getSlotIndex(SlotIndices slot) {
+        return slot.ordinal();
+    }
+
+    public enum SlotIndices {
+        DISC, PAY, A, B, C
+    }
 }

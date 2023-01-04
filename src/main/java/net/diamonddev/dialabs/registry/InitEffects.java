@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.registry;
 
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.effect.ChargeEffect;
 import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.effect.RetributionEffect;
@@ -17,8 +17,8 @@ public class InitEffects implements RegistryInit {
 
     @Override
     public void init() {
-        Registry.register(Registries.STATUS_EFFECT, DiaLabs.id.build("crystallising"), CRYSTALLISE);
-        Registry.register(Registries.STATUS_EFFECT, DiaLabs.id.build("charged"), CHARGE);
-        Registry.register(Registries.STATUS_EFFECT, DiaLabs.id.build("retribution"), RETRIBUTION);
+        Registry.register(Registries.STATUS_EFFECT, Dialabs.id.build("crystallising"), CRYSTALLISE);
+        Registry.register(Registries.STATUS_EFFECT, Dialabs.id.build("charged"), CHARGE);
+        Registry.register(Registries.STATUS_EFFECT, Dialabs.id.build("retribution"), RETRIBUTION);
     }
 }

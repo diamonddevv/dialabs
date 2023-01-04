@@ -22,12 +22,13 @@
   "environment": "*",
 
   "entrypoints": {
+
     "main": [
-      "net.diamonddev.dialabs.DiaLabs"
+      "net.diamonddev.dialabs.Dialabs"
     ],
 
     "client": [
-      "net.diamonddev.dialabs.client.DiaLabsClient"
+      "net.diamonddev.dialabs.client.DialabsClient"
     ],
 
     "cardinal-components": [
@@ -36,7 +37,12 @@
 
     "mm:early_risers": [
       "net.diamonddev.dialabs.lib.asm.EarlyRiser"
+    ],
+
+    "emi": [
+      "net.diamonddev.dialabs.api.emi.DialabsEmiPlugin"
     ]
+
   },
 
   "custom": {
@@ -45,7 +51,8 @@
       "dialabs:retributive",
       "dialabs:sniping_arrow_origin",
       "dialabs:sniping",
-      "dialabs:sniping_speed_ref"
+      "dialabs:sniping_speed_ref",
+      "dialabs:sniping_divergence_ref"
     ]
   },
 

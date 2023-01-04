@@ -22,7 +22,14 @@ repositories {
 		url = 'https://ladysnake.jfrog.io/artifactory/mods'
 	}
 
-	maven { url 'https://jitpack.io' }
+	maven {
+		url 'https://jitpack.io'
+	}
+
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
 }
 
 loom {
@@ -41,18 +48,18 @@ dependencies {
 	// CCA
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_ver}"
 	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_ver}"
-//	modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-item:${project.cca_ver}"
-
 	// CCA jij
 	include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_ver}"
 	include "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_ver}"
-//	include "dev.onyxstudios.cardinal-components-api:cardinal-components-item:${project.cca_ver}"
 
 	// Fabric ASM
 	modImplementation "com.github.Chocohead:Fabric-ASM:${project.asm_version}"
-
 	// FASM jij
 	include "com.github.Chocohead:Fabric-ASM:${project.asm_version}"
+
+
+	// EMI
+	modImplementation "dev.emi:emi:${emi_version}"
 }
 
 processResources {

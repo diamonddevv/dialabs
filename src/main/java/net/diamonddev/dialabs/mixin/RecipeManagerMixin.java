@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.mixin;
 
 import com.google.gson.JsonElement;
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.recipe.SynthesisRecipe;
 import net.minecraft.recipe.RecipeManager;
 import net.minecraft.resource.ResourceManager;
@@ -24,7 +24,7 @@ public class RecipeManagerMixin {
     ) {
         ArrayList<Identifier> toRemove = new ArrayList<>();
         for (Map.Entry<Identifier, JsonElement> entry : map.entrySet()) {
-            if (entry.getKey().toString().matches(DiaLabs.MOD_ID + SynthesisRecipe.Type.ID)) {
+            if (entry.getKey().toString().matches(Dialabs.MOD_ID + SynthesisRecipe.Type.ID)) {
                 toRemove.add(entry.getKey());
             }
         }

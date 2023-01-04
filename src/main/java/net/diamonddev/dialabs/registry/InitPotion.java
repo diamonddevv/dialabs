@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.registry;
 
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.lib.RegistryInit;
 import net.diamonddev.dialabs.mixin.BrewingRecipeInvoker;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -19,10 +19,10 @@ public class InitPotion implements RegistryInit {
     public static Potion DECAY_STRONG = new Potion(new StatusEffectInstance(StatusEffects.WITHER, 300, 1));
 
     public void init() {
-        Registry.register(Registries.POTION, DiaLabs.id.build("darkness"), DARKNESS);
-        Registry.register(Registries.POTION, DiaLabs.id.build("decay"), DECAY);
-        Registry.register(Registries.POTION, DiaLabs.id.build("decay_long"), DECAY_LONG);
-        Registry.register(Registries.POTION, DiaLabs.id.build("decay_strong"), DECAY_STRONG);
+        Registry.register(Registries.POTION, Dialabs.id.build("darkness"), DARKNESS);
+        Registry.register(Registries.POTION, Dialabs.id.build("decay"), DECAY);
+        Registry.register(Registries.POTION, Dialabs.id.build("decay_long"), DECAY_LONG);
+        Registry.register(Registries.POTION, Dialabs.id.build("decay_strong"), DECAY_STRONG);
 
 
         BrewingRecipeInvoker.dialabs$invokeRegisterPotionRecipe(Potions.AWKWARD, Items.ECHO_SHARD, DARKNESS);

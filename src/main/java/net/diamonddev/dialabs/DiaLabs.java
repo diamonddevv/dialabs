@@ -26,7 +26,7 @@ import static net.minecraft.item.EnchantedBookItem.getEnchantmentNbt;
 import static net.minecraft.item.ItemGroups.*;
 
 
-public class DiaLabs implements ModInitializer {
+public class Dialabs implements ModInitializer {
 
 	// Mod ID and Version Variables
 	public static final String MOD_ID = "dialabs";

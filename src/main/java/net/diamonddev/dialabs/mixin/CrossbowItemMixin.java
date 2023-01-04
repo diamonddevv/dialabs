@@ -93,7 +93,10 @@ public abstract class CrossbowItemMixin {
             // Actual Sniping Info
             DialabsCCA.SnipingArrowManager.setIs(persProj, true);
             DialabsCCA.SnipingArrowManager.set(persProj, entity.getPos());
-            DialabsCCA.SnipingArrowManager.setSpeedReference(persProj, (EnchantHelper.getEnchantmentLevel(crossbow, InitEnchants.SNIPING) * 0.5));
+
+            double d = (EnchantHelper.getEnchantmentLevel(crossbow, InitEnchants.SNIPING) * 0.5);
+            DialabsCCA.SnipingArrowManager.setSpeedReference(persProj, d);
+            DialabsCCA.SnipingArrowManager.setDivergenceReference(persProj, d);
 
             // Return
             cir.setReturnValue(persProj);
@@ -110,7 +113,8 @@ public abstract class CrossbowItemMixin {
     )
     private static void dialabs$setSnipingSpeed(ProjectileEntity projEntity, double x, double y, double z, float speed, float divergence) {
         if (!(projEntity instanceof FireworkRocketEntity)) {
-            speed *= 1 + (DialabsCCA.SnipingArrowManager.getSpeed((PersistentProjectileEntity) projEntity));
+            speed *= (1 + (DialabsCCA.SnipingArrowManager.getSpeed((PersistentProjectileEntity) projEntity)));
+            divergence *= (1 + (DialabsCCA.SnipingArrowManager.getDivergence((PersistentProjectileEntity) projEntity)));
         }
         projEntity.setVelocity(x, y, z, speed, divergence);
     }

@@ -4,7 +4,7 @@ import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistryV3;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.cca.entity.BooleanComponent;
 import net.diamonddev.dialabs.cca.entity.DoubleComponent;
 import net.diamonddev.dialabs.cca.entity.VectorComponent;
@@ -16,19 +16,22 @@ public class DialabsCCA implements EntityComponentInitializer {
 
     // ENTITY COMPONENTS
     public static final ComponentKey<DoubleComponent> RETRIBUTIONAL_DAMAGE =
-            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("retributional_damage"), DoubleComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("retributional_damage"), DoubleComponent.class);
 
     public static final ComponentKey<BooleanComponent> RETRIBUTIVE_ARROW =
-            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("retributive"), BooleanComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("retributive"), BooleanComponent.class);
 
     public static final ComponentKey<VectorComponent> SNIPING_ARROW_ORIGIN =
-            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("sniping_arrow_origin"), VectorComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping_arrow_origin"), VectorComponent.class);
 
     public static final ComponentKey<BooleanComponent> SNIPING_ARROW =
-            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("sniping"), BooleanComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping"), BooleanComponent.class);
 
     public static final ComponentKey<DoubleComponent> SNIPING_SPEED_REF =
-            ComponentRegistryV3.INSTANCE.getOrCreate(DiaLabs.id.build("sniping_speed_ref"), DoubleComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping_speed_ref"), DoubleComponent.class);
+
+    public static final ComponentKey<DoubleComponent> SNIPING_DIVERGENCE_REF =
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping_divergence_ref"), DoubleComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
@@ -38,6 +41,7 @@ public class DialabsCCA implements EntityComponentInitializer {
         registry.registerFor(PersistentProjectileEntity.class, SNIPING_ARROW_ORIGIN, persProj -> new VectorComponent("originVector"));
         registry.registerFor(PersistentProjectileEntity.class, SNIPING_ARROW, persProj -> new BooleanComponent("isSniping", false));
         registry.registerFor(PersistentProjectileEntity.class, SNIPING_SPEED_REF, persProj -> new DoubleComponent("snipingSpeedReference"));
+        registry.registerFor(PersistentProjectileEntity.class, SNIPING_DIVERGENCE_REF, persProj -> new DoubleComponent("snipingDivergenceReference"));
     }
 
     public static class RetributionalDamageManager {
@@ -87,6 +91,14 @@ public class DialabsCCA implements EntityComponentInitializer {
 
         public static void setSpeedReference(PersistentProjectileEntity target, double speed) {
             SNIPING_SPEED_REF.get(target).setValue(speed);
+        }
+
+        public static double getDivergence(PersistentProjectileEntity target) {
+            return SNIPING_SPEED_REF.get(target).getValue();
+        }
+
+        public static void setDivergenceReference(PersistentProjectileEntity target, double divergence) {
+            SNIPING_SPEED_REF.get(target).setValue(divergence);
         }
     }
 }

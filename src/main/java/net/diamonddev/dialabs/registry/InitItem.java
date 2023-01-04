@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.registry;
 
 
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.item.CrystalShardItem;
 import net.diamonddev.dialabs.item.LightningBottleItem;
 import net.diamonddev.dialabs.item.StaticCoreItem;
@@ -29,15 +29,15 @@ public class InitItem implements RegistryInit {
     @Override
     public void init() {
 
-        Registry.register(Registries.ITEM, DiaLabs.id.build("staticite_ingot"), STATICITE_INGOT);
-        Registry.register(Registries.ITEM, DiaLabs.id.build("staticite_scrap"), STATICITE_SCRAP);
-        Registry.register(Registries.ITEM, DiaLabs.id.build("staticite_scrap_heap"), STATICITE_SCRAP_HEAP);
-        Registry.register(Registries.ITEM, DiaLabs.id.build("static_core"), STATIC_CORE);
-        Registry.register(Registries.ITEM, DiaLabs.id.build("deepslate_plate"), DEEPSLATE_PLATE);
-        Registry.register(Registries.ITEM, DiaLabs.id.build("crystal_shard"), CRYSTAL_SHARD);
-        Registry.register(Registries.ITEM, DiaLabs.id.build("lightning_bottle"), LIGHTNING_BOTTLE);
+        Registry.register(Registries.ITEM, Dialabs.id.build("staticite_ingot"), STATICITE_INGOT);
+        Registry.register(Registries.ITEM, Dialabs.id.build("staticite_scrap"), STATICITE_SCRAP);
+        Registry.register(Registries.ITEM, Dialabs.id.build("staticite_scrap_heap"), STATICITE_SCRAP_HEAP);
+        Registry.register(Registries.ITEM, Dialabs.id.build("static_core"), STATIC_CORE);
+        Registry.register(Registries.ITEM, Dialabs.id.build("deepslate_plate"), DEEPSLATE_PLATE);
+        Registry.register(Registries.ITEM, Dialabs.id.build("crystal_shard"), CRYSTAL_SHARD);
+        Registry.register(Registries.ITEM, Dialabs.id.build("lightning_bottle"), LIGHTNING_BOTTLE);
 
-        Registry.register(Registries.ITEM, DiaLabs.id.build("synthetic_enchantment_disc"), SYNTHETIC_ENCHANTMENT_DISC);
+        Registry.register(Registries.ITEM, Dialabs.id.build("synthetic_enchantment_disc"), SYNTHETIC_ENCHANTMENT_DISC);
 
     }
 }

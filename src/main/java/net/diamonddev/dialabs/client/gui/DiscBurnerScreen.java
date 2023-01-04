@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.diamonddev.dialabs.DiaLabs;
+import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.gui.DiscBurnerScreenHandler;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
@@ -13,7 +13,7 @@ import net.minecraft.util.math.ColorHelper;
 
 public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
 
-    private static final Identifier TEXTURE = DiaLabs.id.build("textures/gui/disc_burner_screen.png");
+    private static final Identifier TEXTURE = Dialabs.id.build("textures/gui/disc_burner_screen.png");
 
     public DiscBurnerScreen(DiscBurnerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

@@ -101,5 +101,7 @@
 
   "effect.dialabs.charged.desc": "Increases Damage Dealt based on time remaining and effect potency. Has no effect against opponents also using this effect",
   "effect.dialabs.crystallising.desc": "Damages foes who damage the user",
-  "effect.dialabs.retribution.desc": "Damages users a fraction based on how much damage they deal during the effects duration"
+  "effect.dialabs.retribution.desc": "Damages users a fraction based on how much damage they deal during the effects duration",
+
+  "tag.dialabs.synthetic_enchantment_payments": "Enchantment Synthesis Payments"
 }
