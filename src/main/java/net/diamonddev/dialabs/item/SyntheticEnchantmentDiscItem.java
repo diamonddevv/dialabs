@@ -16,9 +16,7 @@ import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
 

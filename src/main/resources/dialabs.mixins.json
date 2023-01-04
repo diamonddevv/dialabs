@@ -9,6 +9,7 @@
     "CrossbowItemMixin",
     "DamageTrackerMixin",
     "EmptyBottleMixin",
+    "EnchantCommandMixin",
     "EnchantmentMixin",
     "EnchantmentTargetMixin",
     "IngredientMixin",
@@ -23,6 +24,7 @@
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",
+    "GameRendererMixin",
     "InGameHudMixin"
   ],
   "injectors": {

@@ -15,6 +15,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -117,10 +118,20 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(at = @At("HEAD"), method = "modifyAppliedDamage")
     private void dialabs$retributionalDamage(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
         if (source.getSource() instanceof LivingEntity target) {
-            if (target.hasStatusEffect(InitEffects.RETRIBUTION)) {
-                int lvl = target.getStatusEffect(InitEffects.RETRIBUTION).getAmplifier() + 1;
-                DialabsCCA.RetributionalDamageManager.addDmg(target, amount * (0.5 + (lvl / 10d)));
+            storeRetributionDmgIfPossible(target, amount);
+        }
+
+        if (source.isProjectile()) {
+            if (((ProjectileEntity)source.getSource()).getOwner() instanceof LivingEntity target) {
+                storeRetributionDmgIfPossible(target, amount);
             }
+        }
+    }
+
+    private static void storeRetributionDmgIfPossible(LivingEntity target, float damageDealt) {
+        if (target.hasStatusEffect(InitEffects.RETRIBUTION)) {
+            int lvl = target.getStatusEffect(InitEffects.RETRIBUTION).getAmplifier() + 1;
+            DialabsCCA.RetributionalDamageManager.addDmg(target, damageDealt * (0.5 + (lvl / 10d)));
         }
     }
 

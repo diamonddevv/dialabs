@@ -1,0 +1,22 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "dialabs:strength_tome"
+    }
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "minecraft:lead"
+    },
+    "count": 3
+  },
+  "inputC": {
+    "ingredient": {
+      "item": "minecraft:tripwire_hook"
+    }
+  },
+  "lapis_count": 12,
+  "enchantment": "dialabs:sniping",
+  "level": 1
+}

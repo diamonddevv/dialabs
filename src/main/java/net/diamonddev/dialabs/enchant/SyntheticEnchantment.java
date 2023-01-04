@@ -1,10 +1,8 @@
 package net.diamonddev.dialabs.enchant;
 
 
-import net.diamonddev.dialabs.integration.ModIntegration;
 import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.registry.Registries;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,19 +61,4 @@ public interface SyntheticEnchantment {
         SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(enchantment, syntheticMaxLevel >= 1 ? syntheticMaxLevel : enchantment.getMaxLevel());
     }
 
-    static void makeSyntheticDiscItemFromModIntegration(ModIntegration modIntegration, String enchantmentPath) {
-        if (modIntegration.isModLoaded()) {
-            Enchantment e = modIntegration.getRegistryValue(Registries.ENCHANTMENT, enchantmentPath);
-            SyntheticEnchantmentDiscItem.externalEntries.add(e);
-            SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(e, e.getMaxLevel());
-        }
-    }
-
-    static void makeSyntheticDiscItemFromModIntegration(ModIntegration modIntegration, String enchantmentPath, int syntheticMaxLevel) {
-        if (modIntegration.isModLoaded()) {
-            Enchantment e = modIntegration.getRegistryValue(Registries.ENCHANTMENT, enchantmentPath);
-            SyntheticEnchantmentDiscItem.externalEntries.add(e);
-            SyntheticEnchantment.hashSyntheticEnchantMaxLevel.put(e, syntheticMaxLevel >= 1 ? syntheticMaxLevel : e.getMaxLevel());
-        }
-    }
 }

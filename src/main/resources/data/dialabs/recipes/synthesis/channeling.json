@@ -1,0 +1,23 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "dialabs:destructive_tome"
+    }
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "dialabs:lightning_in_a_bottle"
+    },
+    "count": 5
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "minecraft:prismarine_shard"
+    },
+    "count": 16
+  },
+  "lapis_count": 48,
+  "enchantment": "minecraft:channeling",
+  "level": 1
+}

@@ -11,6 +11,6 @@ public class EarlyRiser implements Runnable {
         String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
 
         ClassTinkerers.enumBuilder(enchantmentTarget)
-                .addEnumSubclass("SHIELD", "net.diamonddev.dialabs.lib.enchant.ShieldEnchantmentTarget").build();
+                .addEnumSubclass("SPYGLASS", "net.diamonddev.dialabs.lib.enchant.SpyglassEnchantTarget").build();
     }
 }

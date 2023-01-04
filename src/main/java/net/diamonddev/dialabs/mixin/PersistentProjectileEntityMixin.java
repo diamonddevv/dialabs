@@ -22,6 +22,8 @@ public abstract class PersistentProjectileEntityMixin extends ProjectileEntity {
 
     @Shadow public abstract double getDamage();
 
+    @Shadow public int shake;
+
     public PersistentProjectileEntityMixin(EntityType<? extends ProjectileEntity> entityType, World world) {
         super(entityType, world);
     }

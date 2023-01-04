@@ -71,6 +71,8 @@
   "enchantment.dialabs.retributive": "Retributive",
   "enchantment.dialabs.multiclip": "Multiclip",
   "enchantment.dialabs.sniping": "Sniping",
+  "enchantment.dialabs.zooming": "Zooming",
+  "enchantment.dialabs.prismarine_spikes": "Prismarine Spikes",
 
   "text.dialabs.multiclip_loaded_count": "Loaded Projectiles: %s",
 
@@ -86,5 +88,18 @@
   "subtitle.dialabs.synthesize_enchantment": "Enchantment synthesizes",
   "subtitle.dialabs.burn_enchantment_disc": "Enchantment disc burns",
   "subtitle.dialabs.crystal_shards.use": "Crystal Shards is used",
-  "subtitle.dialabs.static_core.use": "Static Core is used"
+  "subtitle.dialabs.static_core.use": "Static Core is used",
+
+  "enchantment.dialabs.withered_aspect.desc": "Inflicts the wither effect on damaged opponents",
+  "enchantment.dialabs.harvester.desc": "Yields extra experience on kill",
+  "enchantment.dialabs.soul_aspect.desc": "Steals a small fraction of health from the damaged opponent on hit",
+  "enchantment.dialabs.retributive.desc": "Inflicts Retribution on the hit opponent, however inhibiting the crossbows ability to load Fireworks",
+  "enchantment.dialabs.multiclip.desc": "Loads multiple shots at once, however increasing loading times",
+  "enchantment.dialabs.sniping.desc": "Increases Speed and Power of arrows shot, dealing more damage based on how far the shot was taken from the hit point",
+  "enchantment.dialabs.zooming.desc": "Increases the zoom strength of Spyglasses",
+  "enchantment.dialabs.prismarine_spikes.desc": "Increases general damage dealt when thrown",
+
+  "effect.dialabs.charged.desc": "Increases Damage Dealt based on time remaining and effect potency. Has no effect against opponents also using this effect",
+  "effect.dialabs.crystallising.desc": "Damages foes who damage the user",
+  "effect.dialabs.retribution.desc": "Damages users a fraction based on how much damage they deal during the effects duration"
 }

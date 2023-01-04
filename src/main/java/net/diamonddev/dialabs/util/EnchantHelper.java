@@ -90,6 +90,21 @@ public class EnchantHelper {
         });
     }
 
+    public static void storeAllEnchantments(ItemStack stack, ArrayList<EnchantmentLevelEntry> eles) {
+        eles.forEach(ele -> {
+            Enchantment ench = ele.enchantment;
+            int lvl = ele.level;
+
+            if (hasEnchantmentStored(stack, ench)) {
+                if (lvl >= getStoredEnchantmentLevel(stack, ench)) {
+                    upgradeStoredEnchantment(stack, ench);
+                }
+            } else {
+                storeEnchantment(stack, ele);
+            }
+        });
+    }
+
     public static void addAllEnchantments(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
         mappedEnchantsToAdd.forEach((enchantment, integer) -> {
             if (hasEnchantment(enchantment, stack)) {
@@ -114,7 +129,7 @@ public class EnchantHelper {
     public static void upgradeStoredEnchantment(ItemStack stack, Enchantment enchantment) {
         Map<Enchantment, Integer> existingMap = getMappedStoredEnchantments(stack);
         int existingLevel = existingMap.get(enchantment);
-        if (enchantment instanceof SyntheticEnchantment) {
+        if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchantment)) {
             if (existingLevel < SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchantment)) {
                 existingMap.put(enchantment, existingLevel + 1);
             }
@@ -129,7 +144,7 @@ public class EnchantHelper {
     public static void upgradeExistingEnchantment(ItemStack stack, Enchantment enchantment) {
         Map<Enchantment, Integer> existingMap = EnchantmentHelper.get(stack);
         int existingLevel = existingMap.get(enchantment);
-        if (enchantment instanceof SyntheticEnchantment) {
+        if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchantment)) {
             if (existingLevel < SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchantment)) {
                 existingMap.put(enchantment, existingLevel + 1);
             }

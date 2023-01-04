@@ -1,0 +1,22 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "dialabs:strength_tome"
+    }
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "minecraft:iron_ingot"
+    },
+    "count": 15
+  },
+  "inputC": {
+    "ingredient": {
+      "item": "minecraft:netherite_ingot"
+    }
+  },
+  "lapis_count": 48,
+  "enchantment": "dialabs:multiclip",
+  "level": 1
+}

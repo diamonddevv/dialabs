@@ -18,7 +18,6 @@ import net.minecraft.text.StringVisitable;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
 
 import java.util.Random;
 
@@ -58,7 +57,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         super.init();
 
         // The title was slightly too high
-        titleY = titleY - 2;
+        titleY -= 1;
     }
     public static Text getText(TextRenderer renderer, ItemStack stack) {
         Text key;
@@ -91,12 +90,28 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         }
         return Text.translatable("synthesis.dialabs.empty", stringBuilder);
     }
+
+    public int getLapisReq() {
+        return this.handler.lapisReq;
+    }
+
+    public static Text getLapisRequirementText(int i) {
+        return Text.literal(String.valueOf(i));
+    }
+
+    //
     public void drawEnchantmentText(MatrixStack matrices) {
         for (int i = 0; i < 3; i++) {
             ItemStack stack = this.handler.getInventory().getStack(i + 2);
             drawTextWithShadow(matrices, this.textRenderer, getText(textRenderer, stack), x + 83, y + 15 + i * 19,
-                    ColorHelper.Argb.getArgb(0, 170, 170, 170));
+                    0xaaaaaa);
         }
-    }
 
+
+        int i = getLapisReq();
+        if (i >= 0) {
+            drawTextWithShadow(matrices, this.textRenderer, getLapisRequirementText(i), x + 34 - (5 * (String.valueOf(i).length() - 1)), y + 64,
+                    0x6e6e6e);
+        };
+    }
 }

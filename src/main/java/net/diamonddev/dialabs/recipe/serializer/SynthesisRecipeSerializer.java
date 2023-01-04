@@ -33,15 +33,15 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         CountedIngredient inputC = CountedIngredient.fromJson(format.inputC);
 
         ArrayList<ChancedEnchantment> chancedEnchantments = new ArrayList<>();
-        format.chancedEnchantments = null; // temporary - not supported doofus
-//        if (format.chancedEnchantments != null) {
-//            for (JsonElement obj : format.chancedEnchantments) {
-//                ChancedEnchantment chancedEnchantment = ChancedEnchantment.fromJson(obj);
-//                if (chancedEnchantment != ChancedEnchantment.EMPTY) {
-//                    chancedEnchantments.add(chancedEnchantment);
-//                }
-//            }
-//        }
+
+        if (format.chancedEnchantments != null) {
+            for (JsonElement obj : format.chancedEnchantments) {
+                ChancedEnchantment chancedEnchantment = ChancedEnchantment.fromJson(obj);
+                if (chancedEnchantment != ChancedEnchantment.EMPTY) {
+                    chancedEnchantments.add(chancedEnchantment);
+                }
+            }
+        }
 
         if (inputA == CountedIngredient.EMPTY && inputB == CountedIngredient.EMPTY && inputC == CountedIngredient.EMPTY) {
             throw new JsonSyntaxException("Recipe '" + id + "' invalid; No defined ingredients found!");

@@ -1,0 +1,24 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "minecraft:glass_pane"
+    },
+    "count": 12
+  },
+  "inputB": {
+    "ingredient": {
+      "item": "minecraft:copper_ingot"
+    },
+    "count": 6
+  },
+  "inputC": {
+    "ingredient": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "count": 6
+  },
+  "lapis_count": 18,
+  "enchantment": "dialabs:zooming",
+  "level": 1
+}

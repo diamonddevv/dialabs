@@ -133,8 +133,13 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         return inv.getStack(0).getItem() == InitItem.SYNTHETIC_ENCHANTMENT_DISC &&
                 getInputA().test(inv.getStack(2)) &&
                 getInputB().test(inv.getStack(3)) && // CountedIngredient Checks
-                getInputC().test(inv.getStack(4)) &&
-                getLapisRequirement() <= inv.getStack(1).getCount(); // Lapis Count Check
+                getInputC().test(inv.getStack(4));
+
+        // the lapis requirement is seperate
+    }
+
+    public boolean lapisReqMet(SynthesisInventory inv) {
+        return getLapisRequirement() <= inv.getStack(1).getCount();
     }
 
     // misc stuff lol
