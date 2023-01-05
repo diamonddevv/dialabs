@@ -3,12 +3,14 @@ package net.diamonddev.dialabs.item;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
+import net.diamonddev.dialabs.util.Helpers;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.EnchantedBookItem;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
@@ -37,19 +39,25 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
     }
 
 
-    public void putSyntheticDiscStacks(FabricItemGroupEntries content) {
+    public void putSyntheticDiscStacks(FabricItemGroupEntries content, ItemGroup.StackVisibility vis) {
         content.add(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
 
-        // Predetermined Synthetic Enchantments (from registry)
         for (Enchantment enchant : Registries.ENCHANTMENT) {
-            if (enchant instanceof SyntheticEnchantment) {
-                content.add(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant))));
+            if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchant)) {
+                content.add(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant))), vis);
             }
         }
+    }
 
-        // External Entries
-        for (Enchantment enchant : externalEntries) {
-            content.add(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.getOrDefault(enchant, enchant.getMaxLevel()))));
+    public void putAllSyntheticDiscStacks(FabricItemGroupEntries content, ItemGroup.StackVisibility vis) {
+        content.add(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
+
+        for (Enchantment enchant : Registries.ENCHANTMENT) {
+            if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchant)) {
+                Helpers.getEachIntegerRange(enchant.getMinLevel(), SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant)).forEach((i) -> {
+                    content.add(forEnchantment(new EnchantmentLevelEntry(enchant, i)), vis);
+                });
+            }
         }
     }
 
@@ -59,5 +67,9 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
             tooltip.add(Text.translatable("text.dialabs.empty_synthetic_enchantment_disc"));
         }
         super.appendTooltip(stack, world, tooltip, context);
+    }
+
+    public static ItemStack getStackFromEnchantmentLevelEntry(EnchantmentLevelEntry enchantment) {
+        return EnchantHelper.storeEnchantment(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC), enchantment);
     }
 }

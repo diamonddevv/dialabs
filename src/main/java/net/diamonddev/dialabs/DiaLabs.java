@@ -13,6 +13,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.EnchantedBookItem;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import org.apache.logging.log4j.LogManager;
@@ -119,9 +120,10 @@ public class Dialabs implements ModInitializer {
 				content.add(getBlockItem(InitBlocks.DISC_BURNER));
 				placeTomes(content);
 				content.add(InitItem.SYNTHETIC_ENCHANTMENT_DISC);
-				InitItem.SYNTHETIC_ENCHANTMENT_DISC.putSyntheticDiscStacks(content);
-			});
 
+				InitItem.SYNTHETIC_ENCHANTMENT_DISC.putSyntheticDiscStacks(content, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
+				InitItem.SYNTHETIC_ENCHANTMENT_DISC.putAllSyntheticDiscStacks(content, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+			});
 		}
 
 		public static void removeItemsInGroups() {

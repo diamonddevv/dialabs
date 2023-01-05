@@ -97,7 +97,7 @@
   "enchantment.dialabs.multiclip.desc": "Loads multiple shots at once, however increasing loading times",
   "enchantment.dialabs.sniping.desc": "Increases Speed and Power of arrows shot, dealing more damage based on how far the shot was taken from the hit point",
   "enchantment.dialabs.zooming.desc": "Increases the zoom strength of Spyglasses",
-  "enchantment.dialabs.prismarine_spikes.desc": "Increases general damage dealt when thrown",
+  "enchantment.dialabs.prismarine_spikes.desc": "Increases general damage of trident when thrown",
 
   "effect.dialabs.charged.desc": "Increases Damage Dealt based on time remaining and effect potency. Has no effect against opponents also using this effect",
   "effect.dialabs.crystallising.desc": "Damages foes who damage the user",

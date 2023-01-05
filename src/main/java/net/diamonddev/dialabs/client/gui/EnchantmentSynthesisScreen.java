@@ -42,6 +42,7 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         int y = (height - backgroundHeight) / 2;
         drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
+        drawCanTakeCross(matrices);
         drawEnchantmentText(matrices);
     }
 
@@ -91,14 +92,6 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
         return Text.translatable("synthesis.dialabs.empty", stringBuilder);
     }
 
-    public int getLapisReq() {
-        return this.handler.lapisReq;
-    }
-
-    public static Text getLapisRequirementText(int i) {
-        return Text.literal(String.valueOf(i));
-    }
-
     //
     public void drawEnchantmentText(MatrixStack matrices) {
         for (int i = 0; i < 3; i++) {
@@ -106,12 +99,15 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
             drawTextWithShadow(matrices, this.textRenderer, getText(textRenderer, stack), x + 83, y + 15 + i * 19,
                     0xaaaaaa);
         }
+    }
 
+    public void drawCanTakeCross(MatrixStack matrices) {
+        if (this.handler.getCanTakeFromOutSlot()) {
+            int drawX = 16, drawY = 9;
+            int getX = 177, getY = 1;
+            int dims = 32;
 
-        int i = getLapisReq();
-        if (this.handler.allRecipeSlotsFilled) { // todo: fix, hmm
-            drawTextWithShadow(matrices, this.textRenderer, getLapisRequirementText(i), x + 34 - (5 * (String.valueOf(i).length() - 1)), y + 64,
-                    0x6e6e6e);
-        };
+            this.drawTexture(matrices, x + drawX, y + drawY, getX, getY, dims, dims);
+        }
     }
 }

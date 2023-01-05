@@ -53,7 +53,7 @@ public class EnchantHelper {
         return bl;
     }
 
-    public static void storeEnchantment(ItemStack stack, EnchantmentLevelEntry enchantmentLevelEntry) {
+    public static ItemStack storeEnchantment(ItemStack stack, EnchantmentLevelEntry enchantmentLevelEntry) {
         NbtList nbtList = getStoredEnchantments(stack);
         boolean bl = true;
         Identifier identifier = EnchantmentHelper.getEnchantmentId(enchantmentLevelEntry.enchantment);
@@ -76,6 +76,7 @@ public class EnchantHelper {
         }
 
         stack.getOrCreateNbt().put("StoredEnchantments", nbtList);
+        return stack;
     }
 
     public static void storeAllEnchantments(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
@@ -90,7 +91,7 @@ public class EnchantHelper {
         });
     }
 
-    public static void storeAllEnchantments(ItemStack stack, ArrayList<EnchantmentLevelEntry> eles) {
+    public static ItemStack storeAllEnchantments(ItemStack stack, ArrayList<EnchantmentLevelEntry> eles) {
         eles.forEach(ele -> {
             Enchantment ench = ele.enchantment;
             int lvl = ele.level;
@@ -103,6 +104,7 @@ public class EnchantHelper {
                 storeEnchantment(stack, ele);
             }
         });
+        return stack;
     }
 
     public static void addAllEnchantments(ItemStack stack, Map<Enchantment, Integer> mappedEnchantsToAdd) {
@@ -243,4 +245,13 @@ public class EnchantHelper {
         return map;
     }
 
+    public static ArrayList<EnchantmentLevelEntry> mapToEntryArray(Map<Enchantment, Integer> map) {
+        ArrayList<EnchantmentLevelEntry> eles = new ArrayList<>();
+        map.entrySet().forEach(entry -> eles.add(new EnchantmentLevelEntry(entry.getKey(), entry.getValue())));
+        return eles;
+    }
+
+    public static ArrayList<EnchantmentLevelEntry> getStoredEnchantmentLevelEntries(ItemStack stack) {
+        return mapToEntryArray(getMappedStoredEnchantments(stack));
+    }
 }

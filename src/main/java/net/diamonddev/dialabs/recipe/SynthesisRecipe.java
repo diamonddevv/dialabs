@@ -5,11 +5,13 @@ import net.diamonddev.dialabs.recipe.objects.ChancedEnchantment;
 import net.diamonddev.dialabs.recipe.objects.CountedIngredient;
 import net.diamonddev.dialabs.recipe.serializer.SynthesisRecipeSerializer;
 import net.diamonddev.dialabs.registry.InitItem;
+import net.diamonddev.dialabs.util.DataDrivenTagKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
@@ -174,11 +176,16 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         public static final String ID = "enchantment_synthesis";
     }
 
-    public static int getSlotIndex(SlotIndices slot) {
-        return slot.ordinal();
-    }
 
-    public enum SlotIndices {
-        DISC, PAY, A, B, C
+    public ArrayList<CountedIngredient> getCountedIngredients() {
+        ArrayList<CountedIngredient> ingredients = new ArrayList<>();
+
+       ingredients.add(new CountedIngredient(Ingredient.ofItems(InitItem.SYNTHETIC_ENCHANTMENT_DISC), 1));
+       ingredients.add(new CountedIngredient(Ingredient.fromTag(DataDrivenTagKeys.SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS), getLapisRequirement()));
+       ingredients.add(getInputA());
+       ingredients.add(getInputB());
+       ingredients.add(getInputC());
+
+       return ingredients;
     }
 }

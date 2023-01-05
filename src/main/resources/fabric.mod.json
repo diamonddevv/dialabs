@@ -12,8 +12,8 @@
   ],
 
   "contact": {
-    "homepage": "https://www.github.com/diamondboy4005",
-    "sources": "https://www.github.com/diamondboy4005/dialabs"
+    "homepage": "https://www.github.com/diamonddevv",
+    "sources": "https://www.github.com/diamonddevv/dialabs"
   },
 
   "license": "MIT",
@@ -37,10 +37,6 @@
 
     "mm:early_risers": [
       "net.diamonddev.dialabs.lib.asm.EarlyRiser"
-    ],
-
-    "emi": [
-      "net.diamonddev.dialabs.api.emi.DialabsEmiPlugin"
     ]
 
   },

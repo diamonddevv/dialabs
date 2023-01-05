@@ -34,11 +34,14 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
 
     public ArrayList<EnchantmentLevelEntry> recipeEles;
 
-    public int lapisReq;
     public boolean allRecipeSlotsFilled;
 
     private OutSlot OUT_SLOT;
+    private boolean canTake;
 
+    public boolean getCanTakeFromOutSlot() {
+        return canTake;
+    }
     private static class OutSlot extends Slot {
         public OutSlot(Inventory inventory, int index, int x, int y) {
             super(inventory, index, x, y);
@@ -228,9 +231,8 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
             this.recipeEles = match.get().getOutputRolledEnchants();
             this.out.set(match.get().getOutput().copy());
 
-            this.lapisReq = match.get().getLapisRequirement();
-
             this.OUT_SLOT.canTake = match.get().lapisReqMet(this.inventory);
+            this.canTake = this.OUT_SLOT.canTake;
         } else {
             this.out.clear();
         }
