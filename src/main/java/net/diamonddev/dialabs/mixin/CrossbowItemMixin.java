@@ -114,7 +114,7 @@ public abstract class CrossbowItemMixin {
     private static void dialabs$setSnipingSpeed(ProjectileEntity projEntity, double x, double y, double z, float speed, float divergence) {
         if (!(projEntity instanceof FireworkRocketEntity)) {
             speed *= (1 + (DialabsCCA.SnipingArrowManager.getSpeed((PersistentProjectileEntity) projEntity)));
-            divergence *= (1 + (DialabsCCA.SnipingArrowManager.getDivergence((PersistentProjectileEntity) projEntity)));
+            divergence /= (1 + (DialabsCCA.SnipingArrowManager.getDivergence((PersistentProjectileEntity) projEntity)));
         }
         projEntity.setVelocity(x, y, z, speed, divergence);
     }
