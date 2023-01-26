@@ -19,6 +19,7 @@ public class LightningBottleItem extends Item {
         super(settings);
     }
 
+    private static final int COOLDOWN = 20;
     @Override
     public ActionResult useOnEntity(ItemStack stack, PlayerEntity user, LivingEntity entity, Hand hand) {
         if (entity.isAlive()) {
@@ -30,6 +31,8 @@ public class LightningBottleItem extends Item {
             lightning.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(pos.up()));
 
             world.spawnEntity(lightning);
+
+            setCooldown(user);
 
             stack.decrement(1);
 
@@ -52,6 +55,10 @@ public class LightningBottleItem extends Item {
 
             world.spawnEntity(lightning);
 
+            if (context.getPlayer() != null) {
+                setCooldown(context.getPlayer());
+            }
+
             stack.decrement(1);
 
             return ActionResult.SUCCESS;
@@ -60,4 +67,7 @@ public class LightningBottleItem extends Item {
     }
 
 
+    private void setCooldown(PlayerEntity player) {
+        player.getItemCooldownManager().set(this, COOLDOWN);
+    }
 }

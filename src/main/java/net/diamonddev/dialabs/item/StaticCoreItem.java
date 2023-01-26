@@ -21,6 +21,8 @@ public class StaticCoreItem extends Item {
     }
 
     private static final Random random = new Random();
+
+    private static final int COOLDOWN = 20;
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
@@ -29,6 +31,8 @@ public class StaticCoreItem extends Item {
 
         player.addStatusEffect(new StatusEffectInstance(InitEffects.CHARGE, durationInSec * 20, effectStrength - 1));
         player.getStackInHand(hand).decrement(1);
+
+        player.getItemCooldownManager().set(this, COOLDOWN);
 
         player.playSound(InitSoundEvent.USE_STATIC_CORE, 1.0f, random.nextFloat(0.5f, 1.5f));
 

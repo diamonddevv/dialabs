@@ -156,4 +156,8 @@ public class Dialabs implements ModInitializer {
 		}
 	}
 
+	public static boolean isDevelopment() {
+		return FabricLoaderImpl.INSTANCE.isDevelopmentEnvironment();
+	}
+
 }

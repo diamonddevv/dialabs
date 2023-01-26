@@ -20,6 +20,7 @@ public class CrystalShardItem extends Item {
         super(settings);
     }
 
+    private static final int COOLDOWN = 20;
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
@@ -27,6 +28,8 @@ public class CrystalShardItem extends Item {
         int durationInSec = world.getGameRules().getInt(CRYSTAL_SHARD_LENGTH);
 
         player.addStatusEffect(new StatusEffectInstance(InitEffects.CRYSTALLISE, durationInSec * 20, effectStrength - 1));
+
+        player.getItemCooldownManager().set(this, COOLDOWN);
 
         player.playSound(InitSoundEvent.USE_CRYSTAL_SHARDS, 1.0f, 2.0f);
 
