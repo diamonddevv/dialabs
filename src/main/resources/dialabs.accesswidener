@@ -6,3 +6,6 @@ extendable class   net/minecraft/enchantment/EnchantmentTarget
 
 # Heart Types
 accessible class    net/minecraft/client/gui/hud/InGameHud$HeartType
+
+# ItemCooldownManager.Entry
+accessible class    net/minecraft/entity/player/ItemCooldownManager$Entry
