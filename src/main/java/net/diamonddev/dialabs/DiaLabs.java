@@ -47,6 +47,7 @@ public class Dialabs implements ModInitializer {
 
 		addCallbackReferences(); // Keep BEFORE Registry Initialization
 
+		new InitEntity().init();
 		new InitItem().init();
         new InitEffects().init();
 		new InitBlocks().init();

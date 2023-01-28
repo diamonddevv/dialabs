@@ -2,10 +2,7 @@ package net.diamonddev.dialabs.registry;
 
 
 import net.diamonddev.dialabs.Dialabs;
-import net.diamonddev.dialabs.item.CrystalShardItem;
-import net.diamonddev.dialabs.item.LightningBottleItem;
-import net.diamonddev.dialabs.item.StaticCoreItem;
-import net.diamonddev.dialabs.item.SyntheticEnchantmentDiscItem;
+import net.diamonddev.dialabs.item.*;
 import net.diamonddev.dialabs.lib.RegistryInit;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
@@ -25,6 +22,7 @@ public class InitItem implements RegistryInit {
 
     public static final SyntheticEnchantmentDiscItem SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDiscItem();
 
+    public static final ThrowableItem BOMB = new ThrowableItem(new FabricItemSettings(), new ThrowableItem.ThrowableItemSettings().setOnCollideConsumer((entity, result) -> entity.getWorld().ex));
 
     @Override
     public void init() {
@@ -38,6 +36,8 @@ public class InitItem implements RegistryInit {
         Registry.register(Registries.ITEM, Dialabs.id.build("lightning_bottle"), LIGHTNING_BOTTLE);
 
         Registry.register(Registries.ITEM, Dialabs.id.build("synthetic_enchantment_disc"), SYNTHETIC_ENCHANTMENT_DISC);
+
+        Registry.register(Registries.ITEM, Dialabs.id.build("bomb"), BOMB);
 
     }
 }
