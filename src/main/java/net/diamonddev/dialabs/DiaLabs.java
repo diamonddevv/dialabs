@@ -102,9 +102,12 @@ public class Dialabs implements ModInitializer {
 			});
 
 			ItemGroupEvents.modifyEntriesEvent(COMBAT).register(content -> {
+				content.add(InitItem.BOMB);
+				content.add(InitItem.SPARK_BOMB);
 				content.add(InitItem.CRYSTAL_SHARD);
 				content.add(InitItem.STATIC_CORE);
 				content.add(InitItem.LIGHTNING_BOTTLE);
+				content.add(InitItem.ROCK);
 			});
 
 			ItemGroupEvents.modifyEntriesEvent(INGREDIENTS).register(content -> {

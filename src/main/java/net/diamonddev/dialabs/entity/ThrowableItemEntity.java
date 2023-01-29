@@ -1,6 +1,5 @@
 package net.diamonddev.dialabs.entity;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
@@ -11,14 +10,14 @@ import net.minecraft.world.World;
 import java.util.function.BiConsumer;
 
 
-public class ThrownItemEntityImpl extends ThrownItemEntity {
+public class ThrowableItemEntity extends ThrownItemEntity {
 
-    private BiConsumer<Entity, HitResult> onCollideConsumer;
-    public ThrownItemEntityImpl(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    private BiConsumer<ThrowableItemEntity, HitResult> onCollideConsumer;
+    public ThrowableItemEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public void setOnCollideConsumer(BiConsumer<Entity, HitResult> consumer) {
+    public void setOnCollideConsumer(BiConsumer<ThrowableItemEntity, HitResult> consumer) {
         this.onCollideConsumer = consumer;
     }
     @Override

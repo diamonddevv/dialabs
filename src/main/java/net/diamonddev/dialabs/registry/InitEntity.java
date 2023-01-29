@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.registry;
 
 import net.diamonddev.dialabs.Dialabs;
-import net.diamonddev.dialabs.entity.ThrownItemEntityImpl;
+import net.diamonddev.dialabs.entity.ThrowableItemEntity;
 import net.diamonddev.dialabs.lib.RegistryInit;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
@@ -14,12 +14,12 @@ import net.minecraft.util.Identifier;
 
 public class InitEntity implements RegistryInit {
 
-    public static EntityType<ThrownItemEntityImpl> THROWN_ITEM;
+    public static EntityType<ThrowableItemEntity> THROWN_ITEM;
 
 
     @Override
     public void init() {
-        THROWN_ITEM = register(Dialabs.id.build("thrown_item"), createThrownItemEntityType(ThrownItemEntityImpl::new));
+        THROWN_ITEM = register(Dialabs.id.build("thrown_item"), createThrownItemEntityType(ThrowableItemEntity::new));
     }
 
 

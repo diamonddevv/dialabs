@@ -37,7 +37,12 @@
   "item.dialabs.synthetic_enchantment_disc": "Synthetic Enchantment Disc",
   "text.dialabs.empty_synthetic_enchantment_disc": "§7Empty",
 
+  "item.dialabs.rock": "Rock",
+
   "item.dialabs.bomb": "Bomb",
+  "item.dialabs.spark_bomb": "Spark Bomb",
+
+  "entity.dialabs.thrown_item": "Thrown Item",
 
   "item.minecraft.potion.effect.darkness": "Potion of Darkness",
   "item.minecraft.splash_potion.effect.darkness": "Splash Potion of Darkness",
@@ -66,6 +71,15 @@
   "death.attack.charge.player": "%s couldn't withstand %s's current",
 
   "death.attack.retribution": "%s got what was coming to them",
+
+  "death.attack.bomb": "%s was blown up into smithereens",
+  "death.attack.bomb.player": "%s was blown up into smithereens by %s",
+
+  "death.attack.sparkBomb": "%s was electrocuted by a Spark Bomb",
+  "death.attack.sparkBomb.player": "%s was electrocuted by a Spark Bomb thrown by %s",
+
+  "death.attack.thwack": "%s was thwacked one too many times",
+  "death.attack.thwack.player": "%s was thwacked one too many times by %s",
 
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
   "enchantment.dialabs.harvester": "Harvester",

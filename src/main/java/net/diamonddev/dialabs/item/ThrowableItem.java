@@ -1,9 +1,11 @@
 package net.diamonddev.dialabs.item;
 
-import net.diamonddev.dialabs.entity.ThrownItemEntityImpl;
+import net.diamonddev.dialabs.entity.ThrowableItemEntity;
 import net.diamonddev.dialabs.registry.InitEntity;
-import net.minecraft.entity.Entity;
+import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
@@ -13,6 +15,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
 import java.util.function.BiConsumer;
@@ -23,6 +26,20 @@ public class ThrowableItem extends Item {
     public ThrowableItem(Settings settings, ThrowableItemSettings throwableSettings) {
         super(settings);
         this.throwableSettings = throwableSettings;
+
+        // register dispenser behavior for throwable items
+        DispenserBlock.registerBehavior(this, new ProjectileDispenserBehavior() {
+            @Override
+            protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                ThrowableItem item = (ThrowableItem) stack.getItem();
+                ThrowableItemEntity entity = InitEntity.THROWN_ITEM.create(world);
+
+                entity.setOnCollideConsumer(item.throwableSettings.onCollideConsumer);
+                entity.setItem(stack);
+
+                return entity;
+            }
+        });
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity playerEntity, Hand hand) {
@@ -35,9 +52,10 @@ public class ThrowableItem extends Item {
         world.playSoundFromEntity(null, playerEntity, this.throwableSettings.sound, SoundCategory.NEUTRAL, 1.0f, 1.0f);
 
         if (!world.isClient) {
-            ThrownItemEntityImpl entity = InitEntity.THROWN_ITEM.create(world);
+            ThrowableItemEntity entity = InitEntity.THROWN_ITEM.create(world);
 
             entity.setOnCollideConsumer(this.throwableSettings.onCollideConsumer);
+            entity.setItem(stackInHand);
 
             entity.setVelocity(playerEntity, playerEntity.getPitch(), playerEntity.getYaw(), 0.0F, 1.5F, 1.0F);
             entity.setPos(playerEntity.getX(), playerEntity.getY() + (double) playerEntity.getStandingEyeHeight() - 0.10000000149011612D, playerEntity.getZ());
@@ -53,7 +71,7 @@ public class ThrowableItem extends Item {
     }
 
     public static class ThrowableItemSettings {
-        private BiConsumer<Entity, HitResult> onCollideConsumer;
+        private BiConsumer<ThrowableItemEntity, HitResult> onCollideConsumer;
         private SoundEvent sound;
         private int cooldownTicks;
 
@@ -65,7 +83,7 @@ public class ThrowableItem extends Item {
 
         ///
 
-        public ThrowableItemSettings setOnCollideConsumer(BiConsumer<Entity, HitResult> consumer) {
+        public ThrowableItemSettings setOnCollideConsumer(BiConsumer<ThrowableItemEntity, HitResult> consumer) {
             this.onCollideConsumer = consumer;
             return this;
         }
