@@ -13,13 +13,17 @@ import net.diamonddev.dialabs.world.explosion.IBombExplosionSettings;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LightningEntity;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.function.BiConsumer;
@@ -61,7 +65,14 @@ public class InitItem implements RegistryInit {
 
         @Override
         public void forEachBlockAffected(Entity source, World world, BlockPos blockPos) {
-            if (world.getBlockState(blockPos).getBlock() == Blocks.IRON_BLOCK)
+            if (world.getBlockState(blockPos).getBlock() == Blocks.LIGHTNING_ROD) {
+                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
+                if (lightningEntity != null) {
+                    lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.up()));
+                    if (source instanceof ServerPlayerEntity s) lightningEntity.setChanneler(s);
+                    world.spawnEntity(lightningEntity);
+                }
+            }
         }
 
         @Override
