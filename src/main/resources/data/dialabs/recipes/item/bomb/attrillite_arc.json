@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#i#",
+    "iGi",
+    "#i#"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:sculk_vein"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "dialabs:attrillite_ingot"
+    }
+  },
+  "result": {
+    "item": "dialabs:attrillite_arc",
+    "count": 1
+  }
+}

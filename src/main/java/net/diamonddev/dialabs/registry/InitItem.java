@@ -15,6 +15,8 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -34,6 +36,8 @@ public class InitItem implements RegistryInit {
     public static final Item STATICITE_SCRAP = new Item(new FabricItemSettings());
     public static final Item STATICITE_SCRAP_HEAP = new Item(new FabricItemSettings());
 
+    public static final Item ATTRILLITE_INGOT = new Item(new FabricItemSettings());
+
 
     public static final StaticCoreItem STATIC_CORE = new StaticCoreItem(new FabricItemSettings().maxCount(4).rarity(Rarity.RARE));
     public static final CrystalShardItem CRYSTAL_SHARD = new CrystalShardItem(new FabricItemSettings());
@@ -50,7 +54,7 @@ public class InitItem implements RegistryInit {
     public static final ThrowableItem SPARK_BOMB = createBomb(new FabricItemSettings(), new IBombExplosionSettings() {
         @Override
         public float getPower() {
-            return 2.5f;
+            return 3f;
         }
 
         @Override
@@ -61,17 +65,24 @@ public class InitItem implements RegistryInit {
         @Override
         public void forEachEntityAffected(Entity source, Entity entity) {
             entity.damage(DialabsDamageSource.sparkBomb(source), 6f);
+            Helpers.spawnParticles(
+                    entity.world,
+                    InitParticle.SPARK.getParticleType(),
+                    entity.getPos().x, entity.getPos().y, entity.getPos().z,
+                    25, 0.25,
+                    0.5, 0.5, 0.5
+            );
         }
 
         @Override
         public void forEachBlockAffected(Entity source, World world, BlockPos blockPos) {
             if (world.getBlockState(blockPos).getBlock() == Blocks.LIGHTNING_ROD) {
+
                 LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
-                if (lightningEntity != null) {
-                    lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.up()));
-                    if (source instanceof ServerPlayerEntity s) lightningEntity.setChanneler(s);
-                    world.spawnEntity(lightningEntity);
-                }
+                lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.up()));
+                if (source instanceof ServerPlayerEntity s) lightningEntity.setChanneler(s);
+
+                world.spawnEntity(lightningEntity);
             }
         }
 
@@ -79,12 +90,26 @@ public class InitItem implements RegistryInit {
         public boolean hasParticles() {
             return false;
         }
-    }, (entity, collision) -> Helpers.spawnParticles(
-            entity.world,
-            InitParticle.SPARK.getParticleType(),
-            collision.getPos().x, collision.getPos().y, collision.getPos().z,
-            100, 0,
-            5, 5, 5));
+    }, null);
+
+    public static final ThrowableItem ATTRILLITE_ARC = createBomb(new FabricItemSettings(), new IBombExplosionSettings() {
+        @Override
+        public float getPower() {
+            return 5f;
+        }
+
+        @Override
+        public boolean shouldExplosionDamageEntities() {
+            return false;
+        }
+
+        @Override
+        public void forEachEntityAffected(Entity source, Entity entity) {
+            if (entity instanceof LivingEntity living) {
+                living.addStatusEffect(new StatusEffectInstance(InitEffects.ATTRILLITE_POISON, 300), source);
+            }
+        }
+    }, null);
 
 
     public static final ThrowableItem ROCK = new ThrowableItem(new FabricItemSettings(), new ThrowableItem.ThrowableItemSettings().setOnCollideConsumer((entity, collision) -> {
@@ -101,6 +126,8 @@ public class InitItem implements RegistryInit {
         Registry.register(Registries.ITEM, Dialabs.id.build("staticite_scrap"), STATICITE_SCRAP);
         Registry.register(Registries.ITEM, Dialabs.id.build("staticite_scrap_heap"), STATICITE_SCRAP_HEAP);
 
+        Registry.register(Registries.ITEM, Dialabs.id.build("attrillite_ingot"), ATTRILLITE_INGOT);
+
         Registry.register(Registries.ITEM, Dialabs.id.build("static_core"), STATIC_CORE);
         Registry.register(Registries.ITEM, Dialabs.id.build("crystal_shard"), CRYSTAL_SHARD);
         Registry.register(Registries.ITEM, Dialabs.id.build("lightning_bottle"), LIGHTNING_BOTTLE);
@@ -110,6 +137,7 @@ public class InitItem implements RegistryInit {
 
         Registry.register(Registries.ITEM, Dialabs.id.build("bomb"), BOMB);
         Registry.register(Registries.ITEM, Dialabs.id.build("spark_bomb"), SPARK_BOMB);
+        Registry.register(Registries.ITEM, Dialabs.id.build("attrillite_arc"), ATTRILLITE_ARC);
 
         Registry.register(Registries.ITEM, Dialabs.id.build("rock"), ROCK);
 

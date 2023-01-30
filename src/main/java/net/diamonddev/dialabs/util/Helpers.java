@@ -44,7 +44,7 @@ public class Helpers {
             double m = random.nextGaussian() * speed;
 
             try {
-                world.addParticle(parameters, false, x + g, y + h, z + j, k, l, m);
+                world.addParticle(parameters, true, x + g, y + h, z + j, k, l, m);
             } catch (Throwable t) {
                 Dialabs.LOGGER.warn("Could not spawn particle effect (using Dialabs Helpers.class) {}", parameters);
             }

@@ -8,6 +8,7 @@ public class DialabsDamageSource {
 
     public static final DamageSource CRYSTAL_SHARDS = new DamageSource("crystal_shards").setUsesMagic();
     public static final DamageSource RETRIBUTION = new DamageSource("retribution").setUnblockable();
+    public static final DamageSource ATTRILLITE_POISON = new DamageSource("attrillitePoison").setUnblockable().setBypassesProtection().setBypassesArmor();
 
 
     public static DamageSource thwack(Entity source) {

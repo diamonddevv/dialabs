@@ -104,6 +104,7 @@ public class Dialabs implements ModInitializer {
 			ItemGroupEvents.modifyEntriesEvent(COMBAT).register(content -> {
 				content.add(InitItem.BOMB);
 				content.add(InitItem.SPARK_BOMB);
+				content.add(InitItem.ATTRILLITE_ARC);
 				content.add(InitItem.CRYSTAL_SHARD);
 				content.add(InitItem.STATIC_CORE);
 				content.add(InitItem.LIGHTNING_BOTTLE);
@@ -112,9 +113,13 @@ public class Dialabs implements ModInitializer {
 
 			ItemGroupEvents.modifyEntriesEvent(INGREDIENTS).register(content -> {
 				content.addAfter(Items.DISC_FRAGMENT_5, InitItem.DEEPSLATE_PLATE);
+
 				content.addAfter(Items.NETHERITE_INGOT, InitItem.STATICITE_SCRAP);
 				content.addAfter(InitItem.STATICITE_SCRAP, InitItem.STATICITE_SCRAP_HEAP);
 				content.addAfter(InitItem.STATICITE_SCRAP_HEAP, InitItem.STATICITE_INGOT);
+
+				content.addAfter(InitItem.STATICITE_INGOT, InitItem.ATTRILLITE_INGOT);
+
 				placeTomes(content);
 			});
 

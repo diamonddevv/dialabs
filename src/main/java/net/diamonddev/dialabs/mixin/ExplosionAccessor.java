@@ -3,6 +3,7 @@ package net.diamonddev.dialabs.mixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
+import net.minecraft.world.explosion.ExplosionBehavior;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
@@ -25,6 +26,7 @@ public interface ExplosionAccessor {
     @Accessor("z")
     double getZ();
 
-
+    @Accessor("behavior")
+    ExplosionBehavior getBehavior();
 
 }

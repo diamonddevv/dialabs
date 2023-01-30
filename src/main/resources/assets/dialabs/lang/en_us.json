@@ -5,6 +5,8 @@
   "item.dialabs.staticite_scrap": "Staticite Scrap",
   "item.dialabs.staticite_scrap_heap": "Staticite Scrap Heap",
 
+  "item.dialabs.attrillite_ingot": "Attrillite Ingot",
+
   "block.dialabs.enchantment_synthesizer": "Enchantment Synthesizer",
   "block.dialabs.enchantment_synthesizer.ui.title": "Enchantment Synthesis",
 
@@ -41,6 +43,9 @@
 
   "item.dialabs.bomb": "Bomb",
   "item.dialabs.spark_bomb": "Spark Bomb",
+  "item.dialabs.attrillite_arc": "Attrillite Arc",
+
+  "effect.dialabs.attrillite_poison": "Attrillite Poisoning",
 
   "entity.dialabs.thrown_item": "Thrown Item",
 
@@ -77,6 +82,9 @@
 
   "death.attack.sparkBomb": "%s was electrocuted by a Spark Bomb",
   "death.attack.sparkBomb.player": "%s was electrocuted by a Spark Bomb thrown by %s",
+
+  "death.attack.attrillitePoison": "%s got Chernobyl'd",
+  "death.attack.attrillitePoison.player": "%s got Chernobyl'd by %s",
 
   "death.attack.thwack": "%s was thwacked one too many times",
   "death.attack.thwack.player": "%s was thwacked one too many times by %s",

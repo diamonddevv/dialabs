@@ -128,6 +128,16 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void dialabs$tickAttrillitePoisoning(CallbackInfo ci) {
+        if (this.hasStatusEffect(InitEffects.ATTRILLITE_POISON)) {
+            if (this.world.getRandom().nextBoolean()) {
+                int dmg = this.world.getRandom().nextBetween(1, 5) * (this.getStatusEffect(InitEffects.ATTRILLITE_POISON).getAmplifier() + 1);
+                this.damage(DialabsDamageSource.ATTRILLITE_POISON, dmg);
+            }
+        }
+    }
+
     private static void storeRetributionDmgIfPossible(LivingEntity target, float damageDealt) {
         if (target.hasStatusEffect(InitEffects.RETRIBUTION)) {
             int lvl = target.getStatusEffect(InitEffects.RETRIBUTION).getAmplifier() + 1;

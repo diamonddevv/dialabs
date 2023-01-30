@@ -1,16 +1,19 @@
 package net.diamonddev.dialabs.util;
 
+import com.google.common.collect.Sets;
 import net.diamonddev.dialabs.entity.ThrowableItemEntity;
 import net.diamonddev.dialabs.mixin.ExplosionAccessor;
 import net.diamonddev.dialabs.world.explosion.BombExplosion;
 import net.diamonddev.dialabs.world.explosion.IBombExplosionSettings;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
 
 import java.util.Collection;
+import java.util.Set;
 
 public class ExplosionHelper {
     public static void createDynamicBombExplosion(World world, ThrowableItemEntity entity, IBombExplosionSettings settings) {
@@ -27,14 +30,12 @@ public class ExplosionHelper {
         explosion.collectBlocksAndDamageEntities();
         explosion.affectWorld(settings.hasParticles());
 
-
         collectEntities(explosion).forEach((e) -> settings.forEachEntityAffected(entity.getOwner(), e));
-        explosion.getAffectedBlocks().forEach((b) -> settings.forEachBlockAffected(entity.getOwner(), world, b));
-
+        collectBlocks(explosion).forEach((b) -> settings.forEachBlockAffected(entity.getOwner(), world, b));
     }
 
 
-    private static Collection<Entity> collectEntities(Explosion explosion) { // copy-pasted from Explosion.class
+    private static Collection<Entity> collectEntities(Explosion explosion) { // copy-pasted from Explosion.class and modified
         ExplosionAccessor accessedExplosion = (ExplosionAccessor) explosion;
 
         double q = accessedExplosion.getPower() * 2.0F;
@@ -45,7 +46,48 @@ public class ExplosionHelper {
         int t = MathHelper.floor(accessedExplosion.getZ() - q - 1.0);
         int u = MathHelper.floor(accessedExplosion.getZ() + q + 1.0);
 
-        return accessedExplosion.getWorld().getOtherEntities(accessedExplosion.getEntity(), new Box(k, r, t, l, s, u));
+       Collection<Entity> entity = accessedExplosion.getWorld().getOtherEntities(accessedExplosion.getEntity(), new Box(k, r, t, l, s, u));
+       entity.add(accessedExplosion.getEntity());
+       return entity;
+    }
+
+    private static Collection<BlockPos> collectBlocks(Explosion explosion) { // copy-pasted from Explosion.class and modified
+        ExplosionAccessor accessedExplosion = (ExplosionAccessor) explosion;
+
+        Set<BlockPos> set = Sets.newHashSet();
+
+        int k;
+        int l;
+        for(int j = 0; j < 16; ++j) {
+            for(k = 0; k < 16; ++k) {
+                for(l = 0; l < 16; ++l) {
+                    if (j == 0 || j == 15 || k == 0 || k == 15 || l == 0 || l == 15) {
+                        double d = j / 15.0F * 2.0F - 1.0F;
+                        double e = k / 15.0F * 2.0F - 1.0F;
+                        double f = l / 15.0F * 2.0F - 1.0F;
+                        double g = Math.sqrt(d * d + e * e + f * f);
+                        d /= g;
+                        e /= g;
+                        f /= g;
+                        float h = accessedExplosion.getPower() * (0.7F + accessedExplosion.getWorld().random.nextFloat() * 0.6F);
+                        double m = accessedExplosion.getX();
+                        double n = accessedExplosion.getY();
+                        double o = accessedExplosion.getZ();
+
+                        for(; h > 0.0F; h -= 0.22500001F) {
+                            BlockPos blockPos = new BlockPos(m, n, o);
+                            if (!accessedExplosion.getWorld().isInBuildLimit(blockPos)) {
+                                break;
+                            }
+
+                            set.add(blockPos);
+                        }
+                    }
+                }
+            }
+        }
+
+        return set;
     }
 
 }

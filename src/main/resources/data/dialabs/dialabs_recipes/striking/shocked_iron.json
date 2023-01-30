@@ -1,0 +1,6 @@
+{
+  "dialabs_recipe_type": "dialabs:striking",
+
+  "original": "minecraft:iron_block",
+  "result": "dialabs:shocked_iron_block"
+}

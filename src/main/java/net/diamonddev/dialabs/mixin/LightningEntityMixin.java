@@ -31,7 +31,12 @@ public abstract class LightningEntityMixin extends Entity {
         if(ambientTick >= 0) {
             if(!world.isClient) {
                 BlockPos struckBlock = getBlockPos().down();
-                if(world.getBlockState(struckBlock).getBlock().equals(Blocks.IRON_BLOCK)) {
+                if (world.getBlockState(struckBlock).getBlock().equals(Blocks.LIGHTNING_ROD)) {
+                    struckBlock = struckBlock.down();
+                }
+
+
+                if (world.getBlockState(struckBlock).getBlock().equals(Blocks.IRON_BLOCK)) {
                     world.setBlockState(struckBlock, InitBlocks.SHOCKED_IRON_BLOCK.getDefaultState());
                 }
             }
