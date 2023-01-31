@@ -58,6 +58,8 @@ public class Dialabs implements ModInitializer {
 		new InitRecipe().init();
 		new InitSoundEvent().init();
 
+		new InitResourceListener().init();
+
 		new ItemGroupEditor().init(); // Edit Item Groups - keep last!
 
 		long initializationTime = System.currentTimeMillis() - startInitTime;
