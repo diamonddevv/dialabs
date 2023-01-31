@@ -1,11 +1,15 @@
 package net.diamonddev.dialabs.mixin;
 
 
-import net.diamonddev.dialabs.registry.InitBlocks;
+import net.diamonddev.dialabs.api.v0.recipe.DialabsRecipeManager;
+import net.diamonddev.dialabs.recipe.ddv.StrikingRecipe;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,10 +39,20 @@ public abstract class LightningEntityMixin extends Entity {
                     struckBlock = struckBlock.down();
                 }
 
+                BlockPos finalStruckBlock = struckBlock;
+                DialabsRecipeManager.forEachRecipe(recipe -> {
+                    Identifier ogBlock = recipe.getIdentifier(StrikingRecipe.ORIGINAL_BLOCK_KEY);
+                    Identifier newBlock = recipe.getIdentifier(StrikingRecipe.NEW_BLOCK_KEY);
 
-                if (world.getBlockState(struckBlock).getBlock().equals(Blocks.IRON_BLOCK)) {
-                    world.setBlockState(struckBlock, InitBlocks.SHOCKED_IRON_BLOCK.getDefaultState());
-                }
+                    if (Registries.BLOCK.getId(world.getBlockState(finalStruckBlock).getBlock()).equals(ogBlock)) {
+                        Block block = Registries.BLOCK.get(newBlock);
+                        world.setBlockState(finalStruckBlock, block.getDefaultState());
+                    }
+                });
+
+//                if (world.getBlockState(struckBlock).getBlock().equals(Blocks.IRON_BLOCK)) {
+//                    world.setBlockState(struckBlock, InitBlocks.SHOCKED_IRON_BLOCK.getDefaultState());
+//                }
             }
         }
     }

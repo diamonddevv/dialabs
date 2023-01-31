@@ -1,10 +1,10 @@
 package net.diamonddev.dialabs.api.v0.recipe;
 
-import com.google.gson.annotations.SerializedName;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 public class DialabsRecipeManager {
 
@@ -13,19 +13,18 @@ public class DialabsRecipeManager {
 
     private static final HashMap<Identifier, DialabsRecipeType> TYPES = new HashMap<>();
 
-
-
-    public static void registerType(Identifier identifier, DialabsRecipeType type) {
-        TYPES.put(identifier, type);
-    }
-    public static Identifier deserializeType(JsonRecipeSerializer serializer) {
-        return new Identifier(serializer.stringifiedTypeIdentifier);
+    ///
+    public static void registerType(DialabsRecipeType type) {
+        TYPES.put(type.getId(), type);
     }
 
-
-    private static final String IDPARAM = "dialabs_recipe_type";
-    public static class JsonRecipeSerializer {
-        @SerializedName(IDPARAM)
-        String stringifiedTypeIdentifier;
+    public static DialabsRecipeType getType(Identifier typeId) {
+        return TYPES.get(typeId);
     }
+
+    public static void forEachRecipe(Consumer<DialabsRecipe> recipeConsumer) {
+        CACHE.forEach(recipeConsumer);
+    }
+    //
+    public static final String IDPARAM = "dialabs_recipe_type";
 }

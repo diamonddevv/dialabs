@@ -15,7 +15,7 @@ public class InitRecipe implements RegistryInit {
     public static final DialabsRecipeType STRIKING = new StrikingRecipe();
     public void init() {
         // Dialabs Recipes
-        DialabsRecipeManager.registerType(Dialabs.id.build("striking"), STRIKING);
+        DialabsRecipeManager.registerType(STRIKING);
 
 
         // Synthesis
