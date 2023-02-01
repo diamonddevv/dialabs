@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class InitResourceListener implements RegistryInit {
 
-    public static final Logger RESOURCE_MANAGER_LOGGER = LoggerFactory.getLogger("Dialabs  - Resource Manager");
+    public static final Logger RESOURCE_MANAGER_LOGGER = LoggerFactory.getLogger("Dialabs - Resource Manager");
 
 
     @Override

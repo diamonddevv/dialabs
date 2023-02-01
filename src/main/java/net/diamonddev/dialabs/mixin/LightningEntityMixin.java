@@ -49,10 +49,6 @@ public abstract class LightningEntityMixin extends Entity {
                         world.setBlockState(finalStruckBlock, block.getDefaultState());
                     }
                 });
-
-//                if (world.getBlockState(struckBlock).getBlock().equals(Blocks.IRON_BLOCK)) {
-//                    world.setBlockState(struckBlock, InitBlocks.SHOCKED_IRON_BLOCK.getDefaultState());
-//                }
             }
         }
     }

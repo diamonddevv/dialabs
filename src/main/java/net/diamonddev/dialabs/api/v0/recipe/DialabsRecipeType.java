@@ -4,7 +4,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 
-public abstract class DialabsRecipeType {
-    public abstract Identifier getId();
-    public abstract void addJsonKeys(ArrayList<String> keys);
+public interface DialabsRecipeType {
+    Identifier getId();
+    void addJsonKeys(ArrayList<String> keys);
 }

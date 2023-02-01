@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 
-public class StrikingRecipe extends DialabsRecipeType {
+public class StrikingRecipe implements DialabsRecipeType {
 
     public static final String ORIGINAL_BLOCK_KEY = "original";
     public static final String NEW_BLOCK_KEY = "result";

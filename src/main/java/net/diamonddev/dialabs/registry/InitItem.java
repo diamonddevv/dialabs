@@ -27,6 +27,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 
 import java.util.function.BiConsumer;
 
@@ -50,11 +51,11 @@ public class InitItem implements RegistryInit {
     public static final SyntheticEnchantmentDiscItem SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDiscItem();
 
 
-    public static final ThrowableItem BOMB = createBomb(new FabricItemSettings(), () -> 1.25f, null);
+    public static final ThrowableItem BOMB = createBomb(new FabricItemSettings(), () -> 1.8f, null);
     public static final ThrowableItem SPARK_BOMB = createBomb(new FabricItemSettings(), new IBombExplosionSettings() {
         @Override
         public float getPower() {
-            return 3f;
+            return 3.5f;
         }
 
         @Override
@@ -63,19 +64,19 @@ public class InitItem implements RegistryInit {
         }
 
         @Override
-        public void forEachEntityAffected(Entity source, Entity entity) {
-            entity.damage(DialabsDamageSource.sparkBomb(source), 6f);
+        public void forEachEntityAffected(Entity source, Entity entity, Explosion explosion, ThrowableItemEntity throwableItemEntity) {
+            entity.damage(DialabsDamageSource.sparkBomb(source), (float) (12f * ExplosionHelper.getCustomCalculatedExposure(entity, throwableItemEntity.getPos(), explosion)));
             Helpers.spawnParticles(
                     entity.world,
                     InitParticle.SPARK.getParticleType(),
                     entity.getPos().x, entity.getPos().y, entity.getPos().z,
-                    25, 0.25,
+                    50, 0.5,
                     0.5, 0.5, 0.5
             );
         }
 
         @Override
-        public void forEachBlockAffected(Entity source, World world, BlockPos blockPos) {
+        public void forEachBlockAffected(Entity source, World world, BlockPos blockPos, Explosion explosion, ThrowableItemEntity throwableItemEntity) {
             if (world.getBlockState(blockPos).getBlock() == Blocks.LIGHTNING_ROD) {
 
                 LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
@@ -84,6 +85,7 @@ public class InitItem implements RegistryInit {
 
                 world.spawnEntity(lightningEntity);
             }
+
         }
 
         @Override
@@ -91,7 +93,6 @@ public class InitItem implements RegistryInit {
             return false;
         }
     }, null);
-
     public static final ThrowableItem ATTRILLITE_ARC = createBomb(new FabricItemSettings(), new IBombExplosionSettings() {
         @Override
         public float getPower() {
@@ -104,13 +105,14 @@ public class InitItem implements RegistryInit {
         }
 
         @Override
-        public void forEachEntityAffected(Entity source, Entity entity) {
-            if (entity instanceof LivingEntity living) {
-                living.addStatusEffect(new StatusEffectInstance(InitEffects.ATTRILLITE_POISON, 300), source);
+        public void forEachEntityAffected(Entity source, Entity entity, Explosion explosion, ThrowableItemEntity throwableItemEntity) {
+            if (ExplosionHelper.getCustomCalculatedExposure(entity, throwableItemEntity.getPos(), explosion) > 0f) {
+                if (entity instanceof LivingEntity living) {
+                    living.addStatusEffect(new StatusEffectInstance(InitEffects.ATTRILLITE_POISON, 300), source);
+                }
             }
         }
     }, null);
-
 
     public static final ThrowableItem ROCK = new ThrowableItem(new FabricItemSettings(), new ThrowableItem.ThrowableItemSettings().setOnCollideConsumer((entity, collision) -> {
         if (collision.getType() == HitResult.Type.ENTITY) {

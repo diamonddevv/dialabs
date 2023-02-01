@@ -1,10 +1,12 @@
 package net.diamonddev.dialabs.world.explosion;
 
+import net.diamonddev.dialabs.entity.ThrowableItemEntity;
 import net.diamonddev.dialabs.util.DialabsDamageSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.explosion.Explosion;
 
 public interface IBombExplosionSettings {
     float getPower();
@@ -25,8 +27,8 @@ public interface IBombExplosionSettings {
         return true;
     }
 
-    default void forEachBlockAffected(Entity source, World world, BlockPos blockPos) {}
-    default void forEachEntityAffected(Entity source, Entity entity) {}
+    default void forEachBlockAffected(Entity source, World world, BlockPos blockPos, Explosion explosion, ThrowableItemEntity entity) {}
+    default void forEachEntityAffected(Entity source, Entity entity, Explosion explosion, ThrowableItemEntity throwableItemEntity) {}
 
     default World.ExplosionSourceType getExplosionSourceType() {
         return World.ExplosionSourceType.BLOCK;

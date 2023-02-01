@@ -13,6 +13,7 @@
     "EnchantmentMixin",
     "EnchantmentTargetMixin",
     "ExplosionAccessor",
+    "ExplosionInvoker",
     "ExplosionMixin",
     "IngredientMixin",
     "ItemCooldownManagerAccessor",

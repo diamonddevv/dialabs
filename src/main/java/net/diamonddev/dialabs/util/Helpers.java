@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.function.BiConsumer;
 
 public class Helpers {
+    private static final Random r = new Random();
     public static Collection<Integer> getEachIntegerRange(int origin, int bound) {
         Collection<Integer> intCol = new ArrayList<>();
         for (int i = origin; i <= bound; i++) {
@@ -32,7 +33,6 @@ public class Helpers {
         };
     }
 
-
     public static void spawnParticles(World world, ParticleEffect parameters, double x, double y, double z, int count, double speed, double dX, double dY, double dZ) {
         Random random = new Random();
         for(int i = 0; i < count; ++i) {
@@ -50,4 +50,8 @@ public class Helpers {
             }
         }
     }
+    public static boolean rollRandom(double chance) {
+        return r.nextDouble(0, 1) <= chance;
+    }
+
 }

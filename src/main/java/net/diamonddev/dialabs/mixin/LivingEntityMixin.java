@@ -8,6 +8,7 @@ import net.diamonddev.dialabs.registry.InitEffects;
 import net.diamonddev.dialabs.registry.InitEnchants;
 import net.diamonddev.dialabs.util.DialabsDamageSource;
 import net.diamonddev.dialabs.util.EnchantHelper;
+import net.diamonddev.dialabs.util.Helpers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ExperienceOrbEntity;
@@ -131,8 +132,8 @@ public abstract class LivingEntityMixin extends Entity {
     @Inject(method = "tick", at = @At("HEAD"))
     private void dialabs$tickAttrillitePoisoning(CallbackInfo ci) {
         if (this.hasStatusEffect(InitEffects.ATTRILLITE_POISON)) {
-            if (this.world.getRandom().nextBoolean()) {
-                int dmg = this.world.getRandom().nextBetween(1, 5) * (this.getStatusEffect(InitEffects.ATTRILLITE_POISON).getAmplifier() + 1);
+            if (Helpers.rollRandom(0.075)) {
+                int dmg = this.world.getRandom().nextBetween(1, 2) * (this.getStatusEffect(InitEffects.ATTRILLITE_POISON).getAmplifier() + 1);
                 this.damage(DialabsDamageSource.ATTRILLITE_POISON, dmg);
             }
         }
