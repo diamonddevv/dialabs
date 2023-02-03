@@ -2,14 +2,13 @@ package net.diamonddev.dialabs.api.v0.recipe;
 
 import net.minecraft.util.Identifier;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
 public class DialabsRecipeManager {
 
     // CACHE
-    public static final ArrayList<DialabsRecipe> CACHE = new ArrayList<>();
+    public static final KeyedArrayCache<DialabsRecipeType, DialabsRecipe> CACHE = new KeyedArrayCache<>();
 
     private static final HashMap<Identifier, DialabsRecipeType> TYPES = new HashMap<>();
 
@@ -22,8 +21,8 @@ public class DialabsRecipeManager {
         return TYPES.get(typeId);
     }
 
-    public static void forEachRecipe(Consumer<DialabsRecipe> recipeConsumer) {
-        CACHE.forEach(recipeConsumer);
+    public static void forEachRecipe(DialabsRecipeType recipeType, Consumer<DialabsRecipe> recipeConsumer) {
+        CACHE.get(recipeType).forEach(recipeConsumer);
     }
     //
     public static final String IDPARAM = "dialabs_recipe_type";

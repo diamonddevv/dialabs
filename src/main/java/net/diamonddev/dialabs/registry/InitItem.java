@@ -38,6 +38,7 @@ public class InitItem implements RegistryInit {
     public static final Item STATICITE_SCRAP_HEAP = new Item(new FabricItemSettings());
 
     public static final Item ATTRILLITE_INGOT = new Item(new FabricItemSettings());
+    public static final Item ATTRILLITE_SCRAP = new Item(new FabricItemSettings());
 
 
     public static final StaticCoreItem STATIC_CORE = new StaticCoreItem(new FabricItemSettings().maxCount(4).rarity(Rarity.RARE));
@@ -129,6 +130,7 @@ public class InitItem implements RegistryInit {
         Registry.register(Registries.ITEM, Dialabs.id.build("staticite_scrap_heap"), STATICITE_SCRAP_HEAP);
 
         Registry.register(Registries.ITEM, Dialabs.id.build("attrillite_ingot"), ATTRILLITE_INGOT);
+        Registry.register(Registries.ITEM, Dialabs.id.build("attrillite_scrap"), ATTRILLITE_SCRAP);
 
         Registry.register(Registries.ITEM, Dialabs.id.build("static_core"), STATIC_CORE);
         Registry.register(Registries.ITEM, Dialabs.id.build("crystal_shard"), CRYSTAL_SHARD);

@@ -51,6 +51,7 @@ public class Dialabs implements ModInitializer {
 		new InitItem().init();
         new InitEffects().init();
 		new InitBlocks().init();
+		new InitBlockEntity().init();
 		new InitEnchants().init();
 		new InitGamerules().init();
 		new InitPotion().init();
@@ -120,7 +121,8 @@ public class Dialabs implements ModInitializer {
 				content.addAfter(InitItem.STATICITE_SCRAP, InitItem.STATICITE_SCRAP_HEAP);
 				content.addAfter(InitItem.STATICITE_SCRAP_HEAP, InitItem.STATICITE_INGOT);
 
-				content.addAfter(InitItem.STATICITE_INGOT, InitItem.ATTRILLITE_INGOT);
+				content.addAfter(InitItem.STATICITE_INGOT, InitItem.ATTRILLITE_SCRAP);
+				content.addAfter(InitItem.ATTRILLITE_SCRAP, InitItem.ATTRILLITE_INGOT);
 
 				placeTomes(content);
 			});

@@ -1,0 +1,8 @@
+{
+  "dialabs_recipe_type": "dialabs:soul_fire_enrichment",
+
+  "input_a": "dialabs:staticite_ingot",
+  "input_b": "minecraft:netherite_scrap",
+
+  "output": "dialabs:attrillite_scrap"
+}

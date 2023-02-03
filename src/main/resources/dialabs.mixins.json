@@ -29,6 +29,7 @@
   ],
   "client": [
     "AbstractClientPlayerEntityMixin",
+    "BlockEntityRendererFactoriesInvoker",
     "GameRendererMixin",
     "InGameHudMixin"
   ],

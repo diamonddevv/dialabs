@@ -1,9 +1,13 @@
 package net.diamonddev.dialabs.util;
 
 import net.diamonddev.dialabs.Dialabs;
+import net.minecraft.block.Block;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -52,6 +56,42 @@ public class Helpers {
     }
     public static boolean rollRandom(double chance) {
         return r.nextDouble(0, 1) <= chance;
+    }
+
+    public static boolean isBlockInYRangeOfPos(World world, BlockPos origin, int range, Block find) {
+        if (range == 0) return world.getBlockState(origin).getBlock() == find;
+
+        boolean found = false;
+        BlockPos search;
+
+        if (range > 0) {
+            for (int i = 0; i < range; i++) {
+                search = origin;
+                for (int j = 0; j < i; j++) {
+                    search.down();
+                }
+                found = world.getBlockState(search).getBlock() == find;
+                if (found) break;
+            }
+        } else {
+            for (int i = 0; i > range; i--) {
+                search = origin;
+                for (int j = 0; j > i; j--) {
+                    search.down();
+                }
+                found = world.getBlockState(search).getBlock() == find;
+                if (found) break;
+            }
+        }
+        return found;
+    }
+
+    public static void dropItem(ItemStack stack, World world, BlockPos pos) {
+        if (!stack.isEmpty() && !world.isClient && pos != null) {
+            ItemEntity itemEntity = new ItemEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+            itemEntity.setToDefaultPickupDelay();
+            world.spawnEntity(itemEntity);
+        }
     }
 
 }

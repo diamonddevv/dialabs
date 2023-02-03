@@ -63,7 +63,7 @@ public class DialabsRecipeDataListener implements SimpleSynchronousResourceReloa
                     jsonKeys.forEach(s -> recipe.getHash().put(s, json.get(s)));
 
                     // Add
-                    DialabsRecipeManager.CACHE.add(recipe);
+                    DialabsRecipeManager.CACHE.getOrCreateKey(type).add(recipe);
 
                 } catch (Exception e) {
                     InitResourceListener.RESOURCE_MANAGER_LOGGER.error("Error occurred while loading Dialabs Recipe resource json " + id.toString(), e);
