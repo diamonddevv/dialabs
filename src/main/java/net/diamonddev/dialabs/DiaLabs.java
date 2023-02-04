@@ -1,10 +1,12 @@
 package net.diamonddev.dialabs;
 
+import net.diamonddev.dialabs.command.DialabsDevCommand;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.lib.IdentifierBuilder;
 import net.diamonddev.dialabs.lib.RegistryInit;
 import net.diamonddev.dialabs.registry.*;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
@@ -38,7 +40,7 @@ public class Dialabs implements ModInitializer {
 	public static final IdentifierBuilder id = new IdentifierBuilder(MOD_ID);
 
 	// Logger
-	public static final Logger LOGGER = LogManager.getLogger("DiaLabs");
+	public static final Logger LOGGER = LogManager.getLogger("Dialabs");
 
 	// Initializer
 	@Override
@@ -60,6 +62,12 @@ public class Dialabs implements ModInitializer {
 		new InitSoundEvent().init();
 
 		new InitResourceListener().init();
+
+		if (isFunkyDevFeaturesOn()) {
+			CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+				DialabsDevCommand.register(dispatcher);
+			});
+		}
 
 		new ItemGroupEditor().init(); // Edit Item Groups - keep last!
 
@@ -102,6 +110,7 @@ public class Dialabs implements ModInitializer {
 			ItemGroupEvents.modifyEntriesEvent(FUNCTIONAL).register(content -> {
 				content.addAfter(Items.ENCHANTING_TABLE, getBlockItem(InitBlocks.ENCHANTMENT_SYNTHESIZER));
 				content.addAfter(getBlockItem(InitBlocks.ENCHANTMENT_SYNTHESIZER), getBlockItem(InitBlocks.DISC_BURNER));
+				content.addAfter(getBlockItem(InitBlocks.DISC_BURNER), getBlockItem(InitBlocks.SOUL_BASIN));
 			});
 
 			ItemGroupEvents.modifyEntriesEvent(COMBAT).register(content -> {

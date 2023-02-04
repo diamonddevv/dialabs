@@ -1,5 +1,6 @@
 package net.diamonddev.dialabs.api.v0.recipe;
 
+import net.diamonddev.dialabs.api.v0.util.KeyedArrayCache;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;

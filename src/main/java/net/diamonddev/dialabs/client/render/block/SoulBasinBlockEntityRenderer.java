@@ -21,18 +21,29 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
 
     @Override
     public void render(SoulBasinBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        light = 15728880;
+
         if (!entity.hasOutput()) {
-            if (entity.stacks.size() >= 1) {
-                ItemStack alpha = entity.stacks.get(SoulBasinBlockEntity.ALPHA_INDEX);
-                if (alpha != null) renderItem(alpha, matrices, light, overlay, vertexConsumers, entity);
+            if (entity.alphaStack != null) {
+                ItemStack alpha = entity.alphaStack;
+
+                matrices.translate(0.25, 1.25, 0.5);
+
+                if (!alpha.isEmpty()) renderItem(alpha, matrices, light, overlay, vertexConsumers, entity);
             }
 
-            if (entity.stacks.size() >= 2) {
-                ItemStack beta = entity.stacks.get(SoulBasinBlockEntity.BETA_INDEX);
-                if (beta != null) renderItem(beta, matrices, light, overlay, vertexConsumers, entity);
+            if (entity.betaStack != null) {
+                ItemStack beta = entity.betaStack;
+
+                matrices.translate(0.5, 0, 0);
+
+                if (!beta.isEmpty()) renderItem(beta, matrices, light, overlay, vertexConsumers, entity);
             }
         } else {
             ItemStack out = entity.outStack;
+
+            matrices.translate(0.5, 1.35, 0.5);
+
             if (out != null) renderItem(out, matrices, light, overlay, vertexConsumers, entity);
         }
     }

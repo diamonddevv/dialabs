@@ -10,6 +10,8 @@
   "block.dialabs.enchantment_synthesizer": "Enchantment Synthesizer",
   "block.dialabs.enchantment_synthesizer.ui.title": "Enchantment Synthesis",
 
+  "block.dialabs.soul_basin": "Soul Basin",
+
   "block.dialabs.disc_burner": "Synthetic Disc Burner",
   "block.dialabs.disc_burner.ui.title": "Apply Synthetic Enchantments",
   "block.dialabs.disc_burner.ui.xp" : "%s Levels",

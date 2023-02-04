@@ -55,7 +55,7 @@ public class DialabsRecipeDataListener implements SimpleSynchronousResourceReloa
                     DialabsRecipeType type = DialabsRecipeManager.getType(typeId);
 
                     // Read JSON
-                    DialabsRecipe recipe = new DialabsRecipe(type);
+                    DialabsRecipe recipe = new DialabsRecipe(type, id);
 
                     // Add keys
                     ArrayList<String> jsonKeys = new ArrayList<>();

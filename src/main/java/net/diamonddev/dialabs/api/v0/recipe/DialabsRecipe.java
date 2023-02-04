@@ -9,10 +9,17 @@ public class DialabsRecipe {
 
     private final HashMap<String, JsonElement> objHash;
     private final DialabsRecipeType type;
+    private final Identifier id;
 
-    public DialabsRecipe(DialabsRecipeType type) {
+    public DialabsRecipe(DialabsRecipeType type, Identifier identifier) {
         this.type = type;
+        this.id = identifier;
         this.objHash = new HashMap<>();
+    }
+
+    @Override
+    public String toString() {
+        return id.toString();
     }
 
     public HashMap<String, JsonElement> getHash() {
