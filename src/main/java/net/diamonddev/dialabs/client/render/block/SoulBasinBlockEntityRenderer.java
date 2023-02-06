@@ -46,6 +46,7 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
 
             if (out != null) renderItem(out, matrices, light, overlay, vertexConsumers, entity);
         }
+        matrices.pop();
     }
 
     private void renderItem(ItemStack itemStack, MatrixStack matrices, int light, int overlay, VertexConsumerProvider vertexConsumers, SoulBasinBlockEntity entity) {
