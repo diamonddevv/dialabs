@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 
 public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBasinBlockEntity> {
 
-    float scale = 0.375F;
+    float scale = 0.75F;
 
     private final ItemRenderer itemRenderer;
 
@@ -21,13 +21,20 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
 
     @Override
     public void render(SoulBasinBlockEntity entity, float tickDelta, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        matrices.push();
         light = 15728880;
+//        Direction d = entity.getCachedState().get(HorizontalRotationBlockWithEntity.FACING);
+//
+//        Direction direction2 = Direction.fromHorizontal((d.getHorizontal()) % 4);
+//
+//        float g = -direction2.asRotation();
+//        matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(g));
 
         if (!entity.hasOutput()) {
             if (entity.alphaStack != null) {
                 ItemStack alpha = entity.alphaStack;
 
-                matrices.translate(0.25, 1.25, 0.5);
+                matrices.translate(0.25, .75, 0.5);
 
                 if (!alpha.isEmpty()) renderItem(alpha, matrices, light, overlay, vertexConsumers, entity);
             }
@@ -35,14 +42,14 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
             if (entity.betaStack != null) {
                 ItemStack beta = entity.betaStack;
 
-                matrices.translate(0.5, 0, 0);
+                matrices.translate(0.25, 0, 0);
 
                 if (!beta.isEmpty()) renderItem(beta, matrices, light, overlay, vertexConsumers, entity);
             }
         } else {
             ItemStack out = entity.outStack;
 
-            matrices.translate(0.5, 1.35, 0.5);
+            matrices.translate(0.5, 1.15, 0.5);
 
             if (out != null) renderItem(out, matrices, light, overlay, vertexConsumers, entity);
         }
@@ -50,9 +57,7 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
     }
 
     private void renderItem(ItemStack itemStack, MatrixStack matrices, int light, int overlay, VertexConsumerProvider vertexConsumers, SoulBasinBlockEntity entity) {
-        matrices.push();
         matrices.scale(scale, scale, scale);
         this.itemRenderer.renderItem(itemStack, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, (int) entity.getPos().asLong());
-        matrices.pop();
     }
 }

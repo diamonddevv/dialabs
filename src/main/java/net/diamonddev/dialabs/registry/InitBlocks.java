@@ -1,10 +1,7 @@
 package net.diamonddev.dialabs.registry;
 
 import net.diamonddev.dialabs.Dialabs;
-import net.diamonddev.dialabs.block.DiscBurnerBlock;
-import net.diamonddev.dialabs.block.EnchantmentSynthesizerBlock;
-import net.diamonddev.dialabs.block.SoulBasinBlock;
-import net.diamonddev.dialabs.block.SyntheticEnchantmentTomeBlock;
+import net.diamonddev.dialabs.block.*;
 import net.diamonddev.dialabs.lib.RegistryInit;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -27,6 +24,7 @@ public class InitBlocks implements RegistryInit {
     public static Block SHOCKED_IRON_BLOCK = new Block(FabricBlockSettings.of(Material.METAL).strength(18F).requiresTool().luminance(2));
     public static EnchantmentSynthesizerBlock ENCHANTMENT_SYNTHESIZER = new EnchantmentSynthesizerBlock();
     public static DiscBurnerBlock DISC_BURNER = new DiscBurnerBlock();
+
     public static SoulBasinBlock SOUL_BASIN = new SoulBasinBlock(FabricBlockSettings.of(Material.METAL));
 
     public static final SyntheticEnchantmentTomeBlock ASPECTION_TOME = new SyntheticEnchantmentTomeBlock("aspection");
@@ -40,6 +38,7 @@ public class InitBlocks implements RegistryInit {
         registerBlockWithBlockItem(SHOCKED_IRON_BLOCK, Dialabs.id.build("shocked_iron_block"), new FabricItemSettings());
         registerBlockWithBlockItem(ENCHANTMENT_SYNTHESIZER, Dialabs.id.build("enchantment_synthesizer"), new FabricItemSettings());
         registerBlockWithBlockItem(DISC_BURNER, Dialabs.id.build("disc_burner"), new FabricItemSettings());
+
         registerBlockWithBlockItem(SOUL_BASIN, Dialabs.id.build("soul_basin"), new FabricItemSettings());
 
         registerBlockWithBlockItem(ASPECTION_TOME, Dialabs.id.build("aspection_tome"), TOME_ITEM_SETTINGS);

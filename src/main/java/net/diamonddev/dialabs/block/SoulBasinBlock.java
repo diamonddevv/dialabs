@@ -3,6 +3,7 @@ package net.diamonddev.dialabs.block;
 import net.diamonddev.dialabs.block.entity.SoulBasinBlockEntity;
 import net.diamonddev.dialabs.registry.InitBlockEntity;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
@@ -84,6 +85,12 @@ public class SoulBasinBlock extends HorizontalRotationBlockWithEntity {
     }
 
     // BLOCK ENTITY STUFF
+
+
+    @Override
+    public BlockRenderType getRenderType(BlockState state) {
+        return BlockRenderType.MODEL;
+    }
 
     @Nullable
     @Override
