@@ -26,7 +26,7 @@ public class SoulBasinBlockEntity extends BlockEntity {
     public ItemStack betaStack;
 
     public ItemStack outStack;
-    public SoulBasinBlockEntity(BlockPos pos, BlockState state) {
+    public SoulBasinBlockEntity(BlockPos pos, BlockState state) { // probably needs another rework lol
         super(InitBlockEntity.SOUL_BASIN.blockEntityType(), pos, state);
 
         alphaStack = ItemStack.EMPTY;

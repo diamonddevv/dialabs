@@ -27,6 +27,8 @@
   "synthesis.dialabs.aspection_tome" : "Aspect",
   "synthesis.dialabs.destructive_tome": "Destructive",
 
+  "item.dialabs.flintlock": "Flintlock",
+
   "item.dialabs.static_core": "Static Core",
   "effect.dialabs.charged": "Charged",
 

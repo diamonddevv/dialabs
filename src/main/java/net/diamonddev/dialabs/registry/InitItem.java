@@ -51,6 +51,8 @@ public class InitItem implements RegistryInit {
     public static final Item DEEPSLATE_PLATE = new Item(new FabricItemSettings());
     public static final SyntheticEnchantmentDiscItem SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDiscItem();
 
+    public static final FlintlockItem FLINTLOCK = new FlintlockItem(new FabricItemSettings());
+
 
     public static final ThrowableItem BOMB = createBomb(new FabricItemSettings(), () -> 1.8f, null);
     public static final ThrowableItem SPARK_BOMB = createBomb(new FabricItemSettings(), new IBombExplosionSettings() {
@@ -138,6 +140,8 @@ public class InitItem implements RegistryInit {
 
         Registry.register(Registries.ITEM, Dialabs.id.build("deepslate_plate"), DEEPSLATE_PLATE);
         Registry.register(Registries.ITEM, Dialabs.id.build("synthetic_enchantment_disc"), SYNTHETIC_ENCHANTMENT_DISC);
+
+        Registry.register(Registries.ITEM, Dialabs.id.build("flintlock"), FLINTLOCK);
 
         Registry.register(Registries.ITEM, Dialabs.id.build("bomb"), BOMB);
         Registry.register(Registries.ITEM, Dialabs.id.build("spark_bomb"), SPARK_BOMB);

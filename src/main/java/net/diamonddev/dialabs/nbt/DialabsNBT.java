@@ -3,9 +3,9 @@ package net.diamonddev.dialabs.nbt;
 
 import net.minecraft.item.ItemStack;
 
-public class DialabsNBT {
+public class DialabsNbt {
 
-    public static final NBTIntComponent MULTICLIP_ARROWS = new NBTIntComponent("multiclipArrowCount");
+    public static final NbtIntComponent MULTICLIP_ARROWS = new NbtIntComponent("multiclipArrowCount");
 
     public static class MulticlipProjectileManager {
         public static int getProjectiles(ItemStack stack) {

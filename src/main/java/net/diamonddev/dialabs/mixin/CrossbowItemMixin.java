@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.mixin;
 
 import net.diamonddev.dialabs.cca.DialabsCCA;
-import net.diamonddev.dialabs.nbt.DialabsNBT;
+import net.diamonddev.dialabs.nbt.DialabsNbt;
 import net.diamonddev.dialabs.registry.InitEnchants;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.minecraft.client.item.TooltipContext;
@@ -151,7 +151,7 @@ public abstract class CrossbowItemMixin {
                     loadable = EnchantmentHelper.getLevel(InitEnchants.MULTICLIP, crossbow) + 1;
                 }
 
-                DialabsNBT.MulticlipProjectileManager.setProjectiles(crossbow, loadable);
+                DialabsNbt.MulticlipProjectileManager.setProjectiles(crossbow, loadable);
                 putProjectile(crossbow, itemStack);
                 cir.setReturnValue(true);
             }
@@ -173,7 +173,7 @@ public abstract class CrossbowItemMixin {
     @Inject(method = "appendTooltip", at = @At("TAIL"))
     private void dialabs$appendCrossbowTooltips(ItemStack stack, World world, List<Text> tooltip, TooltipContext context, CallbackInfo ci) {
         if (EnchantHelper.hasEnchantment(InitEnchants.MULTICLIP, stack)) {
-            tooltip.add(Text.translatable("text.dialabs.multiclip_loaded_count", DialabsNBT.MulticlipProjectileManager.getProjectiles(stack)));
+            tooltip.add(Text.translatable("text.dialabs.multiclip_loaded_count", DialabsNbt.MulticlipProjectileManager.getProjectiles(stack)));
         }
     }
 
@@ -186,8 +186,8 @@ public abstract class CrossbowItemMixin {
             cancellable = true)
     private static void dialabs$decrementMulticlipLoadedProjectileCountBeforeClearing(World world, LivingEntity entity, ItemStack stack, CallbackInfo ci) {
         if (EnchantHelper.hasEnchantment(InitEnchants.MULTICLIP, stack)) { // if stack has multiclip
-            if (DialabsNBT.MulticlipProjectileManager.getProjectiles(stack) > 0) { // if arrow count is greater than 0
-                DialabsNBT.MulticlipProjectileManager.decrementProjectileCount(stack); // decrement count
+            if (DialabsNbt.MulticlipProjectileManager.getProjectiles(stack) > 0) { // if arrow count is greater than 0
+                DialabsNbt.MulticlipProjectileManager.decrementProjectileCount(stack); // decrement count
                 ci.cancel(); // cancel
             }
         }
@@ -205,7 +205,7 @@ public abstract class CrossbowItemMixin {
     private void dialabs$preventMulticlipFromBecomingMultishot(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         ItemStack stack = user.getStackInHand(hand);
         if (EnchantHelper.hasEnchantment(InitEnchants.MULTICLIP, stack)) {
-            if (DialabsNBT.MulticlipProjectileManager.getProjectiles(stack) > 0) {
+            if (DialabsNbt.MulticlipProjectileManager.getProjectiles(stack) > 0) {
                 setCharged(stack, true);
                 ((CrossbowItemAccessor) stack.getItem()).setAccessedLoadedState(true);
                 cir.setReturnValue(TypedActionResult.consume(stack));
