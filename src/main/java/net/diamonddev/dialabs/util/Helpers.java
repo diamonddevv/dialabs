@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -92,6 +93,10 @@ public class Helpers {
             itemEntity.setToDefaultPickupDelay();
             world.spawnEntity(itemEntity);
         }
+    }
+
+    public static Hand getOppositeHand(Hand hand) {
+        return hand == Hand.MAIN_HAND ? Hand.OFF_HAND : Hand.MAIN_HAND;
     }
 
 }

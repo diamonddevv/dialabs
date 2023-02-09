@@ -36,6 +36,7 @@ public class ThrowableItem extends Item {
 
                 entity.setOnCollideConsumer(item.throwableSettings.onCollideConsumer);
                 entity.setItem(stack);
+                entity.setPos(position.getX(), position.getY(), position.getZ());
 
                 return entity;
             }
