@@ -2,9 +2,9 @@ package net.diamonddev.dialabs;
 
 import net.diamonddev.dialabs.command.DialabsDevCommand;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
-import net.diamonddev.dialabs.lib.IdentifierBuilder;
-import net.diamonddev.dialabs.lib.RegistryInit;
 import net.diamonddev.dialabs.registry.*;
+import net.diamonddev.dialabs.resource.InitDataResourceTypes;
+import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
@@ -18,6 +18,7 @@ import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,8 +37,10 @@ public class Dialabs implements ModInitializer {
 	public static String VERSION = FabricLoaderImpl.INSTANCE.getModContainer(MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString();
 	public static String MC_VER = SharedConstants.getGameVersion().getName();
 
-	// ID BUILDER
-	public static final IdentifierBuilder id = new IdentifierBuilder(MOD_ID);
+	// ID
+	public static Identifier id(String path) {
+		return new Identifier(MOD_ID, path);
+	}
 
 	// Logger
 	public static final Logger LOGGER = LogManager.getLogger("Dialabs");
@@ -49,19 +52,20 @@ public class Dialabs implements ModInitializer {
 
 		addCallbackReferences(); // Keep BEFORE Registry Initialization
 
-		new InitEntity().init();
-		new InitItem().init();
-        new InitEffects().init();
-		new InitBlocks().init();
-		new InitBlockEntity().init();
-		new InitEnchants().init();
-		new InitGamerules().init();
-		new InitPotion().init();
-		new InitScreenHandler().init();
-		new InitRecipe().init();
-		new InitSoundEvent().init();
+		new InitEntity().register();
+		new InitItem().register();
+        new InitEffects().register();
+		new InitBlocks().register();
+		new InitBlockEntity().register();
+		new InitEnchants().register();
+		new InitGamerules().register();
+		new InitPotion().register();
+		new InitScreenHandler().register();
+		new InitRecipe().register();
+		new InitSoundEvent().register();
 
-		new InitResourceListener().init();
+		new InitResourceListener().register();
+		new InitDataResourceTypes().register();
 
 		if (isFunkyDevFeaturesOn()) {
 			CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
@@ -69,7 +73,7 @@ public class Dialabs implements ModInitializer {
 			});
 		}
 
-		new ItemGroupEditor().init(); // Edit Item Groups - keep last!
+		new ItemGroupEditor().register(); // Edit Item Groups - keep last!
 
 		long initializationTime = System.currentTimeMillis() - startInitTime;
 		LOGGER.info("DiaLabs {" + MOD_ID + " - " + VERSION + "} for Minecraft " + MC_VER + " has initialized (" + initializationTime + " milliseconds elapsed)");
@@ -90,10 +94,10 @@ public class Dialabs implements ModInitializer {
 			}
 		});
 	}
-	private static class ItemGroupEditor implements RegistryInit {
+	private static class ItemGroupEditor implements RegistryInitializer {
 
 		@Override
-		public void init() {
+		public void register() {
 			placeItemsInGroups();
 			removeItemsInGroups();
 		}

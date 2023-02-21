@@ -3,7 +3,7 @@ package net.diamonddev.dialabs.registry;
 import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.entity.FlintlockPelletEntity;
 import net.diamonddev.dialabs.entity.ThrowableItemEntity;
-import net.diamonddev.dialabs.lib.RegistryInit;
+import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
@@ -13,17 +13,17 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
-public class InitEntity implements RegistryInit {
+public class InitEntity implements RegistryInitializer {
 
     public static EntityType<ThrowableItemEntity> THROWN_ITEM;
     public static EntityType<FlintlockPelletEntity> FLINTLOCK_PELLET;
 
 
     @Override
-    public void init() {
-        THROWN_ITEM = register(Dialabs.id.build("thrown_item"), createThrownItemEntityType(ThrowableItemEntity::new));
+    public void register() {
+        THROWN_ITEM = register(Dialabs.id("thrown_item"), createThrownItemEntityType(ThrowableItemEntity::new));
 
-        FLINTLOCK_PELLET = register(Dialabs.id.build("flintlock_pellet"), FabricEntityTypeBuilder.create(SpawnGroup.MISC, FlintlockPelletEntity::new)
+        FLINTLOCK_PELLET = register(Dialabs.id("flintlock_pellet"), FabricEntityTypeBuilder.create(SpawnGroup.MISC, FlintlockPelletEntity::new)
                 .dimensions(EntityDimensions.changing(.1f, .1f))
                 .trackRangeBlocks(64)
                 .trackedUpdateRate(1)

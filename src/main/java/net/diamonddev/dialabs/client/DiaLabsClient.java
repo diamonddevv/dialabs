@@ -10,10 +10,10 @@ public class DialabsClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        new InitHandledScreen().init();
-        new InitEntityLayer().init();
-        new InitEntityRenderer().init();
-        new InitBlockEntityRenderer().init();
-        new InitParticle().init();
+        new InitHandledScreen().register();
+        new InitEntityLayer().register();
+        new InitEntityRenderer().register();
+        new InitBlockEntityRenderer().register();
+        new InitParticle().register();
     }
 }

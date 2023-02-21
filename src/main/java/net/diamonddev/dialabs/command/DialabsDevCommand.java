@@ -2,7 +2,7 @@ package net.diamonddev.dialabs.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
-import net.diamonddev.dialabs.api.v0.recipe.DialabsRecipeManager;
+import net.diamonddev.libgenetics.common.api.v1.dataloader.DataLoaderResourceManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
@@ -22,7 +22,7 @@ public class DialabsDevCommand {
     }
 
     private static int exeGetDDVRecipeCache(CommandContext<ServerCommandSource> context) {
-        context.getSource().sendFeedback(Text.literal(DialabsRecipeManager.CACHE.toString()), true);
+        context.getSource().sendFeedback(Text.literal(DataLoaderResourceManager.CACHE.toString()), true);
         return 1;
     }
 }

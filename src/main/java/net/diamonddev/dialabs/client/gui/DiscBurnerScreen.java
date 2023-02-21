@@ -13,7 +13,7 @@ import net.minecraft.util.math.ColorHelper;
 
 public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
 
-    private static final Identifier TEXTURE = Dialabs.id.build("textures/gui/disc_burner_screen.png");
+    private static final Identifier TEXTURE = Dialabs.id("textures/gui/disc_burner_screen.png");
 
     public DiscBurnerScreen(DiscBurnerScreenHandler handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);

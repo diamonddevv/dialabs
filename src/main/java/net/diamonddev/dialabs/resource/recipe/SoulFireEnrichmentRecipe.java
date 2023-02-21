@@ -1,12 +1,12 @@
-package net.diamonddev.dialabs.recipe.ddv;
+package net.diamonddev.dialabs.resource.recipe;
 
 import net.diamonddev.dialabs.Dialabs;
-import net.diamonddev.dialabs.api.v0.recipe.DialabsRecipeType;
+import net.diamonddev.libgenetics.common.api.v1.dataloader.DataLoaderResourceType;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 
-public class SoulFireEnrichmentRecipe implements DialabsRecipeType {
+public class SoulFireEnrichmentRecipe implements DataLoaderResourceType {
 
     public static final String ALPHA_IN = "input_a";
     public static final String BETA_IN = "input_b";
@@ -14,7 +14,7 @@ public class SoulFireEnrichmentRecipe implements DialabsRecipeType {
 
     @Override
     public Identifier getId() {
-        return Dialabs.id.build("soul_fire_enrichment");
+        return Dialabs.id("soul_fire_enrichment");
     }
 
     @Override

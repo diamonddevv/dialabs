@@ -1,19 +1,18 @@
-package net.diamonddev.dialabs.recipe.ddv;
-
+package net.diamonddev.dialabs.resource.recipe;
 
 import net.diamonddev.dialabs.Dialabs;
-import net.diamonddev.dialabs.api.v0.recipe.DialabsRecipeType;
+import net.diamonddev.libgenetics.common.api.v1.dataloader.DataLoaderResourceType;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 
-public class StrikingRecipe implements DialabsRecipeType {
+public class StrikingRecipe implements DataLoaderResourceType {
 
     public static final String ORIGINAL_BLOCK_KEY = "original";
     public static final String NEW_BLOCK_KEY = "result";
     @Override
     public Identifier getId() {
-        return Dialabs.id.build("striking");
+        return Dialabs.id("striking");
     }
 
     @Override

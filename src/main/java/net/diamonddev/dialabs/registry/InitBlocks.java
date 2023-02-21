@@ -1,8 +1,11 @@
 package net.diamonddev.dialabs.registry;
 
 import net.diamonddev.dialabs.Dialabs;
-import net.diamonddev.dialabs.block.*;
-import net.diamonddev.dialabs.lib.RegistryInit;
+import net.diamonddev.dialabs.block.DiscBurnerBlock;
+import net.diamonddev.dialabs.block.EnchantmentSynthesizerBlock;
+import net.diamonddev.dialabs.block.SoulBasinBlock;
+import net.diamonddev.dialabs.block.SyntheticEnchantmentTomeBlock;
+import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
@@ -16,7 +19,7 @@ import java.util.HashMap;
 
 import static net.diamonddev.dialabs.block.SyntheticEnchantmentTomeBlock.TOME_ITEM_SETTINGS;
 
-public class InitBlocks implements RegistryInit {
+public class InitBlocks implements RegistryInitializer {
 
     private static final HashMap<Block, BlockItem> hashedBlockItems = new HashMap<>();
 
@@ -33,18 +36,18 @@ public class InitBlocks implements RegistryInit {
     public static final SyntheticEnchantmentTomeBlock STRENGTH_TOME = new SyntheticEnchantmentTomeBlock("strength");
 
     @Override
-    public void init() {
-        registerBlockWithBlockItem(STATICITE_BLOCK, Dialabs.id.build("staticite_block"), new FabricItemSettings());
-        registerBlockWithBlockItem(SHOCKED_IRON_BLOCK, Dialabs.id.build("shocked_iron_block"), new FabricItemSettings());
-        registerBlockWithBlockItem(ENCHANTMENT_SYNTHESIZER, Dialabs.id.build("enchantment_synthesizer"), new FabricItemSettings());
-        registerBlockWithBlockItem(DISC_BURNER, Dialabs.id.build("disc_burner"), new FabricItemSettings());
+    public void register() {
+        registerBlockWithBlockItem(STATICITE_BLOCK, Dialabs.id("staticite_block"), new FabricItemSettings());
+        registerBlockWithBlockItem(SHOCKED_IRON_BLOCK, Dialabs.id("shocked_iron_block"), new FabricItemSettings());
+        registerBlockWithBlockItem(ENCHANTMENT_SYNTHESIZER, Dialabs.id("enchantment_synthesizer"), new FabricItemSettings());
+        registerBlockWithBlockItem(DISC_BURNER, Dialabs.id("disc_burner"), new FabricItemSettings());
 
-        registerBlockWithBlockItem(SOUL_BASIN, Dialabs.id.build("soul_basin"), new FabricItemSettings());
+        registerBlockWithBlockItem(SOUL_BASIN, Dialabs.id("soul_basin"), new FabricItemSettings());
 
-        registerBlockWithBlockItem(ASPECTION_TOME, Dialabs.id.build("aspection_tome"), TOME_ITEM_SETTINGS);
-        registerBlockWithBlockItem(DEFENSE_TOME, Dialabs.id.build("defense_tome"), TOME_ITEM_SETTINGS);
-        registerBlockWithBlockItem(DESTRUCTIVE_TOME, Dialabs.id.build("destructive_tome"), TOME_ITEM_SETTINGS);
-        registerBlockWithBlockItem(STRENGTH_TOME, Dialabs.id.build("strength_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(ASPECTION_TOME, Dialabs.id("aspection_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(DEFENSE_TOME, Dialabs.id("defense_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(DESTRUCTIVE_TOME, Dialabs.id("destructive_tome"), TOME_ITEM_SETTINGS);
+        registerBlockWithBlockItem(STRENGTH_TOME, Dialabs.id("strength_tome"), TOME_ITEM_SETTINGS);
     }
     public static void registerBlockWithBlockItem(Block block, Identifier identifier, FabricItemSettings blockItemSettings) {
         BlockItem bi = new BlockItem(block, blockItemSettings);

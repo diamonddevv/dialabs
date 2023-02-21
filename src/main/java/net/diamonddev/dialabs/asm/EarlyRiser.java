@@ -1,4 +1,4 @@
-package net.diamonddev.dialabs.lib.asm;
+package net.diamonddev.dialabs.asm;
 
 import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.loader.api.FabricLoader;
@@ -11,6 +11,6 @@ public class EarlyRiser implements Runnable {
         String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
 
         ClassTinkerers.enumBuilder(enchantmentTarget)
-                .addEnumSubclass("SPYGLASS", "net.diamonddev.dialabs.lib.enchant.SpyglassEnchantTarget").build();
+                .addEnumSubclass("SPYGLASS", "net.diamonddev.dialabs.enchant.targets.SpyglassEnchantTarget").build();
     }
 }

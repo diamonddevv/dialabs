@@ -1,5 +1,6 @@
 package net.diamonddev.dialabs.nbt;
 
+import net.diamonddev.libgenetics.common.api.v1.nbt.NbtComponent;
 import net.minecraft.nbt.NbtCompound;
 
 public class NbtIntComponent extends NbtComponent<Integer> {

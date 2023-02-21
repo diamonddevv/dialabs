@@ -24,7 +24,7 @@ import java.util.Random;
 @Environment(EnvType.CLIENT)
 public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthesisScreenHandler> {
 
-    private static final Identifier TEXTURE = Dialabs.id.build("textures/gui/enchantment_synthesis_screen.png");
+    private static final Identifier TEXTURE = Dialabs.id("textures/gui/enchantment_synthesis_screen.png");
     private static final net.minecraft.util.Identifier FONT_ID = new net.minecraft.util.Identifier("minecraft", "alt");
 
     private static final Style TEXT_STYLE = Style.EMPTY.withFont(FONT_ID);

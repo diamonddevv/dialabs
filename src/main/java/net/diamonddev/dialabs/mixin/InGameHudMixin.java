@@ -21,10 +21,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class InGameHudMixin extends DrawableHelper { // i stole this idea from pick your poison ok (https://github.com/Ladysnake/Pick-Your-Poison)
 
 
-    private static final Identifier RETRIBUTION_HEARTS = Dialabs.id.build("textures/gui/retributional_hearts.png");
-    private static final Identifier CHARGED_HEARTS = Dialabs.id.build("textures/gui/charged_hearts.png");
-    private static final Identifier CRYSTAL_HEARTS = Dialabs.id.build("textures/gui/crystal_hearts.png");
-    private static final Identifier ATTRILLITE_POISON_HEARTS = Dialabs.id.build("textures/gui/attrillite_poison_hearts.png");
+    private static final Identifier RETRIBUTION_HEARTS = Dialabs.id("textures/gui/retributional_hearts.png");
+    private static final Identifier CHARGED_HEARTS = Dialabs.id("textures/gui/charged_hearts.png");
+    private static final Identifier CRYSTAL_HEARTS = Dialabs.id("textures/gui/crystal_hearts.png");
+    private static final Identifier ATTRILLITE_POISON_HEARTS = Dialabs.id("textures/gui/attrillite_poison_hearts.png");
 
 
     @Inject(method = "drawHeart", at = @At("HEAD"), cancellable = true)

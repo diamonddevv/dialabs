@@ -7,7 +7,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 public class ItemGroups {
-    public static final ItemGroup SYNTHETIC_ENCHANT_GROUP = FabricItemGroup.builder(Dialabs.id.build("synthetic_enchantments"))
+    public static final ItemGroup SYNTHETIC_ENCHANT_GROUP = FabricItemGroup.builder(Dialabs.id("synthetic_enchantments"))
             .icon(() -> new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC))
             .build();
 

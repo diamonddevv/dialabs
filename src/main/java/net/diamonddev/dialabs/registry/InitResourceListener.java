@@ -1,19 +1,13 @@
 package net.diamonddev.dialabs.registry;
 
-import net.diamonddev.dialabs.lib.RegistryInit;
-import net.diamonddev.dialabs.resource.DialabsRecipeDataListener;
+import net.diamonddev.dialabs.resource.recipe.DialabsRecipeDataListener;
+import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class InitResourceListener implements RegistryInit {
-
-    public static final Logger RESOURCE_MANAGER_LOGGER = LoggerFactory.getLogger("Dialabs - Resource Manager");
-
-
+public class InitResourceListener implements RegistryInitializer {
     @Override
-    public void init() {
+    public void register() {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new DialabsRecipeDataListener());
     }
 }

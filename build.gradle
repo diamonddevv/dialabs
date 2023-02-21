@@ -51,6 +51,9 @@ dependencies {
 
 	// Fabric ASM
 	include modImplementation("com.github.Chocohead:Fabric-ASM:${project.asm_version}")
+
+	// LibGenetics
+	include modImplementation("com.github.diamonddevv:libgenetics:${project.libgenetics_version}")
 }
 
 processResources {

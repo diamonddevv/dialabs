@@ -24,8 +24,7 @@
   "entrypoints": {
 
     "main": [
-      "net.diamonddev.dialabs.Dialabs",
-      "net.diamonddev.dialabs.api.DialabsApiInitializer"
+      "net.diamonddev.dialabs.Dialabs"
     ],
 
     "client": [
@@ -37,7 +36,7 @@
     ],
 
     "mm:early_risers": [
-      "net.diamonddev.dialabs.lib.asm.EarlyRiser"
+      "net.diamonddev.dialabs.asm.EarlyRiser"
     ]
 
   },

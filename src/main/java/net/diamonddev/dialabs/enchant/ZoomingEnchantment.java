@@ -1,6 +1,6 @@
 package net.diamonddev.dialabs.enchant;
 
-import net.diamonddev.dialabs.lib.enchant.EnchantTargets;
+import net.diamonddev.dialabs.enchant.targets.EnchantTargets;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 

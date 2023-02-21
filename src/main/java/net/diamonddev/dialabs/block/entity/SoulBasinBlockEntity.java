@@ -1,10 +1,10 @@
 package net.diamonddev.dialabs.block.entity;
 
-import net.diamonddev.dialabs.api.v0.recipe.DialabsRecipeManager;
 import net.diamonddev.dialabs.block.SoulBasinBlock;
-import net.diamonddev.dialabs.recipe.ddv.SoulFireEnrichmentRecipe;
 import net.diamonddev.dialabs.registry.InitBlockEntity;
-import net.diamonddev.dialabs.registry.InitRecipe;
+import net.diamonddev.dialabs.resource.InitDataResourceTypes;
+import net.diamonddev.dialabs.resource.recipe.SoulFireEnrichmentRecipe;
+import net.diamonddev.libgenetics.common.api.v1.dataloader.DataLoaderResourceManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.Item;
@@ -51,7 +51,7 @@ public class SoulBasinBlockEntity extends BlockEntity {
     }
 
     public void recipeTick(BlockState state) {
-        DialabsRecipeManager.forEachRecipe(InitRecipe.SOUL_FIRE_ENRICHING, recipe -> {
+        DataLoaderResourceManager.forEachRecipe(InitDataResourceTypes.SOUL_FIRE_ENRICHING, recipe -> {
             Identifier alpha = recipe.getIdentifier(SoulFireEnrichmentRecipe.ALPHA_IN);
             Identifier beta = recipe.getIdentifier(SoulFireEnrichmentRecipe.BETA_IN);
 

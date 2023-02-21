@@ -1,11 +1,11 @@
 package net.diamonddev.dialabs.registry;
 
-import net.diamonddev.dialabs.lib.RegistryInit;
+import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.minecraft.world.GameRules;
 
-public class InitGamerules implements RegistryInit {
+public class InitGamerules implements RegistryInitializer {
 
     public static GameRules.Key<GameRules.IntRule> CRYSTAL_SHARD_STRENGTH;
     public static GameRules.Key<GameRules.IntRule> CRYSTAL_SHARD_LENGTH;
@@ -21,7 +21,7 @@ public class InitGamerules implements RegistryInit {
 
 
     @Override
-    public void init() {
+    public void register() {
        CRYSTAL_SHARD_STRENGTH = GameRuleRegistry.register("crystalShardStrength", GameRules.Category.MOBS,
                 GameRuleFactory.createIntRule(1));
 

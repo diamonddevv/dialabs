@@ -1,4 +1,4 @@
-package net.diamonddev.dialabs.lib.enchant;
+package net.diamonddev.dialabs.enchant.targets;
 
 import com.chocohead.mm.api.ClassTinkerers;
 import net.minecraft.enchantment.EnchantmentTarget;

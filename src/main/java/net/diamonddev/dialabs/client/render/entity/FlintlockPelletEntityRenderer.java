@@ -13,7 +13,7 @@ import net.minecraft.util.Identifier;
 
 public class FlintlockPelletEntityRenderer<T extends Entity> extends EntityRenderer<T> {
 
-    private static final Identifier FLINTLOCK_PELLET_TEXTURE = Dialabs.id.build("textures/entity/flintlock_pellet.png");
+    private static final Identifier FLINTLOCK_PELLET_TEXTURE = Dialabs.id("textures/entity/flintlock_pellet.png");
 
     private final FlintlockPelletEntityModel model;
 

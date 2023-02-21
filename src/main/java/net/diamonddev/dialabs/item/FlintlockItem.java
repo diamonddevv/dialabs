@@ -1,5 +1,7 @@
 package net.diamonddev.dialabs.item;
 
+import net.diamonddev.dialabs.entity.FlintlockPelletEntity;
+import net.diamonddev.dialabs.registry.InitEntity;
 import net.diamonddev.dialabs.util.Helpers;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -26,7 +28,7 @@ public class FlintlockItem extends RangedWeaponItem {
 
     @Override
     public int getRange() {
-        return 40;
+        return 12;
     }
 
     @Override
@@ -42,6 +44,15 @@ public class FlintlockItem extends RangedWeaponItem {
             if (this.hasGunpowder(user, hand)) {
                 if (!ammo.isEmpty()) {
                     world.playSoundFromEntity(null, user, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 2.0f, 1.5f);
+
+                    FlintlockPelletEntity entity = InitEntity.FLINTLOCK_PELLET.create(world);
+
+                    entity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 3.0f, 1.0F);
+                    entity.setPos(user.getX(), user.getY() + (double) user.getStandingEyeHeight() - 0.10000000149011612D, user.getZ());
+                    entity.setOwner(user);
+                    world.spawnEntity(entity);
+
+                    inflictRecoil(user);
 
                     if (!user.getAbilities().creativeMode) {
                         user.getStackInHand(Helpers.getOppositeHand(hand)).decrement(1);
@@ -75,4 +86,8 @@ public class FlintlockItem extends RangedWeaponItem {
         return player.getAbilities().creativeMode ? new ItemStack(Items.ARROW) : ItemStack.EMPTY;
     }
 
+
+    private void inflictRecoil(PlayerEntity user) {
+        user.takeKnockback(1.5f, user.getPos().x, user.getPos().z);
+    }
 }

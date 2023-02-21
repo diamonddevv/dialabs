@@ -4,12 +4,12 @@ package net.diamonddev.dialabs.registry;
 import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.entity.ThrowableItemEntity;
 import net.diamonddev.dialabs.item.*;
-import net.diamonddev.dialabs.lib.RegistryInit;
 import net.diamonddev.dialabs.particle.InitParticle;
 import net.diamonddev.dialabs.util.DialabsDamageSource;
 import net.diamonddev.dialabs.util.ExplosionHelper;
 import net.diamonddev.dialabs.util.Helpers;
 import net.diamonddev.dialabs.world.explosion.IBombExplosionSettings;
+import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -31,7 +31,7 @@ import net.minecraft.world.explosion.Explosion;
 
 import java.util.function.BiConsumer;
 
-public class InitItem implements RegistryInit {
+public class InitItem implements RegistryInitializer {
 
     public static final Item STATICITE_INGOT = new Item(new FabricItemSettings());
     public static final Item STATICITE_SCRAP = new Item(new FabricItemSettings());
@@ -125,29 +125,29 @@ public class InitItem implements RegistryInit {
         entity.kill();
     }));
     @Override
-    public void init() {
+    public void register() {
 
-        Registry.register(Registries.ITEM, Dialabs.id.build("staticite_ingot"), STATICITE_INGOT);
-        Registry.register(Registries.ITEM, Dialabs.id.build("staticite_scrap"), STATICITE_SCRAP);
-        Registry.register(Registries.ITEM, Dialabs.id.build("staticite_scrap_heap"), STATICITE_SCRAP_HEAP);
+        Registry.register(Registries.ITEM, Dialabs.id("staticite_ingot"), STATICITE_INGOT);
+        Registry.register(Registries.ITEM, Dialabs.id("staticite_scrap"), STATICITE_SCRAP);
+        Registry.register(Registries.ITEM, Dialabs.id("staticite_scrap_heap"), STATICITE_SCRAP_HEAP);
 
-        Registry.register(Registries.ITEM, Dialabs.id.build("attrillite_ingot"), ATTRILLITE_INGOT);
-        Registry.register(Registries.ITEM, Dialabs.id.build("attrillite_scrap"), ATTRILLITE_SCRAP);
+        Registry.register(Registries.ITEM, Dialabs.id("attrillite_ingot"), ATTRILLITE_INGOT);
+        Registry.register(Registries.ITEM, Dialabs.id("attrillite_scrap"), ATTRILLITE_SCRAP);
 
-        Registry.register(Registries.ITEM, Dialabs.id.build("static_core"), STATIC_CORE);
-        Registry.register(Registries.ITEM, Dialabs.id.build("crystal_shard"), CRYSTAL_SHARD);
-        Registry.register(Registries.ITEM, Dialabs.id.build("lightning_bottle"), LIGHTNING_BOTTLE);
+        Registry.register(Registries.ITEM, Dialabs.id("static_core"), STATIC_CORE);
+        Registry.register(Registries.ITEM, Dialabs.id("crystal_shard"), CRYSTAL_SHARD);
+        Registry.register(Registries.ITEM, Dialabs.id("lightning_bottle"), LIGHTNING_BOTTLE);
 
-        Registry.register(Registries.ITEM, Dialabs.id.build("deepslate_plate"), DEEPSLATE_PLATE);
-        Registry.register(Registries.ITEM, Dialabs.id.build("synthetic_enchantment_disc"), SYNTHETIC_ENCHANTMENT_DISC);
+        Registry.register(Registries.ITEM, Dialabs.id("deepslate_plate"), DEEPSLATE_PLATE);
+        Registry.register(Registries.ITEM, Dialabs.id("synthetic_enchantment_disc"), SYNTHETIC_ENCHANTMENT_DISC);
 
-        Registry.register(Registries.ITEM, Dialabs.id.build("flintlock"), FLINTLOCK);
+        Registry.register(Registries.ITEM, Dialabs.id("flintlock"), FLINTLOCK);
 
-        Registry.register(Registries.ITEM, Dialabs.id.build("bomb"), BOMB);
-        Registry.register(Registries.ITEM, Dialabs.id.build("spark_bomb"), SPARK_BOMB);
-        Registry.register(Registries.ITEM, Dialabs.id.build("attrillite_arc"), ATTRILLITE_ARC);
+        Registry.register(Registries.ITEM, Dialabs.id("bomb"), BOMB);
+        Registry.register(Registries.ITEM, Dialabs.id("spark_bomb"), SPARK_BOMB);
+        Registry.register(Registries.ITEM, Dialabs.id("attrillite_arc"), ATTRILLITE_ARC);
 
-        Registry.register(Registries.ITEM, Dialabs.id.build("rock"), ROCK);
+        Registry.register(Registries.ITEM, Dialabs.id("rock"), ROCK);
 
     }
 

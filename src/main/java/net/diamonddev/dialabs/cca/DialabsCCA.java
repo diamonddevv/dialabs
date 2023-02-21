@@ -16,22 +16,22 @@ public class DialabsCCA implements EntityComponentInitializer {
 
     // ENTITY COMPONENTS
     public static final ComponentKey<DoubleComponent> RETRIBUTIONAL_DAMAGE =
-            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("retributional_damage"), DoubleComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id("retributional_damage"), DoubleComponent.class);
 
     public static final ComponentKey<BooleanComponent> RETRIBUTIVE_ARROW =
-            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("retributive"), BooleanComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id("retributive"), BooleanComponent.class);
 
     public static final ComponentKey<VectorComponent> SNIPING_ARROW_ORIGIN =
-            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping_arrow_origin"), VectorComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id("sniping_arrow_origin"), VectorComponent.class);
 
     public static final ComponentKey<BooleanComponent> SNIPING_ARROW =
-            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping"), BooleanComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id("sniping"), BooleanComponent.class);
 
     public static final ComponentKey<DoubleComponent> SNIPING_SPEED_REF =
-            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping_speed_ref"), DoubleComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id("sniping_speed_ref"), DoubleComponent.class);
 
     public static final ComponentKey<DoubleComponent> SNIPING_DIVERGENCE_REF =
-            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id.build("sniping_divergence_ref"), DoubleComponent.class);
+            ComponentRegistryV3.INSTANCE.getOrCreate(Dialabs.id("sniping_divergence_ref"), DoubleComponent.class);
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {

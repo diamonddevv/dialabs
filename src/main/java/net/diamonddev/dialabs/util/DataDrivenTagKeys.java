@@ -8,7 +8,7 @@ import net.minecraft.registry.tag.TagKey;
 
 public class DataDrivenTagKeys {
 
-    public static TagKey<Item> SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS = TagKey.of(Registries.ITEM.getKey(), Dialabs.id.build("synthetic_enchantment_payments"));
-    public static TagKey<Enchantment> SYNTHETIC_ENCHANTMENTS_FROM_TAG = TagKey.of(Registries.ENCHANTMENT.getKey(), Dialabs.id.build("synthetic"));
+    public static TagKey<Item> SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS = TagKey.of(Registries.ITEM.getKey(), Dialabs.id("synthetic_enchantment_payments"));
+    public static TagKey<Enchantment> SYNTHETIC_ENCHANTMENTS_FROM_TAG = TagKey.of(Registries.ENCHANTMENT.getKey(), Dialabs.id("synthetic"));
 
 }
