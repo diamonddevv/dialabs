@@ -11,6 +11,7 @@
     "EmptyBottleMixin",
     "EnchantCommandMixin",
     "EnchantmentMixin",
+    "EnchantmentTargetMixin",
     "ExplosionAccessor",
     "ExplosionInvoker",
     "ExplosionMixin",

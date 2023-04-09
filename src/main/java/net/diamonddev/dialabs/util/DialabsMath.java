@@ -2,7 +2,7 @@ package net.diamonddev.dialabs.util;
 
 import net.minecraft.util.math.Direction;
 
-public class DDVMathHelper {
+public class DialabsMath {
 
     public static float degToRad(float deg) {
         return (float) (deg * (Math.PI / 180));

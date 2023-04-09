@@ -1,9 +1,10 @@
 package net.diamonddev.dialabs.mixin;
 
 
+import net.diamonddev.dialabs.registry.InitResourceListener;
 import net.diamonddev.dialabs.resource.InitDataResourceTypes;
 import net.diamonddev.dialabs.resource.recipe.StrikingRecipe;
-import net.diamonddev.libgenetics.common.api.v1.dataloader.DataLoaderResourceManager;
+import net.diamonddev.libgenetics.common.api.v1.dataloader.cognition.CognitionResourceManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -41,7 +42,7 @@ public abstract class LightningEntityMixin extends Entity {
                 }
 
                 BlockPos finalStruckBlock = struckBlock;
-                DataLoaderResourceManager.forEachRecipe(InitDataResourceTypes.STRIKING, recipe -> {
+                CognitionResourceManager.forEachResource(InitResourceListener.DIALABS_RECIPES, InitDataResourceTypes.STRIKING, recipe -> {
                     Identifier ogBlock = recipe.getIdentifier(StrikingRecipe.ORIGINAL_BLOCK_KEY);
                     Identifier newBlock = recipe.getIdentifier(StrikingRecipe.NEW_BLOCK_KEY);
 

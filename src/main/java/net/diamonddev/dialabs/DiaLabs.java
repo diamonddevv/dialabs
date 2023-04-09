@@ -1,6 +1,5 @@
 package net.diamonddev.dialabs;
 
-import net.diamonddev.dialabs.command.DialabsDevCommand;
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.*;
 import net.diamonddev.dialabs.resource.InitDataResourceTypes;
@@ -24,8 +23,8 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
 
-import static net.diamonddev.dialabs.registry.InitBlocks.getBlockItem;
 import static net.diamonddev.dialabs.util.ItemGroups.SYNTHETIC_ENCHANT_GROUP;
+import static net.diamonddev.libgenetics.common.api.v1.interfaces.BlockRegistryHelper.getBlockItem;
 import static net.minecraft.item.EnchantedBookItem.getEnchantmentNbt;
 import static net.minecraft.item.ItemGroups.*;
 
@@ -67,11 +66,9 @@ public class Dialabs implements ModInitializer {
 		new InitResourceListener().register();
 		new InitDataResourceTypes().register();
 
-		if (isFunkyDevFeaturesOn()) {
-			CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-				DialabsDevCommand.register(dispatcher);
-			});
-		}
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+
+		});
 
 		new ItemGroupEditor().register(); // Edit Item Groups - keep last!
 

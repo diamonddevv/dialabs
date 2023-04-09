@@ -1,0 +1,11 @@
+{
+  "type": "dialabs:enchantment_synthesis",
+  "inputA": {
+    "ingredient": {
+      "item": "dialabs:attrilite_arc"
+    }
+  },
+  "lapis_count": 48,
+  "enchantment": "minecraft:infinity",
+  "level": 1
+}

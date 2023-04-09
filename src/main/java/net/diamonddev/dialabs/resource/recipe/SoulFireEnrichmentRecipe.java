@@ -1,12 +1,12 @@
 package net.diamonddev.dialabs.resource.recipe;
 
 import net.diamonddev.dialabs.Dialabs;
-import net.diamonddev.libgenetics.common.api.v1.dataloader.DataLoaderResourceType;
+import net.diamonddev.libgenetics.common.api.v1.dataloader.cognition.CognitionResourceType;
 import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 
-public class SoulFireEnrichmentRecipe implements DataLoaderResourceType {
+public class SoulFireEnrichmentRecipe implements CognitionResourceType {
 
     public static final String ALPHA_IN = "input_a";
     public static final String BETA_IN = "input_b";

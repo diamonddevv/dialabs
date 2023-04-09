@@ -2,7 +2,7 @@ package net.diamonddev.dialabs.client.render.block;
 
 import net.diamonddev.dialabs.block.HorizontalRotationBlockWithEntity;
 import net.diamonddev.dialabs.block.entity.SoulBasinBlockEntity;
-import net.diamonddev.dialabs.util.DDVMathHelper;
+import net.diamonddev.dialabs.util.DialabsMath;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
@@ -71,7 +71,7 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
         else
             matrices.translate(.75, .75, .5);
 
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(DDVMathHelper.degToRad(180))); // Flip completely because it was backwards for some odd reason
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(DDVMathHelper.directionToRad(direction))); // todo: make it do the thing
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(DialabsMath.degToRad(180))); // Flip completely because it was backwards for some odd reason
+        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(DialabsMath.directionToRad(direction))); // todo: make it do the thing
     }
 }
