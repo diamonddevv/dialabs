@@ -1,19 +1,14 @@
 package net.diamonddev.dialabs.block;
 
 import net.diamonddev.dialabs.gui.EnchantmentSynthesisScreenHandler;
-import net.diamonddev.dialabs.recipe.SynthesisRecipe;
-import net.diamonddev.dialabs.registry.InitRecipe;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Material;
 import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.recipe.RecipeType;
-import net.minecraft.recipe.SmithingRecipe;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -23,10 +18,11 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
 
 public class EnchantmentSynthesizerBlock extends Block {
     public EnchantmentSynthesizerBlock() {
-        super(FabricBlockSettings.of(Material.METAL).strength(5f, 8f));
+        super(QuiltBlockSettings.create().sounds(BlockSoundGroup.METAL).strength(5f, 8f));
     }
 
     private final Text TITLE = Text.translatable("block.dialabs.enchantment_synthesizer.ui.title");

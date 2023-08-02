@@ -1,29 +1,27 @@
 package net.diamonddev.dialabs.block;
 
 import net.diamonddev.dialabs.item.TranslatedSynthesisTag;
-import net.fabricmc.fabric.api.item.v1.EquipmentSlotProvider;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
-import net.minecraft.block.Material;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Wearable;
+import net.minecraft.item.Equippable;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
+import org.quiltmc.qsl.block.extensions.api.QuiltBlockSettings;
+import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.stream.Stream;
 
-public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock implements TranslatedSynthesisTag, Wearable {
+public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock implements TranslatedSynthesisTag, Equippable {
 
 
     private final String key;
-    public static final FabricItemSettings TOME_ITEM_SETTINGS = new FabricItemSettings().equipmentSlot(new TomeEquipmentSlotProvider());
+    public static final QuiltItemSettings TOME_ITEM_SETTINGS = new QuiltItemSettings();
 
     public SyntheticEnchantmentTomeBlock(String typeKey) {
-        super(FabricBlockSettings.of(Material.WOOL));
+        super(QuiltBlockSettings.create().sounds(BlockSoundGroup.WOOL));
         this.key = typeKey;
 
         this.setDefaultState(this.stateManager.getDefaultState().with(FACING, Direction.NORTH));
@@ -67,11 +65,8 @@ public class SyntheticEnchantmentTomeBlock extends HorizontalRotationalBlock imp
         return getEastShape();
     }
 
-
-    public static class TomeEquipmentSlotProvider implements EquipmentSlotProvider {
-        @Override
-        public EquipmentSlot getPreferredEquipmentSlot(ItemStack stack) {
-            return EquipmentSlot.HEAD;
-        }
+    @Override
+    public EquipmentSlot getPreferredSlot() {
+        return EquipmentSlot.HEAD;
     }
 }

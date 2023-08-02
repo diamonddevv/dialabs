@@ -91,7 +91,7 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
 
         // Player Inventory
         this.context = context;
-        this.world = playerInventory.player.world;
+        this.world = playerInventory.player.getWorld();
 
         int i;
         int j;
@@ -120,7 +120,7 @@ public class DiscBurnerScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
+    public ItemStack quickTransfer(PlayerEntity player, int slot) {
         Slot s = this.slots.get(slot);
         if (s.hasStack()) {
             ItemStack stack = s.getStack();

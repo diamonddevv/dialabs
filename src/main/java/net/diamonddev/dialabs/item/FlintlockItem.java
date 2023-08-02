@@ -4,6 +4,7 @@ import net.diamonddev.dialabs.entity.FlintlockPelletEntity;
 import net.diamonddev.dialabs.registry.InitEntity;
 import net.diamonddev.dialabs.util.Helpers;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.RangedWeaponItem;
@@ -14,6 +15,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
+import java.util.List;
 import java.util.function.Predicate;
 
 public class FlintlockItem extends RangedWeaponItem {
@@ -21,9 +23,11 @@ public class FlintlockItem extends RangedWeaponItem {
         super(settings);
     }
 
+    private static final List<Item> PROJECTILES = List.of(Items.IRON_NUGGET);
+
     @Override
     public Predicate<ItemStack> getProjectiles() {
-        return (stack -> stack.getItem() == Items.IRON_NUGGET);
+        return (stack -> PROJECTILES.contains(stack.getItem()));
     }
 
     @Override
@@ -47,8 +51,12 @@ public class FlintlockItem extends RangedWeaponItem {
 
                     FlintlockPelletEntity entity = InitEntity.FLINTLOCK_PELLET.create(world);
 
-                    entity.setVelocity(user, user.getPitch(), user.getYaw(), 0.0F, 3.0f, 1.0F);
+                    entity.setVelocity(5f, 1f, 5f);
+
                     entity.setPos(user.getX(), user.getY() + (double) user.getStandingEyeHeight() - 0.10000000149011612D, user.getZ());
+                    entity.setYaw(user.getYaw());
+                    entity.setPitch(user.getPitch());
+
                     entity.setOwner(user);
                     world.spawnEntity(entity);
 

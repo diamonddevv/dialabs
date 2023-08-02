@@ -7,11 +7,11 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Axis;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.RotationAxis;
 
 public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBasinBlockEntity> {
 
@@ -61,7 +61,7 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
 
     private void renderItem(ItemStack itemStack, MatrixStack matrices, int light, int overlay, VertexConsumerProvider vertexConsumers, SoulBasinBlockEntity entity) {
         matrices.scale(scale, scale, scale);
-        this.itemRenderer.renderItem(itemStack, ModelTransformation.Mode.FIXED, light, overlay, matrices, vertexConsumers, (int) entity.getPos().asLong());
+        this.itemRenderer.renderItem(itemStack, ModelTransformationMode.FIXED, light, overlay, matrices, vertexConsumers, entity.getWorld(), (int) entity.getPos().asLong());
     }
 
     private void translate(MatrixStack matrices, boolean alpha, Direction direction) {
@@ -71,7 +71,7 @@ public class SoulBasinBlockEntityRenderer implements BlockEntityRenderer<SoulBas
         else
             matrices.translate(.75, .75, .5);
 
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(DialabsMath.degToRad(180))); // Flip completely because it was backwards for some odd reason
-        matrices.multiply(RotationAxis.POSITIVE_Y.rotation(DialabsMath.directionToRad(direction))); // todo: make it do the thing
+        matrices.multiply(Axis.Y_POSITIVE.rotation(DialabsMath.degToRad(180))); // Flip completely because it was backwards for some odd reason
+        matrices.multiply(Axis.Y_POSITIVE.rotation(DialabsMath.directionToRad(direction))); // todo: make it do the thing
     }
 }

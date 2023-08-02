@@ -2,13 +2,13 @@ package net.diamonddev.dialabs.effect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 import java.util.Random;
 
 public class CrystalliseEffect extends StatusEffect {
     public CrystalliseEffect() {
-        super(StatusEffectCategory.BENEFICIAL, 0x2f71a1);
+        super(StatusEffectType.BENEFICIAL, 0x2f71a1);
     }
 
     @Override

@@ -2,13 +2,13 @@ package net.diamonddev.dialabs.effect;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 
 public class ChargeEffect extends StatusEffect {
 
     public ChargeEffect() {
-        super(StatusEffectCategory.BENEFICIAL, 0xe6dc27);
+        super(StatusEffectType.BENEFICIAL, 0xe6dc27);
     }
 
     @Override

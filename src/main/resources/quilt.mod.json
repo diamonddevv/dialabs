@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "quilt_loader": {
+    "group": "io.github.diamonddevv",
+    "id": "${modid}",
+    "version": "${version}",
+    "entrypoints": {
+      "init": "net.diamonddev.dialabs.Dialabs",
+      "client_init": "net.diamonddev.dialabs.client.DialabsClient",
+      "mm:early_risers": "net.diamonddev.dialabs.impl.EarlyRiser"
+    },
+
+    "metadata": {
+      "name": "Dialabs",
+      "description": "Adding, whatever!",
+      "contributors": {
+        "DiamondDev": "Owner"
+      },
+      "contact": {
+        "homepage": "https://diamonddevv.github.io/",
+        "issues": "https://github.com/diamonddevv/dialabs/issues",
+        "sources": "https://github.com/diamonddevv/dialabs"
+      },
+      "license": "GPLv3",
+      "icon": "assets/dialabs/icon.png"
+    },
+
+    "intermediate_mappings": "net.fabricmc:intermediary",
+
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "versions": ">=0.19.1"
+      },
+      {
+        "id": "quilted_fabric_api",
+        "versions": ">=7.0.3"
+      },
+      {
+        "id": "minecraft",
+        "versions": ">=1.20.1"
+      }
+    ]
+  },
+  "mixin": "dialabs.mixins.json",
+  "access_widener": "dialabs.accesswidener",
+  "minecraft": {
+    "environment": "*"
+  }
+}

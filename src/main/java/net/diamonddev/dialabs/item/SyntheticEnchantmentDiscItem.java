@@ -10,7 +10,6 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
@@ -18,7 +17,9 @@ import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
 
@@ -39,23 +40,23 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
     }
 
 
-    public void putSyntheticDiscStacks(FabricItemGroupEntries content, ItemGroup.StackVisibility vis) {
-        content.add(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
+    public void putSyntheticDiscStacks(FabricItemGroupEntries content) {
+        content.addStack(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
 
         for (Enchantment enchant : Registries.ENCHANTMENT) {
             if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchant)) {
-                content.add(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant))), vis);
+                content.addStack(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant))));
             }
         }
     }
 
-    public void putAllSyntheticDiscStacks(FabricItemGroupEntries content, ItemGroup.StackVisibility vis) {
-        content.add(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
+    public void putAllSyntheticDiscStacks(FabricItemGroupEntries content) {
+        content.addStack(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
 
         for (Enchantment enchant : Registries.ENCHANTMENT) {
             if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchant)) {
                 Helpers.getEachIntegerRange(enchant.getMinLevel(), SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant)).forEach((i) -> {
-                    content.add(forEnchantment(new EnchantmentLevelEntry(enchant, i)), vis);
+                    content.addStack(forEnchantment(new EnchantmentLevelEntry(enchant, i)));
                 });
             }
         }

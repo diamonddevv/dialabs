@@ -113,7 +113,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         this.addSlot(OUT_SLOT); // Add out slot, handled seperately
 
         this.context = context;
-        this.world = playerInventory.player.world;
+        this.world = playerInventory.player.getWorld();
         this.player = playerInventory.player;
 
         int i;
@@ -195,7 +195,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
     }
 
     @Override
-    public ItemStack quickMove(PlayerEntity player, int slot) {
+    public ItemStack quickTransfer(PlayerEntity player, int slot) {
         Slot s = this.slots.get(slot);
         if (s.hasStack()) {
             ItemStack stack = s.getStack();

@@ -5,11 +5,11 @@ import net.diamonddev.dialabs.util.DialabsDamageSource;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 public class RetributionEffect extends StatusEffect {
     public RetributionEffect() {
-        super(StatusEffectCategory.HARMFUL, 0x520e05);
+        super(StatusEffectType.HARMFUL, 0x520e05);
     }
 
     @Override

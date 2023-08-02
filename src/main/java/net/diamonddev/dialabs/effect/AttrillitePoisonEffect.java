@@ -1,10 +1,10 @@
 package net.diamonddev.dialabs.effect;
 
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.entity.effect.StatusEffectType;
 
 public class AttrillitePoisonEffect extends StatusEffect {
     public AttrillitePoisonEffect() {
-        super(StatusEffectCategory.HARMFUL, 0xADBBFF);
+        super(StatusEffectType.HARMFUL, 0xADBBFF);
     }
 }

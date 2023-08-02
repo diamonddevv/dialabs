@@ -1,8 +1,8 @@
 package net.diamonddev.dialabs.client.render.model;
 
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.diamonddev.dialabs.entity.FlintlockPelletEntity;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 
@@ -22,8 +22,9 @@ public class FlintlockPelletEntityModel extends EntityModel<FlintlockPelletEntit
 	@Override
 	public void setAngles(FlintlockPelletEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 	}
+
 	@Override
-	public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-		bb_main.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+	public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+		bb_main.render(matrices, vertices, light, overlay, red, green, blue, alpha);
 	}
 }

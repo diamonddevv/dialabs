@@ -1,13 +1,13 @@
-package net.diamonddev.dialabs.asm;
+package net.diamonddev.dialabs.impl;
 
 import com.chocohead.mm.api.ClassTinkerers;
-import net.fabricmc.loader.api.FabricLoader;
-import net.fabricmc.loader.api.MappingResolver;
+import org.quiltmc.loader.api.MappingResolver;
+import org.quiltmc.loader.api.QuiltLoader;
 
 public class EarlyRiser implements Runnable {
     @Override
     public void run() {
-        MappingResolver remapper = FabricLoader.getInstance().getMappingResolver();
+        MappingResolver remapper = QuiltLoader.getMappingResolver();
         String enchantmentTarget = remapper.mapClassName("intermediary", "net.minecraft.class_1886");
 
         ClassTinkerers.enumBuilder(enchantmentTarget)

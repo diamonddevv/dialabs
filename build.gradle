@@ -1,13 +1,13 @@
 plugins {
-	id 'fabric-loom' version '1.0-SNAPSHOT'
 	id 'maven-publish'
+	alias libs.plugins.quilt.loom
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
+base.archivesName = project.archives_base_name
+version = "$project.version+${libs.versions.minecraft.get()}"
 group = project.maven_group
 
 repositories {
@@ -19,7 +19,7 @@ repositories {
 
 	maven {
 		name = 'Ladysnake Mods'
-		url = 'https://ladysnake.jfrog.io/artifactory/mods'
+		url = 'https://maven.ladysnake.org/releases'
 	}
 
 	maven {
@@ -38,12 +38,13 @@ loom {
 
 dependencies {
 	// To change the versions see the gradle.properties file
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	minecraft libs.minecraft
+	mappings variantOf(libs.quilt.mappings) { classifier 'intermediary-v2' }
 
-	// Fabric API. This is technically optional, but you probably want it anyway.
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	modImplementation libs.quilt.loader // my favourite part was when he said its quiltin time and then quilted all over the place
+
+	// QFAPI
+	modImplementation libs.quilted.fabric.api
 
 	// CCA
 	include modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_ver}")
@@ -54,22 +55,31 @@ dependencies {
 
 	// LibGenetics
 	include modImplementation("com.github.diamonddevv:libgenetics:${project.libgenetics_version}")
+
+	// Simple Trims
+	include modImplementation("com.github.diamonddevv:simple-trims:${project.simple_trims_version}");
 }
 
 processResources {
 	inputs.property "version", project.version
+	inputs.property "modid", project.archives_base_name
 
-	filesMatching("fabric.mod.json") {
+	filesMatching("quilt.mod.json") {
 		expand "version": project.version
+		expand "modid": project.archives_base_name
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	// Minecraft 1.18 uses Java 17
+	it.options.encoding = 'UTF-8'
+	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
 	it.options.release = 17
 }
 
 java {
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
+
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this line, sources will not be generated.

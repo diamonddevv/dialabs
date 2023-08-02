@@ -1,16 +1,15 @@
 package net.diamonddev.dialabs.client.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.gui.DiscBurnerScreenHandler;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
+import org.quiltmc.loader.api.minecraft.ClientOnly;
 
+@ClientOnly
 public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
 
     private static final Identifier TEXTURE = Dialabs.id("textures/gui/disc_burner_screen.png");
@@ -20,34 +19,17 @@ public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
     }
 
     @Override
-    protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexProgram);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
-
+    protected void drawBackground(GuiGraphics graphics, float delta, int mouseX, int mouseY) {
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
-        drawTexture(matrices, x, y, 0, 0, backgroundWidth, backgroundHeight);
+        graphics.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
 
-        drawXpRequirement(matrices);
-        drawCrossedOutputArrow(matrices);
+        drawXpRequirement(graphics);
+        drawCrossedOutputArrow(graphics);
     }
 
-
-    @Override
-    protected void init() {
-        super.init();
-    }
-
-    @Override
-    public void render(MatrixStack matrices, int mouseX, int mouseY, float delta) {
-        renderBackground(matrices);
-        super.render(matrices, mouseX, mouseY, delta);
-        drawMouseoverTooltip(matrices, mouseX, mouseY);
-    }
-
-    public void drawXpRequirement(MatrixStack matrices) {
+    public void drawXpRequirement(GuiGraphics graphics) {
         int requirement = this.handler.getXpRequirementProperty().get();
         Text text = null;
         if (this.handler.isAllSlotsRequiredFilled()) {
@@ -56,27 +38,26 @@ public class DiscBurnerScreen extends HandledScreen<DiscBurnerScreenHandler> {
 
 
         boolean affordable = this.handler.canTake();
-        int fillColor = affordable ?
-                ColorHelper.Argb.getArgb(0, 0, 255, 0) : ColorHelper.Argb.getArgb(0, 255, 0, 0);
+        int fillColor = affordable ? 0x00ff00 : 0xff0000; // rgb format - green (0,255,0) : red (255,0,0)
 
         if (text != null && !this.handler.forceFail) {
-            drawXpOrb(matrices, affordable);
-            this.textRenderer.drawWithShadow(matrices, text, x + 121, y + 71, fillColor);
+            drawXpOrb(graphics, affordable);
+            graphics.drawShadowedText(this.textRenderer, text, x, y, fillColor);
         }
     }
 
-    public void drawCrossedOutputArrow(MatrixStack matrices) {
+    public void drawCrossedOutputArrow(GuiGraphics graphics) {
         if ((!this.handler.isPossibleCombination() && this.handler.isAllSlotsRequiredFilled()) || this.handler.forceFail) {
             int i = (this.width - this.backgroundWidth) / 2;
             int j = (this.height - this.backgroundHeight) / 2;
-            this.drawTexture(matrices, i + 99, j + 45, this.backgroundWidth, 0, 28, 21);
+            graphics.drawTexture(TEXTURE, i + 99, j + 45, this.backgroundWidth, 0, 28, 21);
         }
     }
 
-    public void drawXpOrb(MatrixStack matrices, boolean canAfford) {
+    public void drawXpOrb(GuiGraphics graphics, boolean canAfford) {
         int x = (this.width - this.backgroundWidth) / 2;
         int y = (this.height - this.backgroundHeight) / 2;
         int uvY = canAfford ? 21 : 37;
-        this.drawTexture(matrices, x + 105, y + 65, this.backgroundWidth, uvY, 16, 16);
+        graphics.drawTexture(TEXTURE, x + 105, y + 65, this.backgroundWidth, uvY, 16, 16);
     }
 }
