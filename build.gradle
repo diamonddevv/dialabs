@@ -58,15 +58,16 @@ dependencies {
 
 	// Simple Trims
 	include modImplementation("com.github.diamonddevv:simple-trims:${project.simple_trims_version}");
+
+	// MixinExtras
+	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:${project.mixin_extras_version}")))
 }
 
 processResources {
 	inputs.property "version", project.version
-	inputs.property "modid", project.archives_base_name
 
 	filesMatching("quilt.mod.json") {
 		expand "version": project.version
-		expand "modid": project.archives_base_name
 	}
 }
 

@@ -5,8 +5,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -24,11 +22,6 @@ public class Helpers {
             intCol.add(i);
         }
         return intCol;
-    }
-
-    public static <T> boolean isInTag(TagKey<T> tag, T object) {
-        RegistryEntry<T> entry = RegistryEntry.of(object);
-        return entry.isIn(tag);
     }
 
     public static <A, B> BiConsumer<A, B> and(BiConsumer<A, B> alpha, BiConsumer<A, B> bravo) {

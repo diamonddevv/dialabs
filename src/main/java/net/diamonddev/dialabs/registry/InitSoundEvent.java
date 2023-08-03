@@ -24,6 +24,6 @@ public class InitSoundEvent implements RegistryInitializer {
 
     private SoundEvent createSound(String name) {
         Identifier id = Dialabs.id(name);
-        return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.of(id));
+        return Registry.register(Registries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
     }
 }

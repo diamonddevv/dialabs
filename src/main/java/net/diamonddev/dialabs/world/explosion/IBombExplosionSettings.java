@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.world.explosion;
 
 import net.diamonddev.dialabs.entity.ThrowableItemEntity;
-import net.diamonddev.dialabs.util.DialabsDamageSource;
+import net.diamonddev.dialabs.registry.InitDamageTypeKeys;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -15,8 +15,8 @@ public interface IBombExplosionSettings {
         return false;
     }
 
-    default DamageSource getDamageSource(Entity source) {
-        return DialabsDamageSource.bomb(source);
+    default DamageSource getDamageSource(Entity target, Entity source) {
+        return InitDamageTypeKeys.get(target, InitDamageTypeKeys.BOMB, source, null);
     }
 
     default boolean shouldDestroyBlocks() {

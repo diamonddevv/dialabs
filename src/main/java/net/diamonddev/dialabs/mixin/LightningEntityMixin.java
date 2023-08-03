@@ -2,9 +2,8 @@ package net.diamonddev.dialabs.mixin;
 
 
 import net.diamonddev.dialabs.registry.InitResourceListener;
-import net.diamonddev.dialabs.resource.InitDataResourceTypes;
 import net.diamonddev.dialabs.resource.recipe.StrikingRecipe;
-import net.diamonddev.libgenetics.common.api.v1.dataloader.cognition.CognitionResourceManager;
+import net.diamonddev.libgenetics.common.api.v1.dataloader.cognition.CognitionRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -32,23 +31,24 @@ public abstract class LightningEntityMixin extends Entity {
     }
 
 
-    @Inject(at=@At("TAIL"), method="tick")
+    @Inject(method = "tick", at = @At("TAIL"))
     public void dialabs$tickLightningRecipes(CallbackInfo ci) {
-        if(ambientTick >= 0) {
-            if(!world.isClient) {
+        if (ambientTick >= 0) {
+            if (!this.getWorld().isClient) {
+
                 BlockPos struckBlock = getBlockPos().down();
-                if (world.getBlockState(struckBlock).getBlock().equals(Blocks.LIGHTNING_ROD)) {
+                if (this.getWorld().getBlockState(struckBlock).getBlock().equals(Blocks.LIGHTNING_ROD)) {
                     struckBlock = struckBlock.down();
                 }
 
                 BlockPos finalStruckBlock = struckBlock;
-                CognitionResourceManager.forEachResource(InitResourceListener.DIALABS_RECIPES, InitDataResourceTypes.STRIKING, recipe -> {
+                CognitionRegistry.forEachResource(InitResourceListener.DIALABS_RECIPES, InitResourceListener.STRIKING, recipe -> {
                     Identifier ogBlock = recipe.getIdentifier(StrikingRecipe.ORIGINAL_BLOCK_KEY);
                     Identifier newBlock = recipe.getIdentifier(StrikingRecipe.NEW_BLOCK_KEY);
 
-                    if (Registries.BLOCK.getId(world.getBlockState(finalStruckBlock).getBlock()).equals(ogBlock)) {
+                    if (Registries.BLOCK.getId(getWorld().getBlockState(finalStruckBlock).getBlock()).equals(ogBlock)) {
                         Block block = Registries.BLOCK.get(newBlock);
-                        world.setBlockState(finalStruckBlock, block.getDefaultState());
+                        getWorld().setBlockState(finalStruckBlock, block.getDefaultState());
                     }
                 });
             }

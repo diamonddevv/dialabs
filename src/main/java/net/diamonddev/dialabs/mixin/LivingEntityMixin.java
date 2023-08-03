@@ -6,7 +6,7 @@ import net.diamonddev.dialabs.effect.ChargeEffect;
 import net.diamonddev.dialabs.effect.CrystalliseEffect;
 import net.diamonddev.dialabs.registry.InitEffects;
 import net.diamonddev.dialabs.registry.InitEnchants;
-import net.diamonddev.dialabs.util.DialabsDamageSource;
+import net.diamonddev.dialabs.registry.InitDamageTypeKeys;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.diamonddev.dialabs.util.Helpers;
 import net.minecraft.entity.Entity;
@@ -56,7 +56,7 @@ public abstract class LivingEntityMixin extends Entity {
     @Shadow public abstract int getXpToDrop();
 
     // called when 'this' takes damage
-    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage")
+    @Inject(at = @At("HEAD"), method = "applyEnchantmentsToDamage")
     private void dialabs$injectCrystallisingMethods(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
 
@@ -69,14 +69,14 @@ public abstract class LivingEntityMixin extends Entity {
             if (target != null) {
                 if (target.isAlive()) {
                     if (CrystalliseEffect.shouldDamageAttacker(amp, rand)) {
-                        target.damage(DialabsDamageSource.CRYSTAL_SHARDS, (float) CrystalliseEffect.getDamageAmount(amp, rand));
+                        target.damage(InitDamageTypeKeys.get(target, InitDamageTypeKeys.CRYSTAL_SHARDS, this, null), (float) CrystalliseEffect.getDamageAmount(amp, rand));
                     }
                 }
             }
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage", cancellable = true)
+    @Inject(at = @At("HEAD"), method = "applyEnchantmentsToDamage", cancellable = true)
     private void dialabs$injectStaticDamage(DamageSource source, float amount,
                                             CallbackInfoReturnable<Float> cir) {
         if (source.getSource() instanceof LivingEntity attacker) {
@@ -96,7 +96,7 @@ public abstract class LivingEntityMixin extends Entity {
                     EnchantHelper.hasEnchantment(InitEnchants.HARVESTER, livingEntity.getStackInHand(Hand.OFF_HAND))) {
                 if (this.shouldDropXp()) {
                     int amount = this.getXpToDrop();
-                    new ExperienceOrbEntity(this.world, this.getX(), this.getY(), this.getZ(), amount);
+                    new ExperienceOrbEntity(this.getWorld(), this.getX(), this.getY(), this.getZ(), amount);
                 }
             }
         }
@@ -116,14 +116,14 @@ public abstract class LivingEntityMixin extends Entity {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "modifyAppliedDamage")
+    @Inject(at = @At("HEAD"), method = "applyEnchantmentsToDamage")
     private void dialabs$retributionalDamage(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
         if (source.getSource() instanceof LivingEntity target) {
             storeRetributionDmgIfPossible(target, amount);
         }
 
-        if (source.isProjectile()) {
-            if (((ProjectileEntity)source.getSource()).getOwner() instanceof LivingEntity target) {
+        if (source.getSource() instanceof ProjectileEntity projectileEntity) {
+            if (projectileEntity.getOwner() instanceof LivingEntity target) {
                 storeRetributionDmgIfPossible(target, amount);
             }
         }
@@ -133,8 +133,8 @@ public abstract class LivingEntityMixin extends Entity {
     private void dialabs$tickAttrillitePoisoning(CallbackInfo ci) {
         if (this.hasStatusEffect(InitEffects.ATTRILLITE_POISON)) {
             if (Helpers.rollRandom(0.075)) {
-                int dmg = this.world.getRandom().nextBetween(1, 2) * (this.getStatusEffect(InitEffects.ATTRILLITE_POISON).getAmplifier() + 1);
-                this.damage(DialabsDamageSource.ATTRILLITE_POISON, dmg);
+                int dmg = this.getWorld().getRandom().range(1, 2) * (this.getStatusEffect(InitEffects.ATTRILLITE_POISON).getAmplifier() + 1);
+                this.damage(InitDamageTypeKeys.get(this, InitDamageTypeKeys.ATTRILLITE_POISON, null, null), dmg);
             }
         }
     }

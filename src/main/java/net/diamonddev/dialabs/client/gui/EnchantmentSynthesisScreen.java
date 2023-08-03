@@ -38,13 +38,23 @@ public class EnchantmentSynthesisScreen extends HandledScreen<EnchantmentSynthes
     }
 
     @Override
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        renderBackground(graphics);
+        super.render(graphics, mouseX, mouseY, delta);
+        drawMouseoverTooltip(graphics, mouseX, mouseY);
+    }
+
+
+    @Override
     protected void drawBackground(GuiGraphics graphics, float delta, int mouseX, int mouseY) {
+
         int x = (width - backgroundWidth) / 2;
         int y = (height - backgroundHeight) / 2;
         graphics.drawTexture(TEXTURE, x, y, 0, 0, backgroundWidth, backgroundHeight);
 
         drawCanTakeCross(graphics);
         drawEnchantmentText(graphics);
+
     }
 
     public static Text getText(TextRenderer renderer, ItemStack stack) {

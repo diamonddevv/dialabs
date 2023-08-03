@@ -93,6 +93,9 @@
   "death.attack.thwack": "%s was thwacked one too many times",
   "death.attack.thwack.player": "%s was thwacked one too many times by %s",
 
+  "death.attack.flintlock": "%s was shot by a Flintlock",
+  "death.attack.flintlock.player": "%s couldn't run from %s's gun",
+
   "enchantment.dialabs.withered_aspect": "Withered Aspect",
   "enchantment.dialabs.harvester": "Harvester",
   "enchantment.dialabs.soul_aspect": "Soul Aspect",

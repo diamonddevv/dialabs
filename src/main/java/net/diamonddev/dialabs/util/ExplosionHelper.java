@@ -21,7 +21,7 @@ public class ExplosionHelper {
     public static void createDynamicBombExplosion(World world, ThrowableItemEntity entity, IBombExplosionSettings settings) {
         Explosion explosion = world.createExplosion(
                 null,
-                settings.getDamageSource(entity),
+                settings.getDamageSource(entity, entity),
                 new BombExplosion.DynamicExplosionBehavior(settings.shouldDestroyBlocks(), settings.shouldExplosionDamageEntities()),
                 entity.getX(), entity.getY(), entity.getZ(),
                 settings.getPower(), settings.createsFire(),
@@ -94,7 +94,7 @@ public class ExplosionHelper {
                         double o = accessedExplosion.getZ();
 
                         for(; h > 0.0F; h -= 0.22500001F) {
-                            BlockPos blockPos = new BlockPos(m, n, o);
+                            BlockPos blockPos = BlockPos.create(m, n, o);
                             if (!accessedExplosion.getWorld().isInBuildLimit(blockPos)) {
                                 break;
                             }

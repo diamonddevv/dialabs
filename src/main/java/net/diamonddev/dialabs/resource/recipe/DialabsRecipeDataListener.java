@@ -20,4 +20,9 @@ public class DialabsRecipeDataListener extends CognitionDataListener {
     public void onFinishReload() {
 
     }
+
+    @Override
+    public void onClearCachePhase() {
+
+    }
 }

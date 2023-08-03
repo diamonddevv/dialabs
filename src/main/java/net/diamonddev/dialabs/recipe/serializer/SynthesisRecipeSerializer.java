@@ -66,7 +66,7 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         ArrayList<ChancedEnchantment> chances = ChancedEnchantment.readArrayListPacket(buf);
 
         int lapis = buf.readInt();
-        Enchantment enchantment = buf.readRegistryValue(Registries.ENCHANTMENT);
+        Enchantment enchantment = MiscObjectSerializers.readEnchantment(buf);
         int lvl = buf.readInt();
 
         ArrayList<String> strings = MiscObjectSerializers.readStringArray(buf);
@@ -83,7 +83,7 @@ public class SynthesisRecipeSerializer implements RecipeSerializer<SynthesisReci
         ChancedEnchantment.writeArrayListPacket(recipe.getChancedEnchantments(), buf);
 
         buf.writeInt(recipe.getLapisRequirement());
-        buf.writeRegistryValue(Registries.ENCHANTMENT, recipe.getResultEnchantment());
+        MiscObjectSerializers.writeEnchantment(buf, recipe.getResultEnchantment());
         buf.writeInt(recipe.getResultLvl());
 
         MiscObjectSerializers.writeStringArray(buf, recipe.getModids());

@@ -27,8 +27,10 @@ public abstract class AbstractClientPlayerEntityMixin extends PlayerEntity {
         The FOV multiplier at Zooming 5 should be 0.01, so from 0.1 thats a reduction of 0.09.
         There are 5 levels, so to get our level-multiplier we divide 0.09 by 5.
         This gives us 0.018.
+
+        Update: i have no idea why quilt mappings calls this method "getSpeed".
      */
-    @Inject(method = "getFovMultiplier", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getSpeed", at = @At("HEAD"), cancellable = true)
     private void dialabs$setFOVWhenUsingSpyglassEarly(CallbackInfoReturnable<Float> cir) {
         if (this.isUsingSpyglass() && MinecraftClient.getInstance().options.getPerspective().isFirstPerson()) {
 

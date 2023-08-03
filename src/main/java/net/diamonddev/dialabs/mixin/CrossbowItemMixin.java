@@ -1,5 +1,7 @@
 package net.diamonddev.dialabs.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.diamonddev.dialabs.cca.DialabsCCA;
 import net.diamonddev.dialabs.nbt.DialabsNbt;
 import net.diamonddev.dialabs.registry.InitEnchants;
@@ -9,11 +11,11 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.*;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.FireworkRocketItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -22,7 +24,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -40,12 +41,7 @@ public abstract class CrossbowItemMixin {
     }
 
     @Shadow
-    protected static void putProjectile(ItemStack crossbow, ItemStack projectile) {
-    }
-
-    @Shadow
-    protected static PersistentProjectileEntity createArrow(World world, LivingEntity entity, ItemStack crossbow, ItemStack arrow) {
-        return null;
+    private static void putProjectile(ItemStack crossbow, ItemStack projectile) {
     }
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
@@ -59,38 +55,34 @@ public abstract class CrossbowItemMixin {
         }
     }
 
-    @Inject(method = "createArrow", at = @At("HEAD"), cancellable = true)
-    private static void dialabs$createRetributiveCrossbowArrow(World world, LivingEntity entity, ItemStack crossbow,
-                                                               ItemStack arrow, CallbackInfoReturnable<PersistentProjectileEntity> cir) {
+    @WrapOperation(
+            method = "shoot",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/item/CrossbowItem;createArrow(Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/entity/projectile/PersistentProjectileEntity;"
+            )
+    )
+    private static PersistentProjectileEntity dialabs$createRetributiveCrossbowArrow(World world, LivingEntity entity, ItemStack crossbow, ItemStack arrow, Operation<PersistentProjectileEntity> original) {
+        PersistentProjectileEntity persProj = original.call(world, entity, crossbow, arrow);
         if (EnchantHelper.hasEnchantment(InitEnchants.RETRIBUTIVE, crossbow)) {
-            ArrowItem arrowItem = (ArrowItem)(arrow.getItem() instanceof ArrowItem ? arrow.getItem() : Items.ARROW);
-            PersistentProjectileEntity persProj = arrowItem.createArrow(world, arrow, entity);
-
-            // Boilerplate
-            persProj.setShotFromCrossbow(true);
-            persProj.setSound(SoundEvents.ITEM_CROSSBOW_HIT);
-
-            // Actual Retribution Info
+            // Retribution Info
             persProj.setDamage(persProj.getDamage() * 0.5);
             DialabsCCA.RetributiveArrowManager.setRetributive(persProj, true);
-
-            // Return
-            cir.setReturnValue(persProj);
         }
+        return persProj;
     }
 
-    @Inject(method = "createArrow", at = @At("HEAD"), cancellable = true)
-    private static void dialabs$createSnipingCrossbowArrow(World world, LivingEntity entity, ItemStack crossbow,
-                                                               ItemStack arrow, CallbackInfoReturnable<PersistentProjectileEntity> cir) {
+    @WrapOperation(
+            method = "shoot",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/item/CrossbowItem;createArrow(Lnet/minecraft/world/World;Lnet/minecraft/entity/LivingEntity;Lnet/minecraft/item/ItemStack;Lnet/minecraft/item/ItemStack;)Lnet/minecraft/entity/projectile/PersistentProjectileEntity;"
+            )
+    )
+    private static PersistentProjectileEntity dialabs$createSnipingCrossbowArrow(World world, LivingEntity entity, ItemStack crossbow, ItemStack arrow, Operation<PersistentProjectileEntity> original) {
+        PersistentProjectileEntity persProj = original.call(world, entity, crossbow, arrow);
         if (EnchantHelper.hasEnchantment(InitEnchants.SNIPING, crossbow)) {
-            ArrowItem arrowItem = (ArrowItem)(arrow.getItem() instanceof ArrowItem ? arrow.getItem() : Items.ARROW);
-            PersistentProjectileEntity persProj = arrowItem.createArrow(world, arrow, entity);
-
-            // Boilerplate
-            persProj.setShotFromCrossbow(true);
-            persProj.setSound(SoundEvents.ITEM_CROSSBOW_HIT);
-
-            // Actual Sniping Info
+            // Sniping Info
             DialabsCCA.SnipingArrowManager.setIs(persProj, true);
             DialabsCCA.SnipingArrowManager.set(persProj, entity.getPos());
 
@@ -98,25 +90,25 @@ public abstract class CrossbowItemMixin {
             DialabsCCA.SnipingArrowManager.setSpeedReference(persProj, d);
             DialabsCCA.SnipingArrowManager.setDivergenceReference(persProj, d);
 
-            // Return
-            cir.setReturnValue(persProj);
         }
+        return persProj;
     }
 
 
-    @Redirect(
+    @WrapOperation(
             method = "shoot",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/projectile/ProjectileEntity;setVelocity(DDDFF)V"
             )
     )
-    private static void dialabs$setSnipingSpeed(ProjectileEntity projEntity, double x, double y, double z, float speed, float divergence) {
-        if (!(projEntity instanceof FireworkRocketEntity)) {
+    private static void dialabs$setSnipingSpeed(ProjectileEntity projEntity, double x, double y, double z, float speed, float divergence, Operation<Void> original,
+                                                World world, LivingEntity shooter, Hand hand, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean creative, float speed2, float divergence2, float simulated) {
+        if (EnchantHelper.hasEnchantment(InitEnchants.SNIPING, shooter.getStackInHand(hand))) {
             speed *= (1 + (DialabsCCA.SnipingArrowManager.getSpeed((PersistentProjectileEntity) projEntity)));
             divergence /= (1 + (DialabsCCA.SnipingArrowManager.getDivergence((PersistentProjectileEntity) projEntity)));
         }
-        projEntity.setVelocity(x, y, z, speed, divergence);
+        original.call(projEntity, x, y, z, speed, divergence);
     }
 
 
@@ -138,9 +130,8 @@ public abstract class CrossbowItemMixin {
             if (projectile.isEmpty()) {
                 cir.setReturnValue(false);
             } else {
-                boolean bl = creative && projectile.getItem() instanceof ArrowItem;
                 ItemStack itemStack;
-                if (!bl && !creative && !simulated) {
+                if (!creative && !simulated) {
                     itemStack = projectile.split(EnchantmentHelper.getLevel(InitEnchants.MULTICLIP, crossbow) + 1);
                     loadable = itemStack.getCount();
                     if (projectile.isEmpty() && shooter instanceof PlayerEntity) {

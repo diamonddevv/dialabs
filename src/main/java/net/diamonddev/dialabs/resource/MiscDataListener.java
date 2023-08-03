@@ -12,9 +12,9 @@ import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 
-public class RootDataListener extends CognitionDataListener {
-    public RootDataListener() {
-        super("Dialabs Root Data Loader", Dialabs.id("root"), "", ResourceType.SERVER_DATA);
+public class MiscDataListener extends CognitionDataListener {
+    public MiscDataListener() {
+        super("Dialabs Misc. Data Loader", Dialabs.id("misc"), "misc", ResourceType.SERVER_DATA);
     }
 
     public static ArrayList<Identifier> CACHED_SYNTHETICS = new ArrayList<>();
@@ -38,5 +38,10 @@ public class RootDataListener extends CognitionDataListener {
             Enchantment enchantment = Registries.ENCHANTMENT.get(identifier);
             SyntheticEnchantment.validSyntheticEnchantments.add(enchantment);
         });
+    }
+
+    @Override
+    public void onClearCachePhase() {
+
     }
 }

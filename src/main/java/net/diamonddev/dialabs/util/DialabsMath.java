@@ -4,6 +4,7 @@ import net.minecraft.util.math.Direction;
 
 public class DialabsMath {
 
+
     public static float degToRad(float deg) {
         return (float) (deg * (Math.PI / 180));
     }

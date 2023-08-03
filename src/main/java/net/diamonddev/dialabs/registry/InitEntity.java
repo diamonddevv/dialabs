@@ -4,7 +4,6 @@ import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.entity.FlintlockPelletEntity;
 import net.diamonddev.dialabs.entity.ThrowableItemEntity;
 import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
@@ -12,6 +11,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import org.quiltmc.qsl.entity.api.QuiltEntityTypeBuilder;
 
 public class InitEntity implements RegistryInitializer {
 
@@ -23,11 +23,11 @@ public class InitEntity implements RegistryInitializer {
     public void register() {
         THROWN_ITEM = register(Dialabs.id("thrown_item"), createThrownItemEntityType(ThrowableItemEntity::new));
 
-        FLINTLOCK_PELLET = register(Dialabs.id("flintlock_pellet"), FabricEntityTypeBuilder.create(SpawnGroup.MISC, FlintlockPelletEntity::new)
-                .dimensions(EntityDimensions.changing(.1f, .1f))
-                .trackRangeBlocks(64)
-                .trackedUpdateRate(1)
-                .forceTrackedVelocityUpdates(true)
+        FLINTLOCK_PELLET = register(Dialabs.id("flintlock_pellet"), QuiltEntityTypeBuilder.create(SpawnGroup.MISC, FlintlockPelletEntity::new)
+                .setDimensions(EntityDimensions.changing(.1f, .1f))
+                .maxBlockTrackingRange(64)
+                .trackingTickInterval(1)
+                .alwaysUpdateVelocity(true)
                 .build()
         );
     }
@@ -40,11 +40,11 @@ public class InitEntity implements RegistryInitializer {
     ///////////////////
 
     private static <T extends Entity> EntityType<T> createThrownItemEntityType(EntityType.EntityFactory<T> factory) {
-        return FabricEntityTypeBuilder.create(SpawnGroup.MISC, factory)
-                .dimensions(EntityDimensions.changing(0.25f, 0.25f))
-                .trackRangeBlocks(64)
-                .trackedUpdateRate(1)
-                .forceTrackedVelocityUpdates(true)
+        return QuiltEntityTypeBuilder.create(SpawnGroup.MISC, factory)
+                .setDimensions(EntityDimensions.changing(0.25f, 0.25f))
+                .maxBlockTrackingRange(64)
+                .trackingTickInterval(1)
+                .alwaysUpdateVelocity(true)
                 .build();
     }
 }

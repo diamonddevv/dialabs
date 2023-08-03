@@ -1,7 +1,7 @@
 package net.diamonddev.dialabs.effect;
 
 import net.diamonddev.dialabs.cca.DialabsCCA;
-import net.diamonddev.dialabs.util.DialabsDamageSource;
+import net.diamonddev.dialabs.registry.InitDamageTypeKeys;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
 import net.minecraft.entity.effect.StatusEffect;
@@ -18,7 +18,7 @@ public class RetributionEffect extends StatusEffect {
 
         // Apply Retibutional Damage
         double attributedDamage = DialabsCCA.RetributionalDamageManager.getDmg(entity);
-        entity.damage(DialabsDamageSource.RETRIBUTION, (float) attributedDamage);
+        entity.damage(InitDamageTypeKeys.get(entity, InitDamageTypeKeys.RETRIBUTION, null, null), (float) attributedDamage);
         DialabsCCA.RetributionalDamageManager.resetDmg(entity); // Reset Retributional Damage
     }
 }

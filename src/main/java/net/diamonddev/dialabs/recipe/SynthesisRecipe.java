@@ -15,6 +15,7 @@ import net.minecraft.recipe.Ingredient;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -115,7 +116,7 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
     }
 
     @Override
-    public ItemStack getOutput() {
+    public ItemStack getResult(DynamicRegistryManager drm) {
         ItemStack stack = new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC);
         EnchantHelper.storeEnchantment(stack, new EnchantmentLevelEntry(getResultEnchantment(), getResultLvl()));
         return stack;
@@ -146,8 +147,8 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
 
     // misc stuff lol
     @Override
-    public ItemStack craft(SynthesisInventory inv) {
-        return this.getOutput().copy();
+    public ItemStack craft(SynthesisInventory inv, DynamicRegistryManager drm) {
+        return this.getResult(drm).copy();
     }
 
     @Override
@@ -181,7 +182,7 @@ public class SynthesisRecipe implements Recipe<SynthesisInventory> {
         ArrayList<CountedIngredient> ingredients = new ArrayList<>();
 
        ingredients.add(new CountedIngredient(Ingredient.ofItems(InitItem.SYNTHETIC_ENCHANTMENT_DISC), 1));
-       ingredients.add(new CountedIngredient(Ingredient.fromTag(DataDrivenTagKeys.SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS), getLapisRequirement()));
+       ingredients.add(new CountedIngredient(Ingredient.ofTag(DataDrivenTagKeys.SYNTHETIC_ENCHANTMENT_PAYMENT_ITEMS), getLapisRequirement()));
        ingredients.add(getInputA());
        ingredients.add(getInputB());
        ingredients.add(getInputC());

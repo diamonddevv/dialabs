@@ -2,30 +2,24 @@ package net.diamonddev.dialabs;
 
 import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.*;
-import net.diamonddev.dialabs.resource.InitDataResourceTypes;
 import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.loader.impl.FabricLoaderImpl;
 import net.minecraft.SharedConstants;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.loader.api.QuiltLoader;
+import org.quiltmc.loader.impl.QuiltLoaderImpl;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
+import org.quiltmc.qsl.command.api.CommandRegistrationCallback;
 
-import java.util.Map;
-
-import static net.diamonddev.dialabs.util.ItemGroups.SYNTHETIC_ENCHANT_GROUP;
 import static net.diamonddev.libgenetics.common.api.v1.interfaces.BlockRegistryHelper.getBlockItem;
-import static net.minecraft.item.EnchantedBookItem.getEnchantmentNbt;
 import static net.minecraft.item.ItemGroups.*;
 
 
@@ -33,7 +27,7 @@ public class Dialabs implements ModInitializer {
 
 	// Mod ID and Version Variables
 	public static final String MOD_ID = "dialabs";
-	public static String VERSION = FabricLoaderImpl.INSTANCE.getModContainer(MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString();
+	public static String VERSION = QuiltLoader.getModContainer(MOD_ID).orElseThrow().metadata().version().raw();
 	public static String MC_VER = SharedConstants.getGameVersion().getName();
 
 	// ID
@@ -46,7 +40,7 @@ public class Dialabs implements ModInitializer {
 
 	// Initializer
 	@Override
-	public void onInitialize() {
+	public void onInitialize(ModContainer mod) {
 		long startInitTime = System.currentTimeMillis();
 
 		addCallbackReferences(); // Keep BEFORE Registry Initialization
@@ -62,9 +56,8 @@ public class Dialabs implements ModInitializer {
 		new InitScreenHandler().register();
 		new InitRecipe().register();
 		new InitSoundEvent().register();
-
 		new InitResourceListener().register();
-		new InitDataResourceTypes().register();
+		new InitDamageTypeKeys().register();
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 
@@ -96,7 +89,6 @@ public class Dialabs implements ModInitializer {
 		@Override
 		public void register() {
 			placeItemsInGroups();
-			removeItemsInGroups();
 		}
 
 		public static void placeItemsInGroups() {
@@ -108,20 +100,20 @@ public class Dialabs implements ModInitializer {
 				placeTomes(content);
 			});
 
-			ItemGroupEvents.modifyEntriesEvent(FUNCTIONAL).register(content -> {
+			ItemGroupEvents.modifyEntriesEvent(FUNCTIONAL_BLOCKS).register(content -> {
 				content.addAfter(Items.ENCHANTING_TABLE, getBlockItem(InitBlocks.ENCHANTMENT_SYNTHESIZER));
 				content.addAfter(getBlockItem(InitBlocks.ENCHANTMENT_SYNTHESIZER), getBlockItem(InitBlocks.DISC_BURNER));
 				content.addAfter(getBlockItem(InitBlocks.DISC_BURNER), getBlockItem(InitBlocks.SOUL_BASIN));
 			});
 
 			ItemGroupEvents.modifyEntriesEvent(COMBAT).register(content -> {
-				content.add(InitItem.BOMB);
-				content.add(InitItem.SPARK_BOMB);
-				content.add(InitItem.ATTRILLITE_ARC);
-				content.add(InitItem.CRYSTAL_SHARD);
-				content.add(InitItem.STATIC_CORE);
-				content.add(InitItem.LIGHTNING_BOTTLE);
-				content.add(InitItem.ROCK);
+				content.addItem(InitItem.BOMB);
+				content.addItem(InitItem.SPARK_BOMB);
+				content.addItem(InitItem.ATTRILLITE_ARC);
+				content.addItem(InitItem.CRYSTAL_SHARD);
+				content.addItem(InitItem.STATIC_CORE);
+				content.addItem(InitItem.LIGHTNING_BOTTLE);
+				content.addItem(InitItem.ROCK);
 			});
 
 			ItemGroupEvents.modifyEntriesEvent(INGREDIENTS).register(content -> {
@@ -138,41 +130,19 @@ public class Dialabs implements ModInitializer {
 			});
 
 
-			ItemGroupEvents.modifyEntriesEvent(SYNTHETIC_ENCHANT_GROUP).register(content -> {
-				content.add(getBlockItem(InitBlocks.ENCHANTMENT_SYNTHESIZER)); // first item
-				content.add(getBlockItem(InitBlocks.DISC_BURNER));
+			ItemGroupEvents.modifyEntriesEvent(INGREDIENTS).register(content -> {
+				content.addItem(getBlockItem(InitBlocks.ENCHANTMENT_SYNTHESIZER)); // first item
+				content.addItem(getBlockItem(InitBlocks.DISC_BURNER));
 				placeTomes(content);
-				content.add(InitItem.SYNTHETIC_ENCHANTMENT_DISC);
+				content.addItem(InitItem.SYNTHETIC_ENCHANTMENT_DISC);
 
-				InitItem.SYNTHETIC_ENCHANTMENT_DISC.putSyntheticDiscStacks(content, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
-				InitItem.SYNTHETIC_ENCHANTMENT_DISC.putAllSyntheticDiscStacks(content, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
-			});
-		}
-
-		public static void removeItemsInGroups() {
-			ItemGroupEvents.MODIFY_ENTRIES_ALL.register((group, entries) -> {
-				if (group != SYNTHETIC_ENCHANT_GROUP) {
-					entries.getDisplayStacks().removeIf(stack -> {
-						boolean bl = false;
-						if (stack.getItem() instanceof EnchantedBookItem) {
-							Map<Enchantment, Integer> enchantMapData = EnchantmentHelper.fromNbt(getEnchantmentNbt(stack));
-							for (Enchantment e : enchantMapData.keySet()) {
-								if (e instanceof SyntheticEnchantment synth) {
-									if (!synth.shouldMakeEnchantmentBook()) {
-										bl = true;
-										break;
-									}
-								}
-							}
-						}
-						return bl;
-					});
-				}
+				InitItem.SYNTHETIC_ENCHANTMENT_DISC.putSyntheticDiscStacks(content, ItemGroup.Visibility.PARENT_TAB_ONLY);
+				InitItem.SYNTHETIC_ENCHANTMENT_DISC.putAllSyntheticDiscStacks(content, ItemGroup.Visibility.SEARCH_TAB_ONLY);
 			});
 		}
 
 		private static void placeTomes(FabricItemGroupEntries content) {
-			content.add(getBlockItem(InitBlocks.ASPECTION_TOME));
+			content.addItem(getBlockItem(InitBlocks.ASPECTION_TOME));
 			content.addAfter(getBlockItem(InitBlocks.ASPECTION_TOME), getBlockItem(InitBlocks.DEFENSE_TOME));
 			content.addAfter(getBlockItem(InitBlocks.DEFENSE_TOME), getBlockItem(InitBlocks.DESTRUCTIVE_TOME));
 			content.addAfter(getBlockItem(InitBlocks.DESTRUCTIVE_TOME), getBlockItem(InitBlocks.STRENGTH_TOME));
@@ -180,7 +150,7 @@ public class Dialabs implements ModInitializer {
 	}
 
 	public static boolean isFunkyDevFeaturesOn() {
-		return FabricLoaderImpl.INSTANCE.isDevelopmentEnvironment();
+		return QuiltLoaderImpl.INSTANCE.isDevelopmentEnvironment();
 	}
 
 }

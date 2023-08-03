@@ -229,7 +229,7 @@ public class EnchantmentSynthesisScreenHandler extends ScreenHandler {
         // Copy result stack to output.
         if (match.isPresent()) {
             this.recipeEles = match.get().getOutputRolledEnchants();
-            this.out.set(match.get().getOutput().copy());
+            this.out.set(match.get().getResult(this.world.getRegistryManager()).copy());
 
             this.OUT_SLOT.canTake = match.get().lapisReqMet(this.inventory);
             this.canTake = this.OUT_SLOT.canTake;

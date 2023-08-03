@@ -47,14 +47,14 @@ public abstract class TridentEntityMixin extends PersistentProjectileEntityMixin
         Entity entity = entityHitResult.getEntity();
 
 
-        if (this.world instanceof ServerWorld && EnchantmentHelper.getLevel(Enchantments.CHANNELING, this.tridentStack) > 1) { // if this is serverworld and the trident has channeling greater than 1
+        if (this.getWorld() instanceof ServerWorld && EnchantmentHelper.getLevel(Enchantments.CHANNELING, this.tridentStack) > 1) { // if this is serverworld and the trident has channeling greater than 1
             BlockPos blockPos = entity.getBlockPos();
-            if (this.world.isSkyVisible(blockPos)) {
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.world);
+            if (this.getWorld().isSkyVisible(blockPos)) {
+                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(this.getWorld());
                 if (lightningEntity != null) {
                     lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos));
                     lightningEntity.setChanneler(this.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity)this.getOwner() : null);
-                    this.world.spawnEntity(lightningEntity);
+                    this.getWorld().spawnEntity(lightningEntity);
                     SoundEvent soundEvent = SoundEvents.ITEM_TRIDENT_THUNDER;
                     float g = 5.0F;
 

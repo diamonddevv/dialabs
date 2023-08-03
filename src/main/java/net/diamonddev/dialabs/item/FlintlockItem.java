@@ -49,15 +49,11 @@ public class FlintlockItem extends RangedWeaponItem {
                 if (!ammo.isEmpty()) {
                     world.playSoundFromEntity(null, user, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.NEUTRAL, 2.0f, 1.5f);
 
-                    FlintlockPelletEntity entity = InitEntity.FLINTLOCK_PELLET.create(world);
+                    FlintlockPelletEntity entity = new FlintlockPelletEntity(InitEntity.FLINTLOCK_PELLET, world);
 
-                    entity.setVelocity(5f, 1f, 5f);
+                    entity.setProperties(user, user.getPitch(), user.getYaw(), user.getRoll(), 5f, 1.2f);
+                    entity.setPos(user.getX(), user.getY() + user.getEyeHeight(user.getPose()), user.getZ());
 
-                    entity.setPos(user.getX(), user.getY() + (double) user.getStandingEyeHeight() - 0.10000000149011612D, user.getZ());
-                    entity.setYaw(user.getYaw());
-                    entity.setPitch(user.getPitch());
-
-                    entity.setOwner(user);
                     world.spawnEntity(entity);
 
                     inflictRecoil(user);

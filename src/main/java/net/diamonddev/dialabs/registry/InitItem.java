@@ -5,12 +5,10 @@ import net.diamonddev.dialabs.Dialabs;
 import net.diamonddev.dialabs.entity.ThrowableItemEntity;
 import net.diamonddev.dialabs.item.*;
 import net.diamonddev.dialabs.particle.InitParticle;
-import net.diamonddev.dialabs.util.DialabsDamageSource;
 import net.diamonddev.dialabs.util.ExplosionHelper;
 import net.diamonddev.dialabs.util.Helpers;
 import net.diamonddev.dialabs.world.explosion.IBombExplosionSettings;
 import net.diamonddev.libgenetics.common.api.v1.interfaces.RegistryInitializer;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -28,34 +26,35 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.explosion.Explosion;
+import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.function.BiConsumer;
 
 public class InitItem implements RegistryInitializer {
 
-    public static final Item STATICITE_INGOT = new Item(new FabricItemSettings());
-    public static final Item STATICITE_SCRAP = new Item(new FabricItemSettings());
-    public static final Item STATICITE_SCRAP_HEAP = new Item(new FabricItemSettings());
+    public static final Item STATICITE_INGOT = new Item(new QuiltItemSettings());
+    public static final Item STATICITE_SCRAP = new Item(new QuiltItemSettings());
+    public static final Item STATICITE_SCRAP_HEAP = new Item(new QuiltItemSettings());
 
-    public static final Item ATTRILLITE_INGOT = new Item(new FabricItemSettings());
-    public static final Item ATTRILLITE_SCRAP = new Item(new FabricItemSettings());
-
-
-    public static final StaticCoreItem STATIC_CORE = new StaticCoreItem(new FabricItemSettings().maxCount(4).rarity(Rarity.RARE));
-    public static final CrystalShardItem CRYSTAL_SHARD = new CrystalShardItem(new FabricItemSettings());
+    public static final Item ATTRILLITE_INGOT = new Item(new QuiltItemSettings());
+    public static final Item ATTRILLITE_SCRAP = new Item(new QuiltItemSettings());
 
 
-    public static final LightningBottleItem LIGHTNING_BOTTLE = new LightningBottleItem(new FabricItemSettings().maxCount(8));
+    public static final StaticCoreItem STATIC_CORE = new StaticCoreItem(new QuiltItemSettings().maxCount(4).rarity(Rarity.RARE));
+    public static final CrystalShardItem CRYSTAL_SHARD = new CrystalShardItem(new QuiltItemSettings());
 
 
-    public static final Item DEEPSLATE_PLATE = new Item(new FabricItemSettings());
+    public static final LightningBottleItem LIGHTNING_BOTTLE = new LightningBottleItem(new QuiltItemSettings().maxCount(8));
+
+
+    public static final Item DEEPSLATE_PLATE = new Item(new QuiltItemSettings());
     public static final SyntheticEnchantmentDiscItem SYNTHETIC_ENCHANTMENT_DISC = new SyntheticEnchantmentDiscItem();
 
-    public static final FlintlockItem FLINTLOCK = new FlintlockItem(new FabricItemSettings());
+    public static final FlintlockItem FLINTLOCK = new FlintlockItem(new QuiltItemSettings());
 
 
-    public static final ThrowableItem BOMB = createBomb(new FabricItemSettings(), () -> 1.8f, null);
-    public static final ThrowableItem SPARK_BOMB = createBomb(new FabricItemSettings(), new IBombExplosionSettings() {
+    public static final ThrowableItem BOMB = createBomb(new QuiltItemSettings(), () -> 1.8f, null);
+    public static final ThrowableItem SPARK_BOMB = createBomb(new QuiltItemSettings(), new IBombExplosionSettings() {
         @Override
         public float getPower() {
             return 3.5f;
@@ -68,9 +67,9 @@ public class InitItem implements RegistryInitializer {
 
         @Override
         public void forEachEntityAffected(Entity source, Entity entity, Explosion explosion, ThrowableItemEntity throwableItemEntity) {
-            entity.damage(DialabsDamageSource.sparkBomb(source), (float) (12f * ExplosionHelper.getCustomCalculatedExposure(entity, throwableItemEntity.getPos(), explosion)));
+            entity.damage(InitDamageTypeKeys.get(entity, InitDamageTypeKeys.SPARK_BOMB, throwableItemEntity, source), (float) (12f * ExplosionHelper.getCustomCalculatedExposure(entity, throwableItemEntity.getPos(), explosion)));
             Helpers.spawnParticles(
-                    entity.world,
+                    entity.getWorld(),
                     InitParticle.SPARK.getParticleType(),
                     entity.getPos().x, entity.getPos().y, entity.getPos().z,
                     50, 0.5,
@@ -82,7 +81,7 @@ public class InitItem implements RegistryInitializer {
         public void forEachBlockAffected(Entity source, World world, BlockPos blockPos, Explosion explosion, ThrowableItemEntity throwableItemEntity) {
             if (world.getBlockState(blockPos).getBlock() == Blocks.LIGHTNING_ROD) {
 
-                LightningEntity lightningEntity = EntityType.LIGHTNING_BOLT.create(world);
+                LightningEntity lightningEntity = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
                 lightningEntity.refreshPositionAfterTeleport(Vec3d.ofBottomCenter(blockPos.up()));
                 if (source instanceof ServerPlayerEntity s) lightningEntity.setChanneler(s);
 
@@ -96,7 +95,7 @@ public class InitItem implements RegistryInitializer {
             return false;
         }
     }, null);
-    public static final ThrowableItem ATTRILLITE_ARC = createBomb(new FabricItemSettings(), new IBombExplosionSettings() {
+    public static final ThrowableItem ATTRILLITE_ARC = createBomb(new QuiltItemSettings(), new IBombExplosionSettings() {
         @Override
         public float getPower() {
             return 5f;
@@ -116,14 +115,14 @@ public class InitItem implements RegistryInitializer {
             }
         }
     }, null);
-
-    public static final ThrowableItem ROCK = new ThrowableItem(new FabricItemSettings(), new ThrowableItem.ThrowableItemSettings().setOnCollideConsumer((entity, collision) -> {
+    public static final ThrowableItem ROCK = new ThrowableItem(new QuiltItemSettings(), new ThrowableItem.ThrowableItemSettings().setOnCollideConsumer((entity, collision) -> {
         if (collision.getType() == HitResult.Type.ENTITY) {
             Entity target = ((EntityHitResult) collision).getEntity();
-            target.damage(DialabsDamageSource.thwack(entity.getOwner()), 1f);
+            target.damage(InitDamageTypeKeys.get(target, InitDamageTypeKeys.THWACK, entity, entity.getOwner()), 1f);
         }
         entity.kill();
     }));
+
     @Override
     public void register() {
 
@@ -156,7 +155,7 @@ public class InitItem implements RegistryInitializer {
                 new ThrowableItem.ThrowableItemSettings().setOnCollideConsumer(
                         Helpers.and(
                                 (entity, result) -> {
-                                    ExplosionHelper.createDynamicBombExplosion(entity.world, entity, bombSettings);
+                                    ExplosionHelper.createDynamicBombExplosion(entity.getWorld(), entity, bombSettings);
                                     entity.kill();
                                 },
                                 onCollideExtra

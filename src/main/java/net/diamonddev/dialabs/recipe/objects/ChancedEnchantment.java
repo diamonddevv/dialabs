@@ -96,14 +96,14 @@ public class ChancedEnchantment {
     }
 
     public static ChancedEnchantment fromPacket(PacketByteBuf buf) {
-       Enchantment e = buf.readRegistryValue(Registries.ENCHANTMENT);
+       Enchantment e = MiscObjectSerializers.readEnchantment(buf);
        int i = buf.readInt();
        float f = buf.readFloat();
        return new ChancedEnchantment(e, i, f);
     }
 
     public void toPacket(PacketByteBuf buf) {
-        buf.writeRegistryValue(Registries.ENCHANTMENT, this.enchantment);
+        MiscObjectSerializers.writeEnchantment(buf, this.enchantment);
         buf.writeInt(this.level);
         buf.writeFloat(this.chance);
     }

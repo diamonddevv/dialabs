@@ -10,10 +10,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GameRendererMixin {
 
     @Inject(
-            method = "updateFovMultiplier",
+            method = "updateMovementFovMultiplier",
             at = @At(
                     value = "FIELD",
-                    target = "Lnet/minecraft/client/render/GameRenderer;fovMultiplier:F",
+                    target = "Lnet/minecraft/client/render/GameRenderer;movementFovMultiplier:F",
                     ordinal = 6
             ),
             cancellable = true

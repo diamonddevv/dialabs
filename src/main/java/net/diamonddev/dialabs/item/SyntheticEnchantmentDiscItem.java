@@ -4,18 +4,19 @@ import net.diamonddev.dialabs.enchant.SyntheticEnchantment;
 import net.diamonddev.dialabs.registry.InitItem;
 import net.diamonddev.dialabs.util.EnchantHelper;
 import net.diamonddev.dialabs.util.Helpers;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroupEntries;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.item.EnchantedBookItem;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Rarity;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,7 +26,7 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
 
     public static Collection<Enchantment> externalEntries = new ArrayList<>();
     public SyntheticEnchantmentDiscItem() {
-        super(new FabricItemSettings().maxCount(1).rarity(Rarity.RARE));
+        super(new QuiltItemSettings().maxCount(1).rarity(Rarity.RARE));
     }
 
     @Override
@@ -40,23 +41,23 @@ public class SyntheticEnchantmentDiscItem extends EnchantedBookItem {
     }
 
 
-    public void putSyntheticDiscStacks(FabricItemGroupEntries content) {
+    public void putSyntheticDiscStacks(FabricItemGroupEntries content, ItemGroup.Visibility vis) {
         content.addStack(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
 
         for (Enchantment enchant : Registries.ENCHANTMENT) {
             if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchant)) {
-                content.addStack(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant))));
+                content.addStack(forEnchantment(new EnchantmentLevelEntry(enchant, SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant))), vis);
             }
         }
     }
 
-    public void putAllSyntheticDiscStacks(FabricItemGroupEntries content) {
+    public void putAllSyntheticDiscStacks(FabricItemGroupEntries content, ItemGroup.Visibility vis) {
         content.addStack(new ItemStack(InitItem.SYNTHETIC_ENCHANTMENT_DISC));
 
         for (Enchantment enchant : Registries.ENCHANTMENT) {
             if (SyntheticEnchantment.validSyntheticEnchantments.contains(enchant)) {
                 Helpers.getEachIntegerRange(enchant.getMinLevel(), SyntheticEnchantment.hashSyntheticEnchantMaxLevel.get(enchant)).forEach((i) -> {
-                    content.addStack(forEnchantment(new EnchantmentLevelEntry(enchant, i)));
+                    content.addStack(forEnchantment(new EnchantmentLevelEntry(enchant, i)), vis);
                 });
             }
         }

@@ -77,6 +77,7 @@ public class DialabsCCA implements EntityComponentInitializer {
         public static void setIs(PersistentProjectileEntity target, boolean val) {
             SNIPING_ARROW.get(target).setComponent(val);
         }
+
         public static Vec3d get(PersistentProjectileEntity target) {
             return SNIPING_ARROW_ORIGIN.get(target).get();
         }

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "quilt_loader": {
     "group": "io.github.diamonddevv",
-    "id": "${modid}",
+    "id": "dialabs",
     "version": "${version}",
     "entrypoints": {
       "init": "net.diamonddev.dialabs.Dialabs",
@@ -21,7 +21,7 @@
         "issues": "https://github.com/diamonddevv/dialabs/issues",
         "sources": "https://github.com/diamonddevv/dialabs"
       },
-      "license": "GPLv3",
+      "license": "GPL-3.0-only",
       "icon": "assets/dialabs/icon.png"
     },
 
@@ -42,6 +42,17 @@
       }
     ]
   },
+
+  "cardinal-components": [
+    "dialabs:retributional_damage",
+    "dialabs:retributive",
+    "dialabs:sniping_arrow_origin",
+    "dialabs:sniping",
+    "dialabs:sniping_speed_ref",
+    "dialabs:sniping_divergence_ref"
+  ],
+
+
   "mixin": "dialabs.mixins.json",
   "access_widener": "dialabs.accesswidener",
   "minecraft": {
